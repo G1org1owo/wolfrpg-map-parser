@@ -2,6 +2,7 @@ mod map;
 mod event;
 mod command;
 mod byte_utils;
+mod show_message_command;
 
 use std::{env, fs};
 use serde::{Serialize};

@@ -1,5 +1,6 @@
 use serde::Serialize;
-use crate::byte_utils::{as_u32_be, as_u32_le};
+use crate::byte_utils::{as_u32_be};
+use crate::show_message_command::ShowMessageCommand;
 
 #[derive(Serialize)]
 pub enum Command {
@@ -24,27 +25,6 @@ impl Command {
         };
 
         (offset, command)
-    }
-}
-
-#[derive(Serialize)]
-struct ShowMessageCommand {
-    message: String
-}
-
-impl ShowMessageCommand {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
-        let mut offset: usize = 3;
-
-        let message_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-        offset += 4;
-
-        let message: String = String::from_utf8(bytes[offset..offset+message_length-1].to_vec())
-            .unwrap();
-
-        (0, Self {
-            message
-        })
     }
 }
 
