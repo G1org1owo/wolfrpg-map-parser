@@ -55,7 +55,7 @@
 | 1 byte               | ???                 |                              |
 | 4 byte               | ???                 |                              |
 | 4 byte               | command_count       | little-endian uint32         |
-| \<variable>          | commands            |                              |
+| \<variable>          | commands            | [Command; command_count]     |
 | ...                  | ...                 | ...                          |
 | 1 byte               | shadow_graphic      | uint8                        |
 | 1 byte               | range_extension_x   | uint8                        |
@@ -63,8 +63,27 @@
 | 1 byte               | Page end            | `7A`                         |
 | 1 byte               | Event end           | `70`                         |
 
+## Command format
+| Length      | Content      | Value                |
+|-------------|--------------|----------------------|
+| 4 byte      | command_code | little-endian uint32 |
+| \<variable> | command_data | \<variable>          |
 
+### Show message Command format
 
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 byte                 | command_code   | `01 65 00 00`         |
+| 1 byte                 | ???            | uint8                 |
+| 1 byte                 | ???            | uint8                 |
+| 1 byte                 | ???            | uint8                 |
+| 4 bytes                | message_length | little-endian uint32  |
+| `message_length` bytes | message_length | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
 
-
-
+### Exit Command format
+| Length                 | Content      | Value                 |
+|------------------------|--------------|-----------------------|
+| 4 byte                 | command_code | `01 65 00 00`         |
+| 4 bytes                | ???          | little-endian uint32  |
+| 4 bytes                | ???          | little-endian uint32  |
