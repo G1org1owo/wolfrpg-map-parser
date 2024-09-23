@@ -56,7 +56,6 @@
 | 4 byte               | ???                 |                              |
 | 4 byte               | command_count       | little-endian uint32         |
 | \<variable>          | commands            | [Command; command_count]     |
-| ...                  | ...                 | ...                          |
 | 1 byte               | shadow_graphic      | uint8                        |
 | 1 byte               | range_extension_x   | uint8                        |
 | 1 byte               | range_extension_y   | uint8                        |
