@@ -30,7 +30,10 @@
 | 5 bytes              | Icon signature      | `79 FF FF FF FF`             |
 | 4 bytes              | icon_length         | little-endian uint32         |
 | `icon_length` bytes  | icon_name           | NUL-terminated string        |
-| 4 bytes              |                     |                              |
+| 1 byte               | icon_row            | uint8                        |
+| 1 byte               | icon_column         | uint8                        |
+| 1 byte               | icon_opacity        | uint8                        |
+| 1 byte               | icon_blend          | uint8                        |
 | 1 byte               | event_trigger       | uint8                        |
 | 1 byte               | condition1_operator | uint8 bitmask                |
 | 1 byte               | condition2_operator | uint8 bitmask                |

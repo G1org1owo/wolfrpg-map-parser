@@ -58,7 +58,6 @@ impl Map {
         let mut events: Vec<Event> = Vec::new();
 
         for _i in 0..event_count {
-            println!("event offset: {offset}");
             let (bytes_read, event): (usize, Event) = Event::parse(&bytes[offset..]);
 
             offset += bytes_read;
