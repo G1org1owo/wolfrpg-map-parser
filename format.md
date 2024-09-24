@@ -80,6 +80,38 @@
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
 
+### Show choice Command format
+| Length      | Content      | Value                  |
+|-------------|--------------|------------------------|
+| 4 bytes     | command_code | `02 66 00 00`          |
+| 1 byte      | ???          |                        |
+| 4 bytes     | choice_count | little-endian uint32   |
+| 1 byte      | ???          |                        |
+| 1 byte      | ???          |                        |
+| \<variable> | choices      | [Choice; choice_count] |
+| 1 byte      | Choices end  | `00`                   |
+| \<variable> | Cases        | [Case; choice_count?]  |
+| 4 bytes     | ???          |                        |
+| 4 bytes     | ???          |                        |
+
+### Choice format
+| Length              | Content       | Value                 |
+|---------------------|---------------|-----------------------|
+| 4 bytes             | choice_length | little-endian uint32  |
+| `case_length` bytes | choice        | NUL-terminated string |
+
+### Case format
+| Length      | Content      | Value                          |
+|-------------|--------------|--------------------------------|
+| 4 bytes     | command_code | `02 91 01 00` or `02 92 01 00` |
+| 1 byte      | ???          |                                |
+| 1 byte      | case_id      | uint8                          |
+| 2 bytes     | ???          |                                |
+| 4 bytes     | ???          |                                |
+| \<variable> | commands     | [Command]                      |
+| 4 bytes     | ???          |                                |
+| 4 bytes     | ???          |                                |
+
 ### Exit Command format
 | Length  | Content      | Value                 |
 |---------|--------------|-----------------------|
