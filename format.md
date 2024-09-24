@@ -39,22 +39,22 @@
 | 1 byte               | condition2_operator | uint8 bitmask                |
 | 1 byte               | condition3_operator | uint8 bitmask                |
 | 1 byte               | condition4_operator | uint8 bitmask                |
-| 4 byte               | condition1_variable | little-endian uint32         |
-| 4 byte               | condition2_variable | little-endian uint32         |
-| 4 byte               | condition3_variable | little-endian uint32         |
-| 4 byte               | condition4_variable | little-endian uint32         |
-| 4 byte               | condition1_value    | little-endian uint32         |
-| 4 byte               | condition2_value    | little-endian uint32         |
-| 4 byte               | condition3_value    | little-endian uint32         |
-| 4 byte               | condition4_value    | little-endian uint32         |
+| 4 bytes              | condition1_variable | little-endian uint32         |
+| 4 bytes              | condition2_variable | little-endian uint32         |
+| 4 bytes              | condition3_variable | little-endian uint32         |
+| 4 bytes              | condition4_variable | little-endian uint32         |
+| 4 bytes              | condition1_value    | little-endian uint32         |
+| 4 bytes              | condition2_value    | little-endian uint32         |
+| 4 bytes              | condition3_value    | little-endian uint32         |
+| 4 bytes              | condition4_value    | little-endian uint32         |
 | 1 byte               | animation_speed     | uint8                        |
 | 1 byte               | move_speed          | uint8                        |
 | 1 byte               | move_frequency      | uint8                        |
 | 1 byte               | move_route          | uint8                        |
 | 1 byte               | options             | uint8 bitmask                |
 | 1 byte               | ???                 |                              |
-| 4 byte               | ???                 |                              |
-| 4 byte               | command_count       | little-endian uint32         |
+| 4 bytes              | ???                 |                              |
+| 4 bytes              | command_count       | little-endian uint32         |
 | \<variable>          | commands            | [Command; command_count]     |
 | 1 byte               | shadow_graphic      | uint8                        |
 | 1 byte               | range_extension_x   | uint8                        |
@@ -65,14 +65,14 @@
 ## Command format
 | Length      | Content      | Value                |
 |-------------|--------------|----------------------|
-| 4 byte      | command_code | little-endian uint32 |
+| 4 bytes     | command_code | little-endian uint32 |
 | \<variable> | command_data | \<variable>          |
 
 ### Show message Command format
 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
-| 4 byte                 | command_code   | `01 65 00 00`         |
+| 4 bytes                | command_code   | `01 65 00 00`         |
 | 1 byte                 | ???            | uint8                 |
 | 1 byte                 | ???            | uint8                 |
 | 1 byte                 | ???            | uint8                 |
@@ -81,8 +81,8 @@
 | 1 byte                 | Command end    | `00`                  |
 
 ### Exit Command format
-| Length                 | Content      | Value                 |
-|------------------------|--------------|-----------------------|
-| 4 byte                 | command_code | `01 65 00 00`         |
-| 4 bytes                | ???          | little-endian uint32  |
-| 4 bytes                | ???          | little-endian uint32  |
+| Length  | Content      | Value                 |
+|---------|--------------|-----------------------|
+| 4 bytes | command_code | `01 65 00 00`         |
+| 4 bytes | ???          | little-endian uint32  |
+| 4 bytes | ???          | little-endian uint32  |
