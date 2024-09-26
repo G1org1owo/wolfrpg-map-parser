@@ -56,6 +56,7 @@
 | 4 bytes              | ???                 |                              |
 | 4 bytes              | command_count       | little-endian uint32         |
 | \<variable>          | commands            | [Command; command_count]     |
+| 4 bytes              | ???                 |                              |
 | 1 byte               | shadow_graphic      | uint8                        |
 | 1 byte               | range_extension_x   | uint8                        |
 | 1 byte               | range_extension_y   | uint8                        |
@@ -113,8 +114,8 @@
 | 4 bytes     | ???          |                                |
 
 ### Exit Command format
-| Length  | Content      | Value                 |
-|---------|--------------|-----------------------|
-| 4 bytes | command_code | `01 65 00 00`         |
-| 4 bytes | ???          | little-endian uint32  |
-| 4 bytes | ???          | little-endian uint32  |
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 65 00 00` |
+| 2 bytes | ???          | uint16        |
+| 2 bytes | ???          | uint16        |

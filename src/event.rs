@@ -32,6 +32,7 @@ pub struct Event {
     unknown5: u32,
     command_count: u32,
     commands: Vec<Command>,
+    unknown6: u32,
     shadow_graphic: u8,
     range_extension_x: u8,
     range_extension_y: u8,
@@ -90,6 +91,9 @@ impl Event {
             = Event::parse_commands(&bytes[offset..], command_count);
         offset += bytes_read;
 
+        let unknown6: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+
         let shadow_graphic: u8 = bytes[offset];
         let range_extension_x: u8 = bytes[offset+1];
         let range_extension_y: u8 = bytes[offset+2];
@@ -119,6 +123,7 @@ impl Event {
             unknown5,
             command_count,
             commands,
+            unknown6,
             shadow_graphic,
             range_extension_x,
             range_extension_y,

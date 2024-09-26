@@ -27,7 +27,7 @@ impl Command {
             },
             EXIT_COMMAND => {
                 offset+=4;
-                offset+=8; // Not sure what the contents of the EXIT command are at the moment
+                offset+=4; // Not sure what the contents of the EXIT command are at the moment
 
                 Ok(Command::Exit())
             }
