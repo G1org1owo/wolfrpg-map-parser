@@ -82,18 +82,20 @@
 | 1 byte                 | Command end    | `00`                  |
 
 ### Show choice Command format
-| Length      | Content      | Value                  |
-|-------------|--------------|------------------------|
-| 4 bytes     | command_code | `02 66 00 00`          |
-| 1 byte      | ???          |                        |
-| 4 bytes     | choice_count | little-endian uint32   |
-| 1 byte      | ???          |                        |
-| 1 byte      | ???          |                        |
-| \<variable> | choices      | [Choice; choice_count] |
-| 1 byte      | Choices end  | `00`                   |
-| \<variable> | Cases        | [Case; choice_count?]  |
-| 4 bytes     | ???          |                        |
-| 4 bytes     | ???          |                        |
+| Length      | Content          | Value                                                       |
+|-------------|------------------|-------------------------------------------------------------|
+| 4 bytes     | command_code     | `02 66 00 00`                                               |
+| 1 byte      | ???              |                                                             |
+| 1 byte      | selected_choices | high 4 bits for default choice, low 4 bits for choice count |
+| 1 byte      | extra_cases      | uint8 bitmap                                                |
+| 2 bytes     | ???              |                                                             |
+| 1 byte      | ???              |                                                             |
+| 1 byte      | choice_count     | uint8                                                       |
+| \<variable> | choices          | [Choice; choice_count]                                      |
+| 1 byte      | Choices end      | `00`                                                        |
+| \<variable> | Cases            | [Case; choice_count?]                                       |
+| 4 bytes     | ???              |                                                             |
+| 4 bytes     | ???              |                                                             |
 
 ### Choice format
 | Length              | Content       | Value                 |

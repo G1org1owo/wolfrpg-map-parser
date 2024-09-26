@@ -40,6 +40,7 @@ impl Map {
         offset += (width * height * 4) as usize;
 
         let events: Vec<Event> = Map::parse_events(&bytes[offset..], event_count);
+        // TODO: throw error if last byte isn't map ending
 
         Self {
             tileset,

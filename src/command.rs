@@ -1,9 +1,11 @@
 use std::fmt::format;
 use serde::Serialize;
 use crate::byte_utils::{as_u32_be};
+use crate::show_choice_command::ShowChoiceCommand;
 use crate::show_message_command::ShowMessageCommand;
 
 const SHOW_MESSAGE_COMMAND: u32 = 0x01650000;
+const SHOW_CHOICE_COMMAND: u32 = 0x02660000;
 const EXIT_COMMAND: u32 = 0x01000000;
 
 #[derive(Serialize)]
@@ -25,6 +27,14 @@ impl Command {
 
                 Ok(Command::ShowMessage(command))
             },
+            SHOW_CHOICE_COMMAND => {
+                offset+=4;
+                let (bytes_read, command) : (usize, ShowChoiceCommand)
+                    = ShowChoiceCommand::parse(&bytes[offset..]);
+                offset += bytes_read;
+
+                Ok(Command::ShowChoice(command))
+            },
             EXIT_COMMAND => {
                 offset+=4;
                 offset+=4; // Not sure what the contents of the EXIT command are at the moment
@@ -39,13 +49,4 @@ impl Command {
 
         (offset, command)
     }
-}
-
-#[derive(Serialize)]
-struct ShowChoiceCommand {
-
-}
-
-impl ShowChoiceCommand {
-
 }
