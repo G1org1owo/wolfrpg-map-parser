@@ -25,7 +25,7 @@ pub struct ShowChoiceCommand {
 }
 
 impl ShowChoiceCommand {
-    pub fn parse(bytes: &[u8]) -> (usize, Self){
+    pub fn parse(bytes: &[u8]) -> (usize, u32, Self){
         let mut offset: usize = 0;
 
         let unknown1: u8 = bytes[offset];
@@ -53,7 +53,7 @@ impl ShowChoiceCommand {
 
         offset += 1; // should be 0x00 to indicate end of choices
 
-        let (bytes_read, cases): (usize, Vec<Case>) = Self::parse_cases(
+        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>) = Self::parse_cases(
             &bytes[offset..],
             choice_count + Self::extra_cases_count(extra_cases, &cancel_case)
         );
@@ -62,8 +62,9 @@ impl ShowChoiceCommand {
         let unknown4: u32 = as_u32_le(&bytes[offset..offset+4]);
         let unknown5: u32 = as_u32_le(&bytes[offset+4..offset+8]);
         offset += 8;
+        commands_read += 1; // This should be some sort of command end signature I guess
 
-        (offset, Self {
+        (offset, commands_read, Self {
             unknown1,
             cancel_case,
             selected_choices,
@@ -85,19 +86,20 @@ impl ShowChoiceCommand {
         (length + 4, choice)
     }
 
-    fn parse_cases(bytes: &[u8], case_count: u8) -> (usize, Vec<Case>) {
+    fn parse_cases(bytes: &[u8], case_count: u8) -> (usize, u32, Vec<Case>) {
         let mut cases: Vec<Case> = vec![];
         let mut offset: usize = 0;
-        let mut cases: Vec<Case> = Vec::new();
+        let mut commands: u32 = 0;
 
         for _i in 0..case_count {
-            let (bytes_read, case): (usize, Case) = Case::parse(&bytes[offset..]);
+            let (bytes_read, commands_read, case): (usize, u32, Case) = Case::parse(&bytes[offset..]);
             cases.push(case);
             offset += bytes_read;
+            commands += commands_read;
             commands += 1; // case counts as command
         }
 
-        (offset, cases)
+        (offset, commands, cases)
     }
 
     fn extra_cases_count(extra_cases: u8, cancel: &Cancel) -> u8 {

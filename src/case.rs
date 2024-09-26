@@ -45,17 +45,21 @@ impl Case {
         offset += 8;
 
         let mut commands: Vec<Command> = vec![];
+        let mut command_count: u32 = 0;
         loop {
-            let (bytes_read, command): (usize, Command) = Command::parse(&bytes[offset..]);
+            let (bytes_read, commands_read, command): (usize, u32, Command)
+                = Command::parse(&bytes[offset..]);
+
             commands.push(command);
             offset += bytes_read;
+            command_count += commands_read;
 
             if let Command::Exit() = commands.last().unwrap() {
                 break;
             };
         }
 
-        (offset, Self {
+        (offset, command_count, Self {
             case_type,
             unknown1,
             case_id,

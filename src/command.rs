@@ -16,8 +16,10 @@ pub enum Command {
 }
 
 impl Command {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
+        let mut commands = 1;
+
         let command: Command = match as_u32_be(&bytes[offset..offset+4]) {
             SHOW_MESSAGE_COMMAND => { // Comment and Debug Text have similar codes
                 offset+=4;
@@ -29,9 +31,10 @@ impl Command {
             },
             SHOW_CHOICE_COMMAND => {
                 offset+=4;
-                let (bytes_read, command) : (usize, ShowChoiceCommand)
+                let (bytes_read, commands_read, command) : (usize, u32, ShowChoiceCommand)
                     = ShowChoiceCommand::parse(&bytes[offset..]);
                 offset += bytes_read;
+                commands += commands_read;
 
                 Ok(Command::ShowChoice(command))
             },
@@ -47,6 +50,6 @@ impl Command {
             as_u32_be(&bytes[offset..offset+4])
         )).as_str());
 
-        (offset, command)
+        (offset, commands, command)
     }
 }

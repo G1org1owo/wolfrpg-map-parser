@@ -142,10 +142,13 @@ impl Event {
         let mut offset: usize = 0;
         let mut commands: Vec<Command> = Vec::new();
 
-        for _i in 0..command_count {
-            let (bytes_read, command): (usize, Command) = Command::parse(&bytes[offset..]);
+        let mut i: u32 = 0;
+        while i<command_count {
+            let (bytes_read, commands_read, command): (usize, u32, Command) = Command::parse(&bytes[offset..]);
             offset += bytes_read;
             commands.push(command);
+
+            i += commands_read;
         }
 
         (offset, commands)
