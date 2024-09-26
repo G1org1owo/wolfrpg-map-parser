@@ -1,12 +1,17 @@
 use serde::Serialize;
-use crate::byte_utils::{as_u16_le, as_u32_le};
+use crate::byte_utils::{as_u16_le, as_u32_be, as_u32_le};
 use crate::command::Command;
 
 #[derive(Serialize)]
 enum CaseType {
     Choice,
-    Extra
+    Extra,
+    Cancel
 }
+
+const CHOICE_CASE: u32 = 0x02910100;
+const EXTRA_CASE: u32 = 0x02920100;
+const CANCEL_CASE: u32 = 0x02A50100;
 
 #[derive(Serialize)]
 pub struct Case {
@@ -16,29 +21,22 @@ pub struct Case {
     unknown2: u16,
     unknown3: u32,
     commands: Vec<Command>,
-    unknown4: u32,
-    unknown5: u32,
 }
 
 impl Case {
-    fn case_id () {
+    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
+        let mut offset: usize = 0;
 
-    }
-
-    pub fn parse_choice (bytes: &[u8]) -> (usize, Case) {
-        let (offset, mut case): (usize, Case) = Self::parse(bytes, CaseType::Choice);
-
-        (offset, case)
-    }
-
-    pub fn parse_extra (bytes: &[u8]) -> (usize, Case) {
-        let (offset, mut case): (usize, Case) = Self::parse(bytes, CaseType::Extra);
-
-        (offset, case)
-    }
-
-    fn parse(bytes: &[u8], case_type: CaseType) -> (usize, Self) {
-        let mut offset = 0;
+        let case_type: CaseType = match as_u32_be(&bytes[offset..offset+4]) {
+            CHOICE_CASE => Ok(CaseType::Choice),
+            EXTRA_CASE => Ok(CaseType::Extra),
+            CANCEL_CASE => Ok(CaseType::Cancel),
+            _ => Err("Not a valid case")
+        }.expect(format!(
+            "Could not interpret case {:08x}",
+            as_u32_be(&bytes[offset..offset+4])
+        ).as_str());
+        offset += 4;
 
         let unknown1: u8 = bytes[offset];
         let case_id: u8 = bytes[offset+1];
@@ -57,10 +55,6 @@ impl Case {
             };
         }
 
-        let unknown4: u32 = as_u32_le(&bytes[offset..offset+4]);
-        let unknown5: u32 = as_u32_le(&bytes[offset+4..offset+8]);
-        offset += 8;
-
         (offset, Self {
             case_type,
             unknown1,
@@ -68,8 +62,6 @@ impl Case {
             unknown2,
             unknown3,
             commands,
-            unknown4,
-            unknown5,
         })
     }
 }
