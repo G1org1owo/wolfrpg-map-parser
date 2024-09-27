@@ -2,7 +2,7 @@
 
 | Length                 | Content        | Value                                                                        |
 |------------------------|----------------|------------------------------------------------------------------------------|
-| 18 bytes               | WOLF signature | `00 00 00 00 00 00 00 00 00 00 57 4F 4C 46 4D 00 00 00 00 00 64 00 00 00 65` |
+| 25 bytes               | WOLF signature | `00 00 00 00 00 00 00 00 00 00 57 4F 4C 46 4D 00 00 00 00 00 64 00 00 00 65` |
 | 4 bytes                | offset         | little-endian uint32                                                         |
 | `offset` bytes         | ???            | ???                                                                          |
 | 4 bytes                | tileset        | little-endian uint32                                                         |
@@ -104,15 +104,15 @@
 | `case_length` bytes | choice        | NUL-terminated string |
 
 ### Case format
-| Length      | Content      | Value                          |
-|-------------|--------------|--------------------------------|
-| 4 bytes     | command_code | `02 91 01 00` or `02 92 01 00` |
-| 1 byte      | ???          |                                |
-| 1 byte      | case_id      | uint8                          |
-| 2 bytes     | ???          |                                |
-| 4 bytes     | ???          |                                |
-| \<variable> | commands     | [Command]                      |
-| 8 bytes     | Exit         |                                |
+| Length      | Content      | Value                                      |
+|-------------|--------------|--------------------------------------------|
+| 4 bytes     | command_code | `02 91 01 00`, `02 92 01 00` or `02A50100` |
+| 1 byte      | ???          |                                            |
+| 1 byte      | case_id      | uint8                                      |
+| 2 bytes     | ???          |                                            |
+| 4 bytes     | ???          |                                            |
+| \<variable> | commands     | [Command]                                  |
+| 8 bytes     | Exit         |                                            |
 
 
 ### Exit Command format
