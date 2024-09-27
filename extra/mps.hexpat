@@ -114,13 +114,14 @@ bitfield EventOptions {
 };
 
 struct Event {
-    u8 signature[9];
+    u8 signature[5];
+    u32 id;
     u32 title_length;
     char title[title_length];
-    u32 unknown1;
-    u32 unknown2;
+    u32 position_x;
+    u32 position_y;
     u32 page_count;
-    u32 unknown3;
+    u32 unknown1;
     u8 icon_signature[5];
     u32 icon_length;
     char icon_name[icon_length];
@@ -146,11 +147,11 @@ struct Event {
     u8 move_frequency;
     u8 move_route;
     EventOptions options;
-    u8 unknown4;
-    u32 unknown5;
+    u8 unknown2;
+    u32 unknown3;
     u32 command_count;
     Command commands[command_count];
-    u32 unknown6;
+    u32 unknown4;
     u8 shadow_graphic;
     u8 range_extension_x;
     u8 range_extension_y;

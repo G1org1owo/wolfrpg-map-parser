@@ -11,11 +11,12 @@ pub struct Condition {
 
 #[derive(Serialize)]
 pub struct Event {
+    id: u32,
     name: String,
-    unknown1: u32,
-    unknown2: u32,
+    position_x: u32,
+    position_y: u32,
     page_count: u32,
-    unknown3: u32,
+    unknown1: u32,
     icon: String,
     icon_row: u8,
     icon_column: u8,
@@ -28,11 +29,11 @@ pub struct Event {
     move_frequency: u8,
     move_route: u8,
     options: u8, // bitmask
-    unknown4: u8,
-    unknown5: u32,
+    unknown2: u8,
+    unknown3: u32,
     command_count: u32,
     commands: Vec<Command>,
-    unknown6: u32,
+    unknown4: u32,
     shadow_graphic: u8,
     range_extension_x: u8,
     range_extension_y: u8,
@@ -40,7 +41,10 @@ pub struct Event {
 
 impl Event {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
-        let mut offset = 9;
+        let mut offset = 5;
+        let id: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+
         let name_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
         offset+=4;
 
@@ -48,10 +52,10 @@ impl Event {
             .unwrap();
         offset+=name_length;
 
-        let unknown1: u32 = as_u32_le(&bytes[offset..offset+4]);
-        let unknown2: u32 = as_u32_le(&bytes[offset+4..offset+8]);
+        let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);
+        let position_y: u32 = as_u32_le(&bytes[offset+4..offset+8]);
         let page_count: u32 = as_u32_le(&bytes[offset+8..offset+12]);
-        let unknown3: u32 = as_u32_le(&bytes[offset+12..offset+16]);
+        let unknown1: u32 = as_u32_le(&bytes[offset+12..offset+16]);
         offset += 16;
 
         offset+=5;
@@ -80,8 +84,8 @@ impl Event {
         let move_frequency: u8 = bytes[offset+2];
         let move_route: u8 = bytes[offset+3];
         let options: u8 = bytes[offset+4];
-        let unknown4: u8 = bytes[offset+5];
-        let unknown5: u32 = as_u32_le(&bytes[offset+6..offset+10]);
+        let unknown2: u8 = bytes[offset+5];
+        let unknown3: u32 = as_u32_le(&bytes[offset+6..offset+10]);
         offset+=10;
 
         let command_count = as_u32_le(&bytes[offset..offset+4]);
@@ -91,7 +95,7 @@ impl Event {
             = Event::parse_commands(&bytes[offset..], command_count);
         offset += bytes_read;
 
-        let unknown6: u32 = as_u32_le(&bytes[offset..offset+4]);
+        let unknown4: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
         let shadow_graphic: u8 = bytes[offset];
@@ -102,11 +106,12 @@ impl Event {
         offset+=4; // TODO: throw error if not page/event end signature
 
         (offset, Self {
+            id,
             name,
-            unknown1,
-            unknown2,
+            position_x,
+            position_y,
             page_count,
-            unknown3,
+            unknown1,
             icon,
             icon_row,
             icon_column,
@@ -119,11 +124,11 @@ impl Event {
             move_frequency,
             move_route,
             options,
-            unknown4,
-            unknown5,
+            unknown2,
+            unknown3,
             command_count,
             commands,
-            unknown6,
+            unknown4,
             shadow_graphic,
             range_extension_x,
             range_extension_y,
