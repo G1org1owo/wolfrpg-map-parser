@@ -21,7 +21,6 @@ bitfield ExtraCases {
     right_key: 1;
     force_exit: 1;
     padding: 5;
-    
 };
 
 fn extraCasesCount(ExtraCases extra_cases) {
@@ -70,6 +69,71 @@ struct ShowChoiceCommand {
     u32 unknown5;
 };
 
+bitfield SetVariableOptions {
+    bound_result: 1;
+    real_number_calculation: 1;
+    left_not_variable: 1;
+    right_not_variable: 1;
+    use_variable_as_reference: 1;
+    use_left_as_reference: 1;
+    use_right_as_reference: 1;
+    padding: 1;
+};
+
+enum SetVariableAssignment: u8 {
+    Equals = 0x00,
+    PlusEquals = 0x01,
+    MinusEquals = 0x02,
+    TimesEquals = 0x03,
+    DivideEquals = 0x04,
+    RemainderEquals = 0x05,
+    LowerBound = 0x06,
+    UpperBound = 0x07,
+    Ansolute = 0x08,
+    Angle = 0x09,
+    Sin = 0x0a,
+    Cos = 0x0b,
+};
+
+enum SetVariableCalculation: u8 {
+    Plus = 0x00,
+    Minus = 0x01,
+    Times = 0x02,
+    Divides = 0x03,
+    Remainder = 0x04,
+    BitwiseAnd = 0x05,
+    BitwiseNot = 0x06,
+};
+
+bitfield SetVariableOperators {
+    SetVariableAssignment assignment: 4;
+    SetVariableCalculation calculation: 4;
+};
+
+struct SetVariableCommand {
+    u8 unknown1;
+    u32 variable;
+    u32 left_side;
+    u32 right_side;
+    SetVariableOptions options;
+    SetVariableOperators operators;
+    u32 unknown2;
+    u8 end_command;
+};
+
+struct SetVariableRangeCommand {
+    u8 unknown1;
+    u32 variable;
+    u32 left_side;
+    u32 right_side;
+    SetVariableOptions options;
+    SetVariableOperators operators;
+    u16 range_start;
+    u16 range_end;   
+    u32 unknown2;
+    u8 end_command;
+};
+
 struct ExitCommand {
     u32 unknown1;
 };
@@ -77,6 +141,8 @@ struct ExitCommand {
 enum CommandSignature: u32 {
     ShowMessage =  0x01650000,
     ShowChoice = 0x02660000,
+    SetVariable = 0x05790000,
+    SetVariableRange = 0x06790000,
     Exit = 0x01000000,
 };
 
@@ -86,12 +152,13 @@ struct Command {
     match (signature) {
         (CommandSignature::ShowMessage): ShowMessageCommand command;
         (CommandSignature::ShowChoice): ShowChoiceCommand command;
+        (CommandSignature::SetVariable): SetVariableCommand command;
+        (CommandSignature::SetVariableRange): SetVariableRangeCommand command;
         (CommandSignature::Exit): {
             ExitCommand command;
             break;
         }
     }
-    
 };
 
 enum EventTrigger: u8 {

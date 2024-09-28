@@ -1,4 +1,4 @@
-## Map format
+# Map format
 
 | Length                 | Content        | Value                                                                        |
 |------------------------|----------------|------------------------------------------------------------------------------|
@@ -16,7 +16,7 @@
 | 1 byte                 | Map end        | `66`                                                                         |
 
 
-## Event format
+# Event format
 
 | Length               | Content             | Value                    |
 |----------------------|---------------------|--------------------------|
@@ -64,13 +64,13 @@
 | 1 byte               | Page end            | `7A`                     |
 | 1 byte               | Event end           | `70`                     |
 
-## Command format
+# Command format
 | Length      | Content      | Value                |
 |-------------|--------------|----------------------|
 | 4 bytes     | command_code | little-endian uint32 |
 | \<variable> | command_data | \<variable>          |
 
-### Show message Command format
+## Show message Command format
 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
@@ -82,7 +82,7 @@
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
 
-### Show choice Command format
+## Show choice Command format
 | Length      | Content          | Value                                                                        |
 |-------------|------------------|------------------------------------------------------------------------------|
 | 4 bytes     | command_code     | `02 66 00 00`                                                                |
@@ -105,18 +105,44 @@
 | `case_length` bytes | choice        | NUL-terminated string |
 
 ### Case format
-| Length      | Content      | Value                                      |
-|-------------|--------------|--------------------------------------------|
-| 4 bytes     | command_code | `02 91 01 00`, `02 92 01 00` or `02A50100` |
-| 1 byte      | ???          |                                            |
-| 1 byte      | case_id      | uint8                                      |
-| 2 bytes     | ???          |                                            |
-| 4 bytes     | ???          |                                            |
-| \<variable> | commands     | [Command]                                  |
-| 8 bytes     | Exit         |                                            |
+| Length      | Content      | Value                                         |
+|-------------|--------------|-----------------------------------------------|
+| 4 bytes     | command_code | `02 91 01 00`, `02 92 01 00` or `02 A5 01 00` |
+| 1 byte      | ???          |                                               |
+| 1 byte      | case_id      | uint8                                         |
+| 2 bytes     | ???          |                                               |
+| 4 bytes     | ???          |                                               |
+| \<variable> | commands     | [Command]                                     |
+| 8 bytes     | Exit         |                                               |
 
+## Set variable Command
+### Base variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `05 79 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | variable     | little-endian uint32 |
+| 4 bytes | left_side    | little-endian uint32 |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | operators    | uint8 bitmap         |
+| 4 bytes | ???          |                      |
+| 1 byte  | Command end  | `00`                 |
 
-### Exit Command format
+### Range variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `05 79 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | variable     | little-endian uint32 |
+| 4 bytes | left_side    | little-endian uint32 |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | operators    | uint8 bitmap         |
+| 2 bytes | range_start  | little-endian uint16 |
+| 2 bytes | range_end    | little-endian uint16 |
+| 4 bytes | ???          |                      |
+| 1 byte  | Command end  | `00`                 |
+
+## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 65 00 00` |
