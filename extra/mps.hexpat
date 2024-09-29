@@ -359,6 +359,28 @@ struct SetVariablePlusOtherCommand {
     u8 end_command;
 };
 
+bitfield CaseCount {
+    case_count: 4;
+    else_case: 1;
+    padding: 27;
+};
+
+struct ConditionNumberCommand {
+    u8 unknown1;
+    CaseCount case_count;
+    u32 variable;
+    u32 value;
+    u8 operator;
+    u8 unknown2;
+    u32 unknown3;
+    u8 unknown4;
+    
+    Case case;
+    if(case_count.else_case == 1) {
+        Case else_case;
+    }
+};
+
 struct ExitCommand {
     u32 unknown1;
 };
@@ -375,6 +397,7 @@ enum CommandSignature: u32 {
     SetStringDynamic        = 0x047a0000,
     SetVariablePlus         = 0x057C0000,
     SetVariablePlusOther    = 0x047C0000,
+    ConditionNumber         = 0x056f0000,
     Exit                    = 0x01000000,
 };
 
@@ -393,6 +416,7 @@ struct Command {
         (CommandSignature::SetStringDynamic): SetStringDynamicCommand command;
         (CommandSignature::SetVariablePlus): SetVariablePlusCommand command;
         (CommandSignature::SetVariablePlusOther): SetVariablePlusOtherCommand command;
+        (CommandSignature::ConditionNumber): ConditionNumberCommand command;
         (CommandSignature::Exit): {
             ExitCommand command;
             break;
