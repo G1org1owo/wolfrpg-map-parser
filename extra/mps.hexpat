@@ -221,6 +221,80 @@ struct DBManagementCSVCommand {
     u8 end_command;
 };
 
+enum StringContentType: u8 {
+    StringLiteral   = 0b00000000,
+    StringVariable  = 0b00000001,
+    Variable        = 0b00000010,
+    UserInput       = 0b00000011,
+};
+
+enum StringVariableType: u8 {
+    StringVariable      = 0b00000000,
+    VariableReference   = 0b00000001,
+};
+
+bitfield SetStringOptions {
+    StringContentType content_type: 4;
+    StringVariableType variable_type: 4;
+};
+
+enum StringOperation: u8 {
+    Equals              = 0x00,
+    PlusEquals          = 0x01,
+    CopyFirstLine       = 0x02,
+    CutFirstLine        = 0x03,
+    CutFirstCharacter   = 0x04,
+    LoadFileContents    = 0x05,
+    ExportToFile        = 0x06,
+    GetFileList         = 0x07,
+    RemoveInstancesOf   = 0x08,
+    Replace             = 0x09,
+    CutUpTo             = 0x0a,
+    CutAfter            = 0x0b,
+};
+
+bitfield SetStringOperation {
+    StringOperation operation: 4;
+    cancel: 1;
+    replace: 1;
+    padding: 2;
+};
+
+struct SetStringCommand {
+    u8 unknown1;
+    u32 variable;
+    SetStringOptions options;
+    SetStringOperation operation;
+    u16 unknown2;
+    u8 unknown3;
+    u8 string_count;
+    u32 string_length;
+    char string[string_length];
+
+    if(string_count == 2) {
+        u32 replace_length;
+        char replace[replace_length];
+    }
+
+    u8 command_end;
+};
+
+struct SetStringDynamicCommand {
+    u8 unknown1;
+    u32 variable;
+    SetStringOptions options;
+    SetStringOperation operation;
+    u16 unknown2;
+
+    match(options.content_type) {
+        (StringContentType::UserInput): u32 input_length;
+        (_): u32 source;
+    }
+
+    u16 unknown3;
+    u8 command_end;
+};
+
 struct ExitCommand {
     u32 unknown1;
 };
@@ -233,6 +307,8 @@ enum CommandSignature: u32 {
     DBManagement        = 0x06fa0000,
     DBManagementString  = 0x05fa0000,
     DBManagementCSV     = 0x06fb0000,
+    SetString           = 0x037a0000,
+    SetStringDynamic    = 0x047a0000,
     Exit                = 0x01000000,
 };
 
@@ -247,6 +323,8 @@ struct Command {
         (CommandSignature::DBManagement): DBManagementCommand command;
         (CommandSignature::DBManagementString): DBManagementStringCommand command;
         (CommandSignature::DBManagementCSV): DBManagementCSVCommand command;
+        (CommandSignature::SetString): SetStringCommand command;
+        (CommandSignature::SetStringDynamic): SetStringDynamicCommand command;
         (CommandSignature::Exit): {
             ExitCommand command;
             break;

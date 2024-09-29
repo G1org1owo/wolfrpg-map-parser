@@ -214,6 +214,36 @@
 | `field_length` bytes    | field_name      | NUL-terminated string |
 | 1 byte                  | Command end     | `00`                  |
 
+## Set string Command
+### Base Variant
+| Length  | Content        | Value                |
+|---------|----------------|----------------------|
+| 4 bytes | command_code   | `03 7A 00 00`        |
+| 1 byte  | ???            |                      |
+| 4 bytes | variable       | little-endian uint32 |
+| 1 byte  | options        | uint8 bitmap         |
+| 1 byte  | operation      | uint8 bitmap         |
+| 2 bytes | ???            |                      |
+| 1 byte  | ???            |                      |
+| 1 byte  | string_count   | uint8                |
+| 4 bytes | string_length  | little-endian uint32 |
+| 1 byte  | replace_count  | uint8                |
+| 4 bytes | replace_length | little-endian uint32 |
+| 1 byte  | Command end    | `00`                 |
+
+### Dynamic Variant
+| Length  | Content             | Value                |
+|---------|---------------------|----------------------|
+| 4 bytes | command_code        | `04 7A 00 00`        |
+| 1 byte  | ???                 |                      |
+| 4 bytes | variable            | little-endian uint32 |
+| 1 byte  | options             | uint8 bitmap         |
+| 1 byte  | operation           | uint8 bitmap         |
+| 2 bytes | ???                 |                      |
+| 4 bytes | source/input_length | little-endian uint32 |
+| 2 bytes | ???                 |                      |
+| 1 byte  | Command end         | `00`                 |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
