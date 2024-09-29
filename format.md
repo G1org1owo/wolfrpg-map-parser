@@ -115,7 +115,7 @@
 | \<variable> | commands     | [Command]                                     |
 | 8 bytes     | Exit         |                                               |
 
-## Set variable Command
+## Set variable Command format
 ### Base variant
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
@@ -141,6 +141,78 @@
 | 2 bytes | range_end    | little-endian uint16 |
 | 4 bytes | ???          |                      |
 | 1 byte  | Command end  | `00`                 |
+
+## DB management Command format
+### Base Variant
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 bytes                | command_code   | `06 FA 00 00`         |
+| 1 byte                 | ???            |                       |
+| 4 bytes                | db_type        | little-endian uint32  |
+| 4 bytes                | data           | little-endian uint32  |
+| 4 bytes                | field          | little-endian uint32  |
+| 1 byte                 | assignment     | uint8 bitmap          |
+| 1 byte                 | options        | uint8 bitmap          |
+| 2 bytes                | ???            |                       |
+| 4 bytes                | value          | little-endian uint32  |
+| 1 byte                 | ???            |                       |
+| 1 byte                 | string_count   | uint8                 |
+| 4 bytes                | value_length   | little-endian uint32  |
+| `value_length` bytes   | value_string   | NUL-terminated string |
+| 4 bytes                | db_type_length | little-endian uint32  |
+| `db_type_length` bytes | db_type_name   | NUL-terminated string |
+| 4 bytes                | data_length    | little-endian uint32  |
+| `data_length` bytes    | data_name      | NUL-terminated string |
+| 4 bytes                | field_length   | little-endian uint32  |
+| `field_length` bytes   | field_name     | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
+
+### String Variant
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 bytes                | command_code   | `05 FA 00 00`         |
+| 1 byte                 | ???            |                       |
+| 4 bytes                | db_type        | little-endian uint32  |
+| 4 bytes                | data           | little-endian uint32  |
+| 4 bytes                | field          | little-endian uint32  |
+| 1 byte                 | assignment     | uint8 bitmap          |
+| 1 byte                 | options        | uint8 bitmap          |
+| 2 bytes                | ???            |                       |
+| 1 byte                 | ???            |                       |
+| 1 byte                 | string_count   | uint8                 |
+| 4 bytes                | value_length   | little-endian uint32  |
+| `value_length` bytes   | value          | NUL-terminated string |
+| 4 bytes                | db_type_length | little-endian uint32  |
+| `db_type_length` bytes | db_type_name   | NUL-terminated string |
+| 4 bytes                | data_length    | little-endian uint32  |
+| `data_length` bytes    | data_name      | NUL-terminated string |
+| 4 bytes                | field_length   | little-endian uint32  |
+| `field_length` bytes   | field_name     | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
+
+### CSV Variant
+| Length                  | Content         | Value                 |
+|-------------------------|-----------------|-----------------------|
+| 4 bytes                 | command_code    | `06 FB 00 00`         |
+| 1 byte                  | ???             |                       |
+| 4 bytes                 | db_type         | little-endian uint32  |
+| 4 bytes                 | data            | little-endian uint32  |
+| 4 bytes                 | field           | little-endian uint32  |
+| 1 byte                  | assignment      | uint8 bitmap          |
+| 1 byte                  | options         | uint8 bitmap          |
+| 2 bytes                 | ???             |                       |
+| 4 bytes                 | entry_count     | little-endian uint32  |
+| 1 byte                  | ???             |                       |
+| 1 byte                  | string_count    | uint8                 |
+| 4 bytes                 | filename_length | little-endian uint32  |
+| `filename_length` bytes | filename        | NUL-terminated string |
+| 4 bytes                 | db_type_length  | little-endian uint32  |
+| `db_type_length` bytes  | db_type_name    | NUL-terminated string |
+| 4 bytes                 | data_length     | little-endian uint32  |
+| `data_length` bytes     | data_name       | NUL-terminated string |
+| 4 bytes                 | field_length    | little-endian uint32  |
+| `field_length` bytes    | field_name      | NUL-terminated string |
+| 1 byte                  | Command end     | `00`                  |
 
 ## Exit Command format
 | Length  | Content      | Value         |
