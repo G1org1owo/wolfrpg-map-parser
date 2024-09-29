@@ -295,21 +295,87 @@ struct SetStringDynamicCommand {
     u8 command_end;
 };
 
+bitfield SetVariablePlusOptions {
+    bound_result: 1;
+    padding: 3;
+    use_variable_as_reference: 1;
+    precise_position: 1;
+    padding: 2;
+};
+
+enum SetVariablePlusType: u8 {
+    Character       = 0b00000001,
+    Position        = 0b00000010,
+    Other           = 0b00000011,
+    PictureNumber   = 0b00000100,
+};
+
+bitfield SetVariablePlusAssignment {
+    SetVariableAssignment assignment: 4;
+    SetVariablePlusType variable_type: 4;
+};
+
+struct SetVariablePlusCommand {
+    u8 unknown1;
+    u32 variable;
+    SetVariablePlusOptions options;
+    SetVariablePlusAssignment assignment;
+    
+    match(assignment.variable_type) {
+        (SetVariablePlusType::Character): {
+            u16 unknown2;
+            u32 character;
+            u32 field;
+            u16 unknown3;
+        }
+        (SetVariablePlusType::Position): {
+            u8 target;
+            u8 unknown2;
+            u32 position_x;
+            u32 position_y;
+            u16 unknown3;
+        }
+        (SetVariablePlusType::PictureNumber): {
+            u16 unknown2;
+            u32 picture_number;
+            u32 field;
+            u16 unknown3;
+        }
+    }
+    
+    u8 end_command;    
+};
+
+struct SetVariablePlusOtherCommand {
+    u8 unknown1;
+    u32 variable;
+    SetVariablePlusOptions options;
+    SetVariablePlusAssignment assignment;
+    
+    u16 unknown2;
+    u32 target;
+    u16 unknown3;
+    
+    u8 end_command;
+};
+
 struct ExitCommand {
     u32 unknown1;
 };
 
 enum CommandSignature: u32 {
-    ShowMessage         = 0x01650000,
-    ShowChoice          = 0x02660000,
-    SetVariable         = 0x05790000,
-    SetVariableRange    = 0x06790000,
-    DBManagement        = 0x06fa0000,
-    DBManagementString  = 0x05fa0000,
-    DBManagementCSV     = 0x06fb0000,
-    SetString           = 0x037a0000,
-    SetStringDynamic    = 0x047a0000,
-    Exit                = 0x01000000,
+    ShowMessage             = 0x01650000,
+    ShowChoice              = 0x02660000,
+    SetVariable             = 0x05790000,
+    SetVariableRange        = 0x06790000,
+    DBManagement            = 0x06fa0000,
+    DBManagementString      = 0x05fa0000,
+    DBManagementCSV         = 0x06fb0000,
+    SetString               = 0x037a0000,
+    SetStringDynamic        = 0x047a0000,
+    SetVariablePlus         = 0x057C0000,
+    SetVariablePlusOther    = 0x047C0000,
+    Exit                    = 0x01000000,
 };
 
 struct Command {
@@ -325,6 +391,8 @@ struct Command {
         (CommandSignature::DBManagementCSV): DBManagementCSVCommand command;
         (CommandSignature::SetString): SetStringCommand command;
         (CommandSignature::SetStringDynamic): SetStringDynamicCommand command;
+        (CommandSignature::SetVariablePlus): SetVariablePlusCommand command;
+        (CommandSignature::SetVariablePlusOther): SetVariablePlusOtherCommand command;
         (CommandSignature::Exit): {
             ExitCommand command;
             break;

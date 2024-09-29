@@ -244,6 +244,63 @@
 | 2 bytes | ???                 |                      |
 | 1 byte  | Command end         | `00`                 |
 
+## Set variable+ Command format
+### Character Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `05 7C 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | variable     | little-endian uint32 |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | assignment   | uint8 bitmap         |
+| 2 bytes | ???          |                      |
+| 4 bytes | character    | little-endian uint32 |
+| 4 bytes | field        | little-endian uint32 |
+| 2 bytes | ???          |                      |
+| 1 byte  | Command end  | `00`                 |
+
+### Position Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `05 7C 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | variable     | little-endian uint32 |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | assignment   | uint8 bitmap         |
+| 1 byte  | target       | uint8                |
+| 1 byte  | ???          |                      |
+| 4 bytes | position_x   | little-endian uint32 |
+| 4 bytes | position_y   | little-endian uint32 |
+| 2 bytes | ???          |                      |
+| 1 byte  | Command end  | `00`                 |
+
+### Picture number Variant
+| Length  | Content        | Value                |
+|---------|----------------|----------------------|
+| 4 bytes | command_code   | `05 7C 00 00`        |
+| 1 byte  | ???            |                      |
+| 4 bytes | variable       | little-endian uint32 |
+| 1 byte  | options        | uint8 bitmap         |
+| 1 byte  | assignment     | uint8 bitmap         |
+| 2 bytes | ???            |                      |
+| 4 bytes | picture_number | little-endian uint32 |
+| 4 bytes | field          | little-endian uint32 |
+| 2 bytes | ???            |                      |
+| 1 byte  | Command end    | `00`                 |
+
+### Other variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `04 7C 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | variable     | little-endian uint32 |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | assignment   | uint8 bitmap         |
+| 2 bytes | ???          |                      |
+| 4 bytes | target       | little-endian uint32 |
+| 2 bytes | ???          |                      |
+| 1 byte  | Command end  | `00`                 |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
