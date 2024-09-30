@@ -301,6 +301,30 @@
 | 2 bytes | ???          |                      |
 | 1 byte  | Command end  | `00`                 |
 
+## Condition number Command format
+| Length                  | Content      | Value                                         |
+|-------------------------|--------------|-----------------------------------------------|
+| 4 bytes                 | command_code | `05 6F 00 00`, `08 6F 00 00` or `0B 6F 00 00` |
+| 1 byte                  | ???          |                                               |
+| 1 byte                  | case_count   | uint8 bitmap                                  |
+| 12 bytes * `case_count` | conditions   | [Condition; case_count]                       |
+| 4 bytes                 | ???          |                                               |
+| 1 byte                  | ???          |                                               |
+| \<variable>             | cases        | [Case; case_count]                            |
+| \<variable>             | else_case    | Case? (only if flag is set in case_count)     |
+| 4 bytes                 | ???          | `01 F3 00 00`                                 |
+| 4 bytes                 | ???          |                                               |
+
+### Condition format
+| Length  | Content  | Value                |
+|---------|----------|----------------------|
+| 2 bytes | ???      |                      |
+| 4 bytes | variable | little-endian uint32 |
+| 4 bytes | value    | little-endian uint32 |
+| 1 byte  | operator | uint8 bitmap         |
+| 1 byte  | ???      |                      |
+
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

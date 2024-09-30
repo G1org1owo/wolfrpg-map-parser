@@ -362,20 +362,79 @@ struct SetVariablePlusOtherCommand {
 bitfield CaseCount {
     case_count: 4;
     else_case: 1;
-    padding: 27;
+    padding: 11;
+};
+
+enum CompareOperator: u8 {
+    GreaterThan     = 0x00,
+    GreaterOrEquals = 0x01,
+    Equals          = 0x02,
+    LessOrEquals    = 0x03,
+    LessThan        = 0x04,
+    NotEqual        = 0x05,
+    BitwiseAnd      = 0x06,
+};
+
+bitfield ConditionOperator {
+    CompareOperator operator: 4;
+    not_variable: 1;
+    padding: 3;
+};
+
+struct Condition {
+    u16 unknown1;
+    u32 variable;
+    u32 value;
+    ConditionOperator operator;
+    u8 unknown2;
 };
 
 struct ConditionNumberCommand {
     u8 unknown1;
     CaseCount case_count;
-    u32 variable;
-    u32 value;
-    u8 operator;
-    u8 unknown2;
+    Condition condition;
     u32 unknown3;
     u8 unknown4;
     
     Case case;
+    
+    u8 end_command[8];
+
+    if(case_count.else_case == 1) {
+        Case else_case;
+    }
+};
+
+struct DoubleConditionNumberCommand {
+    u8 unknown1;
+    CaseCount case_count;
+    Condition condition1;
+    Condition condition2;
+    u32 unknown2;
+    u8 unknown3;
+
+    Case case1;
+    Case case2;
+    u8 end_command[8];
+
+    if(case_count.else_case == 1) {
+        Case else_case;
+    }
+};
+
+struct TripleConditionNumberCommand {
+    u8 unknown1;
+    CaseCount case_count;
+    Condition condition1;
+    Condition condition2;
+    Condition condition3;
+    u32 unknown2;
+    u8 unknown3;
+
+    Case case1;
+    Case case2;
+    Case case3;
+
     if(case_count.else_case == 1) {
         Case else_case;
     }
@@ -398,6 +457,8 @@ enum CommandSignature: u32 {
     SetVariablePlus         = 0x057C0000,
     SetVariablePlusOther    = 0x047C0000,
     ConditionNumber         = 0x056f0000,
+    DoubleConditionNumber   = 0x086f0000,
+    TripleConditionNumber   = 0x0b6f0000,
     Exit                    = 0x01000000,
 };
 
@@ -417,6 +478,8 @@ struct Command {
         (CommandSignature::SetVariablePlus): SetVariablePlusCommand command;
         (CommandSignature::SetVariablePlusOther): SetVariablePlusOtherCommand command;
         (CommandSignature::ConditionNumber): ConditionNumberCommand command;
+        (CommandSignature::DoubleConditionNumber): DoubleConditionNumberCommand command;
+        (CommandSignature::TripleConditionNumber): TripleConditionNumberCommand command;
         (CommandSignature::Exit): {
             ExitCommand command;
             break;
