@@ -35,9 +35,10 @@ struct Choice {
 };
 
 enum CaseType: u32 {
-    Choice = 0x02910100,
-    Extra = 0x02920100,
-    Cancel = 0x02a50100
+    Choice  = 0x02910100,
+    Extra   = 0x02920100,
+    Cancel  = 0x02a50100,
+    Else    = 0x02a40100,
 };
 
 struct Case {
@@ -398,11 +399,11 @@ struct ConditionNumberCommand {
     
     Case case;
     
-    u8 end_command[8];
-
     if(case_count.else_case == 1) {
         Case else_case;
     }
+    
+    u8 end_command[8];
 };
 
 struct DoubleConditionNumberCommand {
@@ -415,11 +416,12 @@ struct DoubleConditionNumberCommand {
 
     Case case1;
     Case case2;
-    u8 end_command[8];
 
     if(case_count.else_case == 1) {
         Case else_case;
     }
+    
+    u8 end_command[8];
 };
 
 struct TripleConditionNumberCommand {
@@ -438,6 +440,61 @@ struct TripleConditionNumberCommand {
     if(case_count.else_case == 1) {
         Case else_case;
     }
+    
+    u8 end_command[8];
+};
+
+enum StringCompareOperator: u8 {
+    Equals  = 0x00,
+    NotEquals = 0x01,
+    Includes = 0x02,
+    StartsWith = 0x03,
+};
+
+bitfield StringConditionOperator {
+    is_value_variable: 1;    
+    padding: 3;
+    StringCompareOperator operator: 4;
+};
+
+fn valueCount(u32 signature, u32 case_count) {
+    u32 val = signature;
+    val = val >> 24 & 0xff;
+    return val - 2 - case_count;
+};
+
+struct ConditionStringVariable {
+    u24 variable;
+    StringConditionOperator operator;
+};
+
+struct ConditionStringCondition {
+    u32 length;
+    char string[length];
+};
+
+struct ConditionStringCommand<auto total_count> {
+    u8 unknown1;
+    CaseCount case_count;
+    u16 unknown2;
+    
+    ConditionStringVariable variables[case_count.case_count];
+    
+    u32 values[valueCount(total_count, case_count.case_count)];
+    
+    u8 unknown3;
+    u8 condition_count;
+    
+    ConditionStringCondition conditions[condition_count];
+    u8 condition_end;
+    
+    Case cases[case_count.case_count];
+    
+    if(case_count.else_case == 1) {
+        Case else_case;
+    }
+    
+    u8 end_command[8];
 };
 
 struct ExitCommand {
@@ -445,21 +502,31 @@ struct ExitCommand {
 };
 
 enum CommandSignature: u32 {
-    ShowMessage             = 0x01650000,
-    ShowChoice              = 0x02660000,
-    SetVariable             = 0x05790000,
-    SetVariableRange        = 0x06790000,
-    DBManagement            = 0x06fa0000,
-    DBManagementString      = 0x05fa0000,
-    DBManagementCSV         = 0x06fb0000,
-    SetString               = 0x037a0000,
-    SetStringDynamic        = 0x047a0000,
-    SetVariablePlus         = 0x057C0000,
-    SetVariablePlusOther    = 0x047C0000,
-    ConditionNumber         = 0x056f0000,
-    DoubleConditionNumber   = 0x086f0000,
-    TripleConditionNumber   = 0x0b6f0000,
-    Exit                    = 0x01000000,
+    ShowMessage                 = 0x01650000,
+    ShowChoice                  = 0x02660000,
+    SetVariable                 = 0x05790000,
+    SetVariableRange            = 0x06790000,
+    DBManagement                = 0x06fa0000,
+    DBManagementString          = 0x05fa0000,
+    DBManagementCSV             = 0x06fb0000,
+    SetString                   = 0x037a0000,
+    SetStringDynamic            = 0x047a0000,
+    SetVariablePlus             = 0x057C0000,
+    SetVariablePlusOther        = 0x047C0000,
+    ConditionNumber             = 0x056f0000,
+    DoubleConditionNumber       = 0x086f0000,
+    TripleConditionNumber       = 0x0b6f0000,
+    
+    ConditionString1            = 0x03700000,
+    ConditionString2            = 0x04700000,
+    ConditionString3            = 0x05700000,
+    ConditionString4            = 0x06700000,
+    ConditionString5            = 0x07700000,
+    ConditionString6            = 0x08700000,
+    ConditionString7            = 0x09700000,
+    ConditionString8            = 0x0a700000,
+    
+    Exit                        = 0x01000000,
 };
 
 struct Command {
@@ -468,18 +535,32 @@ struct Command {
     match (signature) {
         (CommandSignature::ShowMessage): ShowMessageCommand command;
         (CommandSignature::ShowChoice): ShowChoiceCommand command;
+        
         (CommandSignature::SetVariable): SetVariableCommand command;
         (CommandSignature::SetVariableRange): SetVariableRangeCommand command;
+        
         (CommandSignature::DBManagement): DBManagementCommand command;
         (CommandSignature::DBManagementString): DBManagementStringCommand command;
         (CommandSignature::DBManagementCSV): DBManagementCSVCommand command;
+
         (CommandSignature::SetString): SetStringCommand command;
         (CommandSignature::SetStringDynamic): SetStringDynamicCommand command;
+
         (CommandSignature::SetVariablePlus): SetVariablePlusCommand command;
         (CommandSignature::SetVariablePlusOther): SetVariablePlusOtherCommand command;
+
         (CommandSignature::ConditionNumber): ConditionNumberCommand command;
         (CommandSignature::DoubleConditionNumber): DoubleConditionNumberCommand command;
         (CommandSignature::TripleConditionNumber): TripleConditionNumberCommand command;
+        
+        (CommandSignature::ConditionString1 | CommandSignature::ConditionString2 |
+         CommandSignature::ConditionString3 | CommandSignature::ConditionString4 |
+         CommandSignature::ConditionString5 | CommandSignature::ConditionString6 |
+         CommandSignature::ConditionString7 | CommandSignature::ConditionString8): {
+            u32 total_count = signature;
+            ConditionStringCommand<total_count> command;
+        }
+        
         (CommandSignature::Exit): {
             ExitCommand command;
             break;

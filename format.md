@@ -307,6 +307,7 @@
 | 4 bytes                 | command_code | `05 6F 00 00`, `08 6F 00 00` or `0B 6F 00 00` |
 | 1 byte                  | ???          |                                               |
 | 1 byte                  | case_count   | uint8 bitmap                                  |
+| 1 byte                  | padding      | `00`                                          |
 | 12 bytes * `case_count` | conditions   | [Condition; case_count]                       |
 | 4 bytes                 | ???          |                                               |
 | 1 byte                  | ???          |                                               |
@@ -324,6 +325,34 @@
 | 1 byte  | operator | uint8 bitmap         |
 | 1 byte  | ???      |                      |
 
+## Condition string Command format
+| Length                                            | Content         | Value                                                                                                                    |
+|---------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
+| 4 bytes                                           | command_code    | `03 70 00 00`, `04 70 00 00`, `05 70 00 00`, `06 70 00 00`, `07 70 00 00`, `08 70 00 00`. `09 70 00 00` or `0A 70 00 00` |
+| 1 byte                                            | ???             |                                                                                                                          |
+| 1 byte                                            | case_count      | uint8 bitmap                                                                                                             |
+| 3 byte                                            | padding         | `00 00 00`                                                                                                               |
+| 5 bytes * `case_count`                            | variables       | [ConditionStringVariable; case_count]                                                                                    |
+| 4 bytes * `(command_code >> 24) - 2 - case_count` | values          | [u32; `(command_code >> 24) - 2 - case_count`]                                                                           |
+| 1 byte                                            | ???             |                                                                                                                          |
+| 1 byte                                            | condition_count | uint8                                                                                                                    |
+| \<variable>                                       | conditions      | [ConditionStringCondition; condition_count]                                                                              |
+| \<variable>                                       | cases           | [Case; case_count]                                                                                                       |
+| \<variable>                                       | else_case       | Case? (only if flag is set in case_count)                                                                                |
+| 4 bytes                                           | ???             | `01 F3 00 00`                                                                                                            |
+| 4 bytes                                           | ???             |                                                                                                                          |
+
+### Condition string Variable format
+| Length  | Content  | Value                |
+|---------|----------|----------------------|
+| 4 bytes | variable | little-endian uint32 |
+| 1 byte  | operator | uint8 bitmap         |
+
+### Condition string Condition format
+| Length         | Content | Value                |
+|----------------|---------|----------------------|
+| 4 bytes        | length  | little-endian uint32 |
+| `length` bytes | string  | [u8; length]         |
 
 ## Exit Command format
 | Length  | Content      | Value         |
