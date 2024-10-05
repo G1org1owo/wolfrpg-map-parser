@@ -398,6 +398,9 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | \<variable> | key_code       | little-endian uint32, only if `input_type` is `00` and `inputs` is `00` |
 | 3 bytes     | Command end    | `00 00 00`                                                              |
 
+## Picture Command format
+Quite complex, check `extra/wolf/picture.hexpat`
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

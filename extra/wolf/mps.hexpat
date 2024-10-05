@@ -13,6 +13,7 @@ import wolf.set_variable_plus;
 import wolf.condition_number;
 import wolf.condition_string;
 import wolf.input_key;
+import wolf.picture;
 
 struct ExitCommand {
     u32 unknown1;
@@ -51,6 +52,16 @@ enum CommandSignature: u32 {
     InputToggle1                = 0x027E0000,
     InputToggle2                = 0x037E0000,
     
+    PictureShow1                = 0x0C960000,
+    PictureShow2                = 0x1A960000,
+    PictureShow3                = 0x13960000,
+    PictureShow4                = 0x14960000,
+    PictureShow5                = 0x0E960000,
+    PictureErase1               = 0x04960000,
+    PictureErase2               = 0x07960000,
+    PictureErase3               = 0x05960000,
+    PictureErase4               = 0x03960000,
+
     Exit                        = 0x01000000,
 };
 
@@ -93,6 +104,13 @@ struct Command {
          
         (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command command;
         
+        (CommandSignature::PictureShow1): Picture::ShowCommand command;
+        (CommandSignature::PictureShow2 | CommandSignature::PictureShow3 |
+         CommandSignature::PictureShow4 | CommandSignature::PictureShow5): Picture::ShowCompleteCommand command;
+         
+        (CommandSignature::PictureErase1 | CommandSignature::PictureErase4): Picture::EraseCommand command;
+        (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand command;
+
         (CommandSignature::Exit): {
             ExitCommand command;
             break;
