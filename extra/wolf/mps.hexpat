@@ -12,6 +12,7 @@ import wolf.set_string;
 import wolf.set_variable_plus;
 import wolf.condition_number;
 import wolf.condition_string;
+import wolf.input_key;
 
 struct ExitCommand {
     u32 unknown1;
@@ -41,6 +42,14 @@ enum CommandSignature: u32 {
     ConditionString6            = 0x08700000,
     ConditionString7            = 0x09700000,
     ConditionString8            = 0x0a700000,
+    
+    InputKey1                   = 0x037B0000,
+    InputKey2                   = 0x047B0000,
+    AutomaticInput1             = 0x027D0000,
+    AutomaticInput2             = 0x037D0000,
+    AutomaticInput3             = 0x047D0000,
+    InputToggle1                = 0x027E0000,
+    InputToggle2                = 0x037E0000,
     
     Exit                        = 0x01000000,
 };
@@ -76,6 +85,13 @@ struct Command {
             u32 total_count = signature;
             ConditionString::Command<total_count> command;
         }
+        
+        (CommandSignature::InputKey1 | CommandSignature::InputKey2): InputKey::Command command;
+        
+        (CommandSignature::AutomaticInput1 | CommandSignature::AutomaticInput2 |
+         CommandSignature::AutomaticInput3): AutomaticInput::Command command;
+         
+        (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command command;
         
         (CommandSignature::Exit): {
             ExitCommand command;

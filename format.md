@@ -1,3 +1,6 @@
+This is a format specification I have put together while decoding the .mps map files, as such it is not complete nor
+very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used as reference for a more accurate analysis. 
+
 # Map format
 
 | Length                 | Content        | Value                                                                        |
@@ -353,6 +356,47 @@
 |----------------|---------|----------------------|
 | 4 bytes        | length  | little-endian uint32 |
 | `length` bytes | string  | [u8; length]         |
+
+## Input key Command format
+### Base variant
+| Length      | Content      | Value                                                      |
+|-------------|--------------|------------------------------------------------------------|
+| 4 bytes     | command_code | `03 7B 00 00` or `04 7B 00 00`                             |
+| 1 byte      | ???          |                                                            |
+| 4 bytes     | variable     | little-endian uint32                                       |
+| 1 byte      | options      | uint8 bitmap                                               |
+| 1 byte      | input_type   | uint8                                                      |
+| 2 bytes     | ???          |                                                            |
+| \<variable> | key_code     | little-endian uint32, only if `input_type` is `01` or `02` |
+| 2 bytes     | ???          |                                                            |
+| 1 byte      | Command end  | `00`                                                       |
+
+### Automatic input Variant
+| Length   | Content      | Value                                                                                    |
+|----------|--------------|------------------------------------------------------------------------------------------|
+| 4 bytes  | command_code | `02 7D 00 00`, `03 7D 00 00` or `04 7D 00 00`                                            |
+| 1 byte   | ???          |                                                                                          |
+| 1 byte   | options      | uint8 bitmap                                                                             |
+| 2 bytes  | ???          |                                                                                          |
+| 1 byte   | input_type   | uint8                                                                                    |
+| 4 bytes? | key_code     | little-endian uint32, only if `input_type` is `10`                                       |
+| 4 bytes? | position_x   | little-endian uint32, only if `input_type` is `20` and `options` matches mask `00001000` |
+| 4 bytes? | position_y   | little-endian uint32, only if `input_type` is `20` and `options` matches mask `00001000` |
+| 4 bytes? | wheel_delta  | little-endian uint32, only if `input_type` is `20` and `options` matches mask `00010000` |
+| 4 bytes? | ???          | only if `input_type` is `20` and `options` matches mask `00010000`                       |
+| 3 bytes  | Command end  | `00 00 00`                                                                               |
+
+### Input toggle Variant
+| Length      | Content        | Value                                                                   |
+|-------------|----------------|-------------------------------------------------------------------------|
+| 4 bytes     | command_code   | `02 7E 00 00`, `03 7E 00 00`                                            |
+| 1 byte      | ???            |                                                                         |
+| 1 byte      | inputs         | uint8 bitmap                                                            |
+| 1 byte      | enabled_inputs | uint8 bitmap                                                            |
+| 1 byte      | ???            |                                                                         |
+| 1 byte      | input_type     | uint8 bitmap                                                            |
+| \<variable> | key_code       | little-endian uint32, only if `input_type` is `00` and `inputs` is `00` |
+| 3 bytes     | Command end    | `00 00 00`                                                              |
 
 ## Exit Command format
 | Length  | Content      | Value         |
