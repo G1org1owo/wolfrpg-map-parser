@@ -401,6 +401,54 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 ## Picture Command format
 Quite complex, check `extra/wolf/picture.hexpat`
 
+## Effect Command format
+### Base Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `08 22 01 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | options      | uint32 bitmap        |
+| 4 bytes | duration     | little-endian uint32 |
+| 4 bytes | target       | little-endian uint32 |
+| 4 bytes | range        | little-endian uint32 |
+| 4 bytes | value1       | little-endian uint32 |
+| 4 bytes | value2       | little-endian uint32 |
+| 4 bytes | value3       | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Map shake Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `03 18 01 00`        |
+| 1 byte  | ???          |                      |
+| 1 byte  | options      | uint8 bitmap         |
+| 1 byte  | shake_type   | uint8 bitmap         |
+| 2 bytes | ???          |                      |
+| 4 bytes | duration     | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Scroll screen Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `04 19 01 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | options      | uint32 bitmap        |
+| 4 bytes | x            | little-endian uint32 |
+| 4 bytes | y            | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Change color Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `03 97 00 00`        |
+| 1 byte  | ???          |                      |
+| 1 byte  | red          | uint8                |
+| 1 byte  | green        | uint8                |
+| 1 byte  | blue         | uint8                |
+| 1 byte  | flash        | bool                 |
+| 4 bytes | duration     | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

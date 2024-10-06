@@ -14,6 +14,7 @@ import wolf.condition_number;
 import wolf.condition_string;
 import wolf.input_key;
 import wolf.picture;
+import wolf.effect;
 
 struct ExitCommand {
     u32 unknown1;
@@ -61,6 +62,11 @@ enum CommandSignature: u32 {
     PictureErase2               = 0x07960000,
     PictureErase3               = 0x05960000,
     PictureErase4               = 0x03960000,
+    
+    EffectBase                  = 0x08220100,
+    EffectMapShake              = 0x03180100,
+    EffectScrollScreen          = 0x04190100,
+    EffectChangeColor           = 0x03970000,
 
     Exit                        = 0x01000000,
 };
@@ -110,6 +116,11 @@ struct Command {
          
         (CommandSignature::PictureErase1 | CommandSignature::PictureErase4): Picture::EraseCommand command;
         (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand command;
+
+        (CommandSignature::EffectBase): Effect::Command command;
+        (CommandSignature::EffectMapShake): EffectMapShake::Command command;
+        (CommandSignature::EffectScrollScreen): EffectScrollScreen::Command command;
+        (CommandSignature::EffectChangeColor): EffectChangeColor::Command command;
 
         (CommandSignature::Exit): {
             ExitCommand command;
