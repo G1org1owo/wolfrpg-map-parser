@@ -1,9 +1,5 @@
 #pragma magic [ 00 00 00 00 00 00 00 00 00 00 57 4F 4C 46 4D 00 ] @ 0x00
 
-using Command;
-
-import wolf.case;
-
 import wolf.show_message;
 import wolf.show_choice;
 import wolf.set_variable;
@@ -15,6 +11,7 @@ import wolf.condition_string;
 import wolf.input_key;
 import wolf.picture;
 import wolf.effect;
+import wolf.sound;
 
 struct ExitCommand {
     u32 unknown1;
@@ -67,6 +64,12 @@ enum CommandSignature: u32 {
     EffectMapShake              = 0x03180100,
     EffectScrollScreen          = 0x04190100,
     EffectChangeColor           = 0x03970000,
+    
+    SoundFilename1              = 0x088C0000,
+    SoundFilename2              = 0x078C0000,
+    SoundVariable               = 0x058C0000,
+    SoundVariableMin1           = 0x028C0000,
+    SoundVariableMin2           = 0x048C0000,
 
     Exit                        = 0x01000000,
 };
@@ -121,6 +124,10 @@ struct Command {
         (CommandSignature::EffectMapShake): EffectMapShake::Command command;
         (CommandSignature::EffectScrollScreen): EffectScrollScreen::Command command;
         (CommandSignature::EffectChangeColor): EffectChangeColor::Command command;
+
+        (CommandSignature::SoundFilename1 | CommandSignature::SoundFilename2): Sound::FilenameCommand command;
+        (CommandSignature::SoundVariable): Sound::VariableCommand command;
+        (CommandSignature::SoundVariableMin1 | CommandSignature::SoundVariableMin2): Sound::VariableMinCommand command;
 
         (CommandSignature::Exit): {
             ExitCommand command;

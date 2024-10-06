@@ -449,6 +449,9 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | 4 bytes | duration     | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
+## Sound Command
+Check `extra/wolf/sound.hexpat`
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
