@@ -452,6 +452,38 @@ Quite complex, check `extra/wolf/picture.hexpat`
 ## Sound Command
 Check `extra/wolf/sound.hexpat`
 
+## Save/Load Command format
+### Base Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `03 DC 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | Operation    | big-endian uint32    |
+| 4 bytes | save_number  | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Load variable Variant
+| Length  | Content           | Value                |
+|---------|-------------------|----------------------|
+| 4 bytes | command_code      | `05 DD 00 00`        |
+| 1 byte  | ???               |                      |
+| 4 bytes | target_variable   | little-endian uint32 |
+| 4 bytes | save_number       | little-endian uint32 |
+| 4 bytes | source_variable   | little-endian uint32 |
+| 4 bytes | target_is_pointer | little-endian uint32 |
+| 3 bytes | Command end       | `00 00 00`           |
+
+### Load variable Variant
+| Length  | Content           | Value                |
+|---------|-------------------|----------------------|
+| 4 bytes | command_code      | `05 DE 00 00`        |
+| 1 byte  | ???               |                      |
+| 4 bytes | source_variable   | little-endian uint32 |
+| 4 bytes | save_number       | little-endian uint32 |
+| 4 bytes | target_variable   | little-endian uint32 |
+| 4 bytes | source_is_pointer | little-endian uint32 |
+| 3 bytes | Command end       | `00 00 00`           |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

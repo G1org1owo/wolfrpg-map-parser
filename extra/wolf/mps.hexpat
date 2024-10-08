@@ -12,6 +12,8 @@ import wolf.input_key;
 import wolf.picture;
 import wolf.effect;
 import wolf.sound;
+import wolf.save_load;
+
 
 struct ExitCommand {
     u32 unknown1;
@@ -70,6 +72,10 @@ enum CommandSignature: u32 {
     SoundVariable               = 0x058C0000,
     SoundVariableMin1           = 0x028C0000,
     SoundVariableMin2           = 0x048C0000,
+    
+    SaveLoad                    = 0x03DC0000,
+    LoadVariable                = 0x05DD0000,
+    SaveVariable                = 0x05DE0000,
 
     Exit                        = 0x01000000,
 };
@@ -128,6 +134,10 @@ struct Command {
         (CommandSignature::SoundFilename1 | CommandSignature::SoundFilename2): Sound::FilenameCommand command;
         (CommandSignature::SoundVariable): Sound::VariableCommand command;
         (CommandSignature::SoundVariableMin1 | CommandSignature::SoundVariableMin2): Sound::VariableMinCommand command;
+
+        (CommandSignature::SaveLoad): SaveLoad::Command command;
+        (CommandSignature::LoadVariable): SaveLoad::LoadVariableCommand command;
+        (CommandSignature::SaveVariable): SaveLoad::SaveVariableCommand command;
 
         (CommandSignature::Exit): {
             ExitCommand command;
