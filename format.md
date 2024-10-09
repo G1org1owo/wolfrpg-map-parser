@@ -484,6 +484,42 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes | source_is_pointer | little-endian uint32 |
 | 3 bytes | Command end       | `00 00 00`           |
 
+## Party graphics Command format
+### Base Variant
+| Length                   | Content            | Value                                                  |
+|--------------------------|--------------------|--------------------------------------------------------|
+| 4 bytes                  | command_code       | `03 0E 01 00`                                          |  
+| 1 byte                   | ???                |                                                        |
+| 4 bytes                  | options            | uint32 bitmap                                          |
+| 4 bytes                  | member             | little-endian uint32                                   |
+| 1 byte                   | end_options        | `00`                                                   |
+| 1 byte                   | is_graphics_string | bool                                                   |
+| 4 bytes?                 | filename_length    | little-endian uint32, only if is_graphics_string is 1  |
+| `filename_length` bytes? | filename           | NUL-terminated string, only if is_graphics_string is 1 |
+| 1 byte                   | Command end        | `00`                                                   |
+
+### Variable Variant
+| Length  | Content            | Value                |
+|---------|--------------------|----------------------|
+| 4 bytes | command_code       | `04 0E 01 00`        |  
+| 1 byte  | ???                |                      |
+| 4 bytes | options            | uint32 bitmap        |
+| 4 bytes | member             | little-endian uint32 |
+| 4 bytes | graphics           | little-endian uint32 |
+| 3 bytes | Command end        | `00 00 00`           |
+
+### No member Variant
+| Length                   | Content            | Value                                                  |
+|--------------------------|--------------------|--------------------------------------------------------|
+| 4 bytes                  | command_code       | `03 0E 01 00`                                          |  
+| 1 byte                   | ???                |                                                        |
+| 4 bytes                  | options            | uint32 bitmap                                          |
+| 1 byte                   | end_options        | `00`                                                   |
+| 1 byte                   | is_graphics_string | bool                                                   |
+| 4 bytes?                 | filename_length    | little-endian uint32, only if is_graphics_string is 1  |
+| `filename_length` bytes? | filename           | NUL-terminated string, only if is_graphics_string is 1 |
+| 1 byte                   | Command end        | `00`                                                   |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

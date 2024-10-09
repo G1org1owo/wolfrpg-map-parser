@@ -13,6 +13,7 @@ import wolf.picture;
 import wolf.effect;
 import wolf.sound;
 import wolf.save_load;
+import wolf.party_graphics;
 
 
 struct ExitCommand {
@@ -76,6 +77,10 @@ enum CommandSignature: u32 {
     SaveLoad                    = 0x03DC0000,
     LoadVariable                = 0x05DD0000,
     SaveVariable                = 0x05DE0000,
+    
+    PartyGraphics1              = 0x030E0100,
+    PartyGraphics2              = 0x040E0100,
+    PartyGraphics3              = 0x020E0100,
 
     Exit                        = 0x01000000,
 };
@@ -138,6 +143,9 @@ struct Command {
         (CommandSignature::SaveLoad): SaveLoad::Command command;
         (CommandSignature::LoadVariable): SaveLoad::LoadVariableCommand command;
         (CommandSignature::SaveVariable): SaveLoad::SaveVariableCommand command;
+
+        (CommandSignature::PartyGraphics1 | CommandSignature::PartyGraphics2 |
+         CommandSignature::PartyGraphics3): PartyGraphics::Command command;
 
         (CommandSignature::Exit): {
             ExitCommand command;
