@@ -47,7 +47,7 @@ namespace Sound {
             char sound[sound_length];
         }
 
-        u8 end_command;`
+        u8 end_command;
     };
 
     enum VariableType: u8 {
