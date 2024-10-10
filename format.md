@@ -520,6 +520,37 @@ Check `extra/wolf/sound.hexpat`
 | `filename_length` bytes? | filename           | NUL-terminated string, only if is_graphics_string is 1 |
 | 1 byte                   | Command end        | `00`                                                   |
 
+## Chip management Command format
+### Map chip settings Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `03 F0 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | chip         | little-endian uint32 |
+| 4 bytes | options      | uint32 bitmap        |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Switch chipset Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `02 F1 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | chipset      | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Map chip settings Variant
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `07 F2 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | layer        | little-endian uint32 |
+| 4 bytes | position_x   | little-endian uint32 |
+| 4 bytes | position_y   | little-endian uint32 |
+| 4 bytes | width        | little-endian uint32 |
+| 4 bytes | height       | little-endian uint32 |
+| 4 bytes | chip         | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

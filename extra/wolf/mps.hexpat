@@ -14,6 +14,7 @@ import wolf.effect;
 import wolf.sound;
 import wolf.save_load;
 import wolf.party_graphics;
+import wolf.chip_management;
 
 
 struct ExitCommand {
@@ -81,6 +82,10 @@ enum CommandSignature: u32 {
     PartyGraphics1              = 0x030E0100,
     PartyGraphics2              = 0x040E0100,
     PartyGraphics3              = 0x020E0100,
+    
+    MapChipSettings             = 0x03F00000,
+    MapSwitchChipset            = 0x02F10000,
+    MapOverwriteChips           = 0x07F20000,
 
     Exit                        = 0x01000000,
 };
@@ -146,6 +151,10 @@ struct Command {
 
         (CommandSignature::PartyGraphics1 | CommandSignature::PartyGraphics2 |
          CommandSignature::PartyGraphics3): PartyGraphics::Command command;
+         
+        (CommandSignature::MapChipSettings): MapChip::SettingsCommand command;
+        (CommandSignature::MapSwitchChipset): MapChip::SwitchChipsetCommand command;
+        (CommandSignature::MapOverwriteChips): MapChip::OverwriteChipsCommand command;
 
         (CommandSignature::Exit): {
             ExitCommand command;
