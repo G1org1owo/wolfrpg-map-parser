@@ -551,6 +551,19 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes | chip         | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
+## Transfer Command format
+| Length   | Content         | Value                                                       |
+|----------|-----------------|-------------------------------------------------------------|
+| 4 bytes  | command_code    | `06 82 00 00`                                               |
+| 1 byte   | ???             |                                                             |
+| 4 bytes  | target          | little-endian uint32                                        |
+| 4 bytes? | db_variable     | little-endian uint32, only if `target` is `EF D8 FF FF`     |
+| 4 bytes  | destination_x   | little-endian uint32                                        |
+| 4 bytes  | destination_y   | little-endian uint32                                        |
+| 4 bytes  | destination_map | little-endian uint32, only if `target` is not `EF D8 FF FF` |
+| 4 bytes  | options         | uint32 bitmap                                               |
+|          |                 |                                                             |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
