@@ -16,7 +16,7 @@ import wolf.save_load;
 import wolf.party_graphics;
 import wolf.chip_management;
 import wolf.transfer;
-
+import wolf.event_control;
 
 
 struct ExitCommand {
@@ -91,6 +91,35 @@ enum CommandSignature: u32 {
 
     Transfer                    = 0x06820000,
 
+    Loop                        = 0x01AA0000,
+    BreakLoop                   = 0x01AB0000,
+    GotoLoopStart               = 0x01B00000,
+
+    PrepareTransition           = 0x01A10000,
+    ExecuteTransition           = 0x01A20000,
+    SetTransition               = 0x03A00000,
+
+    MoveRoute                   = 0x02C90000,
+    WaitForMoveRoute            = 0x01CA0000,
+
+    MoveDuringEventsOn          = 0x01E60000,
+    MoveDuringEventsOff         = 0x01E70000,
+
+    GotoTitle                   = 0x01AE0000,
+    GameEnd                     = 0x01AF0000,
+
+    StopNonPictureUpdates       = 0x01B10000,
+    ResumeNonPictureUpdates     = 0x01B20000,
+
+    ForceExitEvent              = 0x01AC0000,
+
+    EraseEvent                  = 0x03AD0000,
+    Wait                        = 0x02B40000,
+    LoopCount                   = 0x02B30000,
+
+    LabelPoint                  = 0x01D40000,
+    LabelJump                   = 0x01D50000,
+
     Exit                        = 0x01000000,
 };
 
@@ -98,72 +127,100 @@ struct Command {
     be CommandSignature signature;
     
     match (signature) {
-        (CommandSignature::ShowMessage): ShowMessage::Command command;
-        (CommandSignature::ShowChoice): ShowChoice::Command command;
+        (CommandSignature::ShowMessage): ShowMessage::Command;
+        (CommandSignature::ShowChoice): ShowChoice::Command;
         
-        (CommandSignature::SetVariable): SetVariable::Command command;
-        (CommandSignature::SetVariableRange): SetVariable::RangeCommand command;
+        (CommandSignature::SetVariable): SetVariable::Command;
+        (CommandSignature::SetVariableRange): SetVariable::RangeCommand;
         
-        (CommandSignature::DBManagement): DBManagement::Command command;
-        (CommandSignature::DBManagementString): DBManagement::StringCommand command;
-        (CommandSignature::DBManagementCSV): DBManagement::CSVCommand command;
+        (CommandSignature::DBManagement): DBManagement::Command;
+        (CommandSignature::DBManagementString): DBManagement::StringCommand;
+        (CommandSignature::DBManagementCSV): DBManagement::CSVCommand;
 
-        (CommandSignature::SetString): SetString::Command command;
-        (CommandSignature::SetStringDynamic): SetString::DynamicCommand command;
+        (CommandSignature::SetString): SetString::Command;
+        (CommandSignature::SetStringDynamic): SetString::DynamicCommand;
 
-        (CommandSignature::SetVariablePlus): SetVariablePlus::Command command;
-        (CommandSignature::SetVariablePlusOther): SetVariablePlus::OtherCommand command;
+        (CommandSignature::SetVariablePlus): SetVariablePlus::Command;
+        (CommandSignature::SetVariablePlusOther): SetVariablePlus::OtherCommand;
 
-        (CommandSignature::ConditionNumber): ConditionNumber::Command command;
-        (CommandSignature::DoubleConditionNumber): ConditionNumber::DoubleCommand command;
-        (CommandSignature::TripleConditionNumber): ConditionNumber::TripleCommand command;
+        (CommandSignature::ConditionNumber): ConditionNumber::Command;
+        (CommandSignature::DoubleConditionNumber): ConditionNumber::DoubleCommand;
+        (CommandSignature::TripleConditionNumber): ConditionNumber::TripleCommand;
         
         (CommandSignature::ConditionString1 | CommandSignature::ConditionString2 |
          CommandSignature::ConditionString3 | CommandSignature::ConditionString4 |
          CommandSignature::ConditionString5 | CommandSignature::ConditionString6 |
          CommandSignature::ConditionString7 | CommandSignature::ConditionString8): {
             u32 total_count = signature;
-            ConditionString::Command<total_count> command;
+            ConditionString::Command<total_count>;
         }
         
-        (CommandSignature::InputKey1 | CommandSignature::InputKey2): InputKey::Command command;
+        (CommandSignature::InputKey1 | CommandSignature::InputKey2): InputKey::Command;
         
         (CommandSignature::AutomaticInput1 | CommandSignature::AutomaticInput2 |
-         CommandSignature::AutomaticInput3): AutomaticInput::Command command;
+         CommandSignature::AutomaticInput3): AutomaticInput::Command;
          
-        (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command command;
+        (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command;
         
-        (CommandSignature::PictureShow1): Picture::ShowCommand command;
+        (CommandSignature::PictureShow1): Picture::ShowCommand;
         (CommandSignature::PictureShow2 | CommandSignature::PictureShow3 |
-         CommandSignature::PictureShow4 | CommandSignature::PictureShow5): Picture::ShowCompleteCommand command;
+         CommandSignature::PictureShow4 | CommandSignature::PictureShow5): Picture::ShowCompleteCommand;
          
         (CommandSignature::PictureErase1 | CommandSignature::PictureErase4): Picture::EraseCommand command;
-        (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand command;
+        (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand;
 
-        (CommandSignature::EffectBase): Effect::Command command;
-        (CommandSignature::EffectMapShake): EffectMapShake::Command command;
-        (CommandSignature::EffectScrollScreen): EffectScrollScreen::Command command;
-        (CommandSignature::EffectChangeColor): EffectChangeColor::Command command;
+        (CommandSignature::EffectBase): Effect::Command;
+        (CommandSignature::EffectMapShake): EffectMapShake::Command;
+        (CommandSignature::EffectScrollScreen): EffectScrollScreen::Command;
+        (CommandSignature::EffectChangeColor): EffectChangeColor::Command;
 
-        (CommandSignature::SoundFilename1 | CommandSignature::SoundFilename2): Sound::FilenameCommand command;
-        (CommandSignature::SoundVariable): Sound::VariableCommand command;
-        (CommandSignature::SoundVariableMin1 | CommandSignature::SoundVariableMin2): Sound::VariableMinCommand command;
+        (CommandSignature::SoundFilename1 | CommandSignature::SoundFilename2): Sound::FilenameCommand;
+        (CommandSignature::SoundVariable): Sound::VariableCommand;
+        (CommandSignature::SoundVariableMin1 | CommandSignature::SoundVariableMin2): Sound::VariableMinCommand;
 
-        (CommandSignature::SaveLoad): SaveLoad::Command command;
-        (CommandSignature::LoadVariable): SaveLoad::LoadVariableCommand command;
-        (CommandSignature::SaveVariable): SaveLoad::SaveVariableCommand command;
+        (CommandSignature::SaveLoad): SaveLoad::Command;
+        (CommandSignature::LoadVariable): SaveLoad::LoadVariableCommand;
+        (CommandSignature::SaveVariable): SaveLoad::SaveVariableCommand;
 
         (CommandSignature::PartyGraphics1 | CommandSignature::PartyGraphics2 |
-         CommandSignature::PartyGraphics3): PartyGraphics::Command command;
+         CommandSignature::PartyGraphics3): PartyGraphics::Command;
 
-        (CommandSignature::MapChipSettings): MapChip::SettingsCommand command;
-        (CommandSignature::MapSwitchChipset): MapChip::SwitchChipsetCommand command;
-        (CommandSignature::MapOverwriteChips): MapChip::OverwriteChipsCommand command;
+        (CommandSignature::MapChipSettings): MapChip::SettingsCommand;
+        (CommandSignature::MapSwitchChipset): MapChip::SwitchChipsetCommand;
+        (CommandSignature::MapOverwriteChips): MapChip::OverwriteChipsCommand;
 
-        (CommandSignature::Transfer): Transfer::Command command;
+        (CommandSignature::Transfer): Transfer::Command;
+
+        (CommandSignature::Loop): Loop::Command;
+        (CommandSignature::BreakLoop): Loop::BreakCommand;
+        (CommandSignature::GotoLoopStart): Loop::GotoStartCommand;
+
+        (CommandSignature::PrepareTransition): Transition::PrepareCommand;
+        (CommandSignature::ExecuteTransition): Transition::ExecuteCommand;
+        (CommandSignature::SetTransition): Transition::SetCommand;
+
+        (CommandSignature::MoveRoute): MoveRoute::Command;
+        (CommandSignature::WaitForMoveRoute): MoveRoute::WaitForCommand;
+
+        (CommandSignature::MoveDuringEventsOn): MoveDuringEvents::OnCommand;
+        (CommandSignature::MoveDuringEventsOff): MoveDuringEvents::OffCommand;
+
+        (CommandSignature::GotoTitle): Goto::TitleCommand;
+        (CommandSignature::GameEnd): Goto::GameEndCommand;
+
+        (CommandSignature::StopNonPictureUpdates): NonPictureUpdates::StopCommand;
+        (CommandSignature::ResumeNonPictureUpdates): NonPictureUpdates::ResumeCommand;
+
+        (CommandSignature::ForceExitEvent): Event::ForceExitCommand;
+
+        (CommandSignature::EraseEvent): Event::EraseCommand;
+        (CommandSignature::Wait): Event::WaitCommand;
+        (CommandSignature::LoopCount): Loop::CountCommand;
+
+        (CommandSignature::LabelPoint | CommandSignature::LabelJump): Label::Command;
 
         (CommandSignature::Exit): {
-            ExitCommand command;
+            ExitCommand;
             break;
         }
     }

@@ -564,6 +564,152 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes  | options         | uint32 bitmap                                               |
 |          |                 |                                                             |
 
+## Event control Commands
+### Loop Command format
+| Length      | Content      | Value                     |
+|-------------|--------------|---------------------------|
+| 4 bytes     | command_code | `01 AA 00 00`             |
+| 1 byte      | ???          |                           |
+| 3 bytes     | ???          |                           |
+| \<variable> | commands     | [Command]                 |
+| 8 bytes     | Command end  | `01 F2 01 00 00 00 00 00` |
+
+### Break loop Command Format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 AB 00 00` |
+| 4 bytes | ???          |               |
+
+### Go to loop start Command Format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 B0 00 00` |
+| 4 bytes | ???          |               |
+
+### Prepare transition Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 A1 00 00` |
+| 4 bytes | ???          |               |
+
+### Execute transition Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 A2 00 00` |
+| 4 bytes | ???          |               |
+
+### Set transition Command format
+| Length  | Content           | Value                |
+|---------|-------------------|----------------------|
+| 4 bytes | command_code      | `03 A0 00 00`        |
+| 1 byte  | ???               |                      |
+| 4 bytes | transition_number | little-endian uint32 |
+| 2 bytes | fade_frames       | little-endian uint16 |
+| 1 byte  | wait_until_done   | bool                 |
+| 4 bytes | Command end       | `00 00 00 00`        |
+
+### Move route Command format
+| Length      | Content      | Value                |
+|-------------|--------------|----------------------|
+| 4 bytes     | command_code | `02 C9 00 00`        |
+| 1 byte      | ???          |                      |
+| 4 bytes     | target       | little-endian uint32 |
+| 4 bytes     | ???          |                      |
+| 4 bytes     | ???          |                      |
+| 1 byte      | options      | uint8 bitmap         |
+| 4 bytes     | move_count   | little-endian uint32 |
+| \<variable> | moves        | [Move]               |
+
+### Move format
+Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more details
+
+### Wait for move route Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 CA 00 00` |
+| 4 bytes | ???          |               |
+
+### Move during events on Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 E6 00 00` |
+| 4 bytes | ???          |               |
+
+### Move during events off Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 E7 00 00` |
+| 4 bytes | ???          |               |
+
+### Go to title Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 AE 00 00` |
+| 4 bytes | ???          |               |
+
+### Game end Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 AF 00 00` |
+| 4 bytes | ???          |               |
+
+### Stop non picture graphic updates Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 B1 00 00` |
+| 4 bytes | ???          |               |
+
+### Resume non picture graphic updates Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 B2 00 00` |
+| 4 bytes | ???          |               |
+
+### Force exit event Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 AC 00 00` |
+| 4 bytes | ???          |               |
+
+### Erase event Command format
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `03 AD 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | event        | little-endian uint32 |
+| 4 bytes | fade_frames  | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Wait event Command format
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `02 B4 00 00`        |
+| 1 byte  | ???          |                      |
+| 4 bytes | frame_count  | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
+
+### Loop count Command format
+| Length      | Content      | Value                     |
+|-------------|--------------|---------------------------|
+| 4 bytes     | command_code | `02 B3 00 00`             |
+| 1 byte      | ???          |                           |
+| 4 bytes     | loop_count   | little-endian uint32      |
+| 3 bytes     | ???          |                           |
+| \<variable> | commands     | [Command]                 |
+| 8 bytes     | Command end  | `01 F2 01 00 00 00 00 00` |
+
+### Label point Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 D4 00 00` |
+| 4 bytes | ???          |               |
+
+### Label jump Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 D5 00 00` |
+| 4 bytes | ???          |               |
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
