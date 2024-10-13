@@ -710,6 +710,9 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | 4 bytes | command_code | `01 D5 00 00` |
 | 4 bytes | ???          |               |
 
+## Common event Command format
+Check `extra/wolf/common_event.hexpat` for details
+
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|

@@ -17,6 +17,7 @@ import wolf.party_graphics;
 import wolf.chip_management;
 import wolf.transfer;
 import wolf.event_control;
+import wolf.common_event;
 
 
 struct ExitCommand {
@@ -119,6 +120,15 @@ enum CommandSignature: u32 {
 
     LabelPoint                  = 0x01D40000,
     LabelJump                   = 0x01D50000,
+    
+    CallEvent1                  = 0x06D20000,
+    CallEvent2                  = 0x05D20000,
+    CallEvent3                  = 0x07D20000,
+    CallEventByVariable         = 0x03D20000,
+    CallEventByName1            = 0x062C0100,
+    CallEventByName2            = 0x052C0100,
+    CallEventByName3            = 0x0B2C0100,
+    ReserveEvent                = 0x03D30000,
 
     Exit                        = 0x01000000,
 };
@@ -218,6 +228,13 @@ struct Command {
         (CommandSignature::LoopCount): Loop::CountCommand;
 
         (CommandSignature::LabelPoint | CommandSignature::LabelJump): Label::Command;
+        
+        (CommandSignature::CallEvent1 | CommandSignature::CallEvent2 |
+         CommandSignature::CallEvent3 | CommandSignature::CallEventByName1 |
+         CommandSignature::CallEventByName2 | CommandSignature::CallEventByName3): CommonEvent::CallEventCommand;
+         
+        (CommandSignature::CallEventByVariable): CommonEvent::CallEventByVariableCommand;
+        (CommandSignature::ReserveEvent): CommonEvent::ReserveEventCommand;
 
         (CommandSignature::Exit): {
             ExitCommand;
