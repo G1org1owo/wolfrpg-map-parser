@@ -74,7 +74,6 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | \<variable> | command_data | \<variable>          |
 
 ## Show message Command format
-
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 65 00 00`         |
@@ -84,6 +83,37 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
+
+## Comment Command format
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 bytes                | command_code   | `01 67 00 00`         |
+| 3 bytes                | ???            | little-endian uint32  |
+| 4 bytes                | message_length | little-endian uint32  |
+| `message_length` bytes | message_length | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
+
+## Debug text Command format
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 bytes                | command_code   | `01 6A 00 00`         |
+| 3 bytes                | ???            | little-endian uint32  |
+| 4 bytes                | message_length | little-endian uint32  |
+| `message_length` bytes | message_length | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
+
+## Force close message Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 69 00 00` |
+| 4 bytes | ???          |               |
+
+## Clear debug text Command format
+| Length  | Content      | Value         |
+|---------|--------------|---------------|
+| 4 bytes | command_code | `01 6B 00 00` |
+| 2 bytes | ???          |               |
+
 
 ## Show choice Command format
 | Length      | Content          | Value                                                                        |
@@ -562,7 +592,7 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes  | destination_y   | little-endian uint32                                        |
 | 4 bytes  | destination_map | little-endian uint32, only if `target` is not `EF D8 FF FF` |
 | 4 bytes  | options         | uint32 bitmap                                               |
-|          |                 |                                                             |
+| 3 bytes  | Command end     | `00 00 00`                                                  |
 
 ## Event control Commands
 ### Loop Command format
@@ -716,6 +746,6 @@ Check `extra/wolf/common_event.hexpat` for details
 ## Exit Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
-| 4 bytes | command_code | `01 65 00 00` |
+| 4 bytes | command_code | `01 00 00 00` |
 | 2 bytes | ???          | uint16        |
 | 2 bytes | ???          | uint16        |

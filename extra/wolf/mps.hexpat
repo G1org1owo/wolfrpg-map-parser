@@ -26,6 +26,11 @@ struct ExitCommand {
 
 enum CommandSignature: u32 {
     ShowMessage                 = 0x01650000,
+    Comment                     = 0x01670000,
+    ForceCloseMessage           = 0x01690000,
+    DebugText                   = 0x016A0000,
+    ClearDebugText              = 0x016B0000,
+    
     ShowChoice                  = 0x02660000,
     SetVariable                 = 0x05790000,
     SetVariableRange            = 0x06790000,
@@ -138,6 +143,11 @@ struct Command {
     
     match (signature) {
         (CommandSignature::ShowMessage): ShowMessage::Command;
+        (CommandSignature::Comment): ShowMessage::CommentCommand;
+        (CommandSignature::ForceCloseMessage): ShowMessage::ForceCloseMessageCommand;
+        (CommandSignature::DebugText): ShowMessage::DebugTextCommand;
+        (CommandSignature::ClearDebugText): ShowMessage::ClearDebugTextCommand;
+
         (CommandSignature::ShowChoice): ShowChoice::Command;
         
         (CommandSignature::SetVariable): SetVariable::Command;
