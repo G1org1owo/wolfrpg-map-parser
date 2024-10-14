@@ -62,7 +62,8 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte               | move_route          | uint8                    |
 | 1 byte               | options             | uint8 bitmask            |
 | 1 byte               | ???                 |                          |
-| 4 bytes              | ???                 |                          |
+| 4 bytes              | move_count          | little-endian uint32     |
+| \<variable>          | moves               | [Move; `move_count`]     |
 | 4 bytes              | command_count       | little-endian uint32     |
 | \<variable>          | commands            | [Command; command_count] |
 | 4 bytes              | ???                 |                          |

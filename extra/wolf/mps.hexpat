@@ -270,6 +270,13 @@ bitfield EventOptions {
     padding: 1;
 };
 
+enum MoveRoute: u8 {
+    NoMove      = 0x00,
+    Custom      = 0x01,
+    Random      = 0x02,
+    TowardsHero = 0x03,
+};
+
 struct Page {
     u8 page_signature[5];
     u32 icon_length;
@@ -294,10 +301,11 @@ struct Page {
     u8 animation_speed;
     u8 move_speed;
     u8 move_frequency;
-    u8 move_route;
+    MoveRoute move_route;
     EventOptions options;
     u8 unknown2;
-    u32 unknown3;
+    u32 move_count;
+    MoveRoute::Move moves[move_count];
     u32 command_count;
     Command commands[command_count];
     u32 unknown4;
