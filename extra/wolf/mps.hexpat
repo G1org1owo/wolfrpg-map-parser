@@ -1,13 +1,10 @@
 #pragma magic [ 00 00 00 00 00 00 00 00 00 00 57 4F 4C 46 4D 00 ] @ 0x00
 
 import wolf.show_message;
-import wolf.show_choice;
 import wolf.set_variable;
 import wolf.db_management;
 import wolf.set_string;
 import wolf.set_variable_plus;
-import wolf.condition_number;
-import wolf.condition_string;
 import wolf.input_key;
 import wolf.picture;
 import wolf.effect;
@@ -19,6 +16,7 @@ import wolf.transfer;
 import wolf.event_control;
 import wolf.common_event;
 
+import wolf.case_commands;
 
 struct ExitCommand {
     u32 unknown1;

@@ -1,5 +1,4 @@
-#ifndef CASE_HEXPAT
-#define CASE_HEXPAT
+#pragma once
 
 using Command;
 
@@ -20,5 +19,3 @@ namespace Case {
         Command commands[9999];
     };
 }
-
-#endif

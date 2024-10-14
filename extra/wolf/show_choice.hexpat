@@ -23,7 +23,7 @@ namespace ShowChoice {
 
     fn calculateCaseCount(u8 choice_count, ExtraCases extra_cases, SelectedChoices selected_choices) {
         return choice_count +
-            extraCasesCount(extra_cases) +
+            ShowChoice::extraCasesCount(extra_cases) +
             (selected_choices.cancel == 0? 1 : 0);
     };
 
@@ -42,7 +42,7 @@ namespace ShowChoice {
         u8 choice_count;
         Choice choices[choice_count];
         u8 choices_end;
-        Case::Case cases[calculateCaseCount(choice_count, extra_cases, selected_choices)];
+        Case::Case cases[ShowChoice::calculateCaseCount(choice_count, extra_cases, selected_choices)];
         u32 unknown4;
         u32 unknown5;
     };
