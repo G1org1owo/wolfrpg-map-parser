@@ -39,7 +39,10 @@ impl Map {
         ).to_vec();
         offset += (width * height * 4) as usize;
 
-        let events: Vec<Event> = Map::parse_events(&bytes[offset..], event_count);
+        let (bytes_read, events): (usize, Vec<Event>) = Map::parse_events(&bytes[offset..], event_count);
+        offset += bytes_read;
+
+        let map_end: u8 = bytes[offset];
         // TODO: throw error if last byte isn't map ending
 
         Self {
@@ -54,7 +57,7 @@ impl Map {
         }
     }
 
-    fn parse_events(bytes: &[u8], event_count: u32) -> Vec<Event> {
+    fn parse_events(bytes: &[u8], event_count: u32) -> (usize, Vec<Event>) {
         let mut offset: usize = 0;
         let mut events: Vec<Event> = Vec::new();
 
@@ -65,6 +68,6 @@ impl Map {
             events.push(event);
         }
 
-        events
+        (offset, events)
     }
 }
