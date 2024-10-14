@@ -20,17 +20,22 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 
 
 # Event format
+| Length               | Content         | Value                 |
+|----------------------|-----------------|-----------------------|
+| 5 bytes              | Event signature | `6F 39 30 00`         |
+| 4 bytes              | event_id        |                       |
+| 4 bytes              | title_length    | little-endian uint32  |
+| `title_length` bytes | title           | NUL-terminated string |
+| 4 bytes              | position_x      | little-endian uint32  |
+| 4 bytes              | position_y      | little-endian uint32  |
+| 4 bytes              | page_count      | little-endian uint32  |
+| 4 bytes              | ???             | little-endian uint32  |
+| \<variable>          | pages           | [Page; `page_count`]  |
+| 1 byte               | Event end       | `70`                  |
 
+## Page format
 | Length               | Content             | Value                    |
 |----------------------|---------------------|--------------------------|
-| 5 bytes              | Event signature     | `6F 39 30 00`            |
-| 4 bytes              | event_id            |                          |
-| 4 bytes              | title_length        | little-endian uint32     |
-| `title_length` bytes | title               | NUL-terminated string    |
-| 4 bytes              | position_x          | little-endian uint32     |
-| 4 bytes              | position_y          | little-endian uint32     |
-| 4 bytes              | page_count          | little-endian uint32     |
-| 4 bytes              | ???                 | little-endian uint32     |
 | 5 bytes              | Icon signature      | `79 FF FF FF FF`         |
 | 4 bytes              | icon_length         | little-endian uint32     |
 | `icon_length` bytes  | icon_name           | NUL-terminated string    |
@@ -65,7 +70,6 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte               | range_extension_x   | uint8                    |
 | 1 byte               | range_extension_y   | uint8                    |
 | 1 byte               | Page end            | `7A`                     |
-| 1 byte               | Event end           | `70`                     |
 
 # Command format
 | Length      | Content      | Value                |

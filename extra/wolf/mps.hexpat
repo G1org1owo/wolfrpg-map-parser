@@ -270,16 +270,8 @@ bitfield EventOptions {
     padding: 1;
 };
 
-struct Event {
-    u8 signature[5];
-    u32 id;
-    u32 title_length;
-    char title[title_length];
-    u32 position_x;
-    u32 position_y;
-    u32 page_count;
-    u32 unknown1;
-    u8 icon_signature[5];
+struct Page {
+    u8 page_signature[5];
     u32 icon_length;
     char icon_name[icon_length];
     u8 icon_row;
@@ -313,6 +305,18 @@ struct Event {
     u8 range_extension_x;
     u8 range_extension_y;
     u8 page_end;
+};
+
+struct Event {
+    u8 signature[5];
+    u32 id;
+    u32 title_length;
+    char title[title_length];
+    u32 position_x;
+    u32 position_y;
+    u32 page_count;
+    u32 unknown1;
+    Page pages[page_count];
     u8 event_end;
 };
 
