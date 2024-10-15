@@ -3,17 +3,29 @@ use serde::Serialize;
 use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
 use show_message_command::ShowMessageCommand;
+use crate::command::comment_command::CommentCommand;
+use crate::command::debug_text_command::DebugTextCommand;
 
 mod show_choice_command;
 mod show_message_command;
+mod comment_command;
+mod debug_text_command;
 
-const SHOW_MESSAGE_COMMAND: u32 = 0x01650000;
-const SHOW_CHOICE_COMMAND: u32 = 0x02660000;
-const EXIT_COMMAND: u32 = 0x01000000;
+const SHOW_MESSAGE_COMMAND: u32         = 0x01650000;
+const COMMENT_COMMAND: u32              = 0x01670000;
+const DEBUG_TEXT_COMMAND: u32           = 0x016A0000;
+const FORCE_CLOSE_MESSAGE_COMMAND: u32  = 0x01690000;
+const CLEAR_DEBUG_TEXT_COMMAND: u32     = 0x016B0000;
+const SHOW_CHOICE_COMMAND: u32          = 0x02660000;
+const EXIT_COMMAND: u32                 = 0x01000000;
 
 #[derive(Serialize)]
 pub enum Command {
     ShowMessage(ShowMessageCommand),
+    Comment(CommentCommand),
+    DebugText(DebugTextCommand),
+    ForceCloseMessage(),
+    ClearDebugText(),
     ShowChoice(ShowChoiceCommand),
     Exit(),
 }
@@ -33,6 +45,39 @@ impl Command {
 
                 Ok(Command::ShowMessage(command))
             },
+
+            COMMENT_COMMAND => {
+                offset += 5;
+                let (bytes_read, command): (usize, CommentCommand)
+                    = CommentCommand::parse(&bytes[offset..]);
+                offset += bytes_read;
+
+                Ok(Command::Comment(command))
+            },
+
+            DEBUG_TEXT_COMMAND => {
+                offset += 5;
+                let (bytes_read, command): (usize,DebugTextCommand)
+                    = DebugTextCommand::parse(&bytes[offset..]);
+                offset += bytes_read;
+
+                Ok(Command::DebugText(command))
+            }
+
+            FORCE_CLOSE_MESSAGE_COMMAND => {
+                offset += 5;
+                offset += 3;
+
+                Ok(Command::ForceCloseMessage())
+            }
+
+            CLEAR_DEBUG_TEXT_COMMAND => {
+                offset += 5;
+                offset += 3;
+
+                Ok(Command::ClearDebugText())
+            }
+
             SHOW_CHOICE_COMMAND => {
                 offset += 5;
                 let (bytes_read, commands_read, command) : (usize, u32, ShowChoiceCommand)
@@ -42,6 +87,7 @@ impl Command {
 
                 Ok(Command::ShowChoice(command))
             },
+
             EXIT_COMMAND => {
                 offset+=5;
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment
