@@ -2,12 +2,10 @@ mod map;
 mod event;
 mod command;
 mod byte_utils;
-mod show_message_command;
-mod show_choice_command;
 mod case;
 
 use std::{env, fs};
-use serde::{Serialize};
+use serde::Serialize;
 use serde_json;
 use crate::map::Map;
 

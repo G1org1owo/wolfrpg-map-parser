@@ -1,8 +1,11 @@
 use std::fmt::format;
 use serde::Serialize;
-use crate::byte_utils::{as_u32_be};
-use crate::show_choice_command::ShowChoiceCommand;
-use crate::show_message_command::ShowMessageCommand;
+use crate::byte_utils::as_u32_be;
+use show_choice_command::ShowChoiceCommand;
+use show_message_command::ShowMessageCommand;
+
+mod show_choice_command;
+mod show_message_command;
 
 const SHOW_MESSAGE_COMMAND: u32 = 0x01650000;
 const SHOW_CHOICE_COMMAND: u32 = 0x02660000;

@@ -1,7 +1,7 @@
 mod page;
 
 use serde::Serialize;
-use crate::byte_utils::{as_u32_le};
+use crate::byte_utils::{as_string, as_u32_le};
 use crate::event::page::Page;
 
 #[derive(Serialize)]
@@ -24,8 +24,7 @@ impl Event {
         let name_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
         offset+=4;
 
-        let name: String = String::from_utf8(bytes[offset..offset+name_length-1].to_vec())
-            .unwrap();
+        let name: String = as_string(bytes, offset, name_length);
         offset+=name_length;
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);

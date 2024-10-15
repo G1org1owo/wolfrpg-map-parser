@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::byte_utils::{as_u16_le, as_u32_le};
+use crate::byte_utils::{as_string, as_u16_le, as_u32_le};
 use crate::case::Case;
 
 #[derive(Serialize)]
@@ -81,7 +81,7 @@ impl ShowChoiceCommand {
 
     fn parse_choice(bytes: &[u8]) -> (usize, String) {
         let length: usize = as_u32_le(&bytes[..4]) as usize;
-        let choice: String = String::from_utf8(bytes[4.. length+4-1].to_vec()).unwrap();
+        let choice: String = as_string(bytes, 4, length);
 
         (length + 4, choice)
     }

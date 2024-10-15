@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::byte_utils::as_u32_le;
+use crate::byte_utils::{as_string, as_u32_le};
 use crate::command::Command;
 
 #[derive(Serialize)]
@@ -44,8 +44,7 @@ impl Page {
         let icon_length: usize = as_u32_le(&bytes[offset..offset+4]).try_into().unwrap();
         offset+=4;
 
-        let icon: String = String::from_utf8(bytes[offset..offset+icon_length-1].to_vec())
-            .unwrap();
+        let icon: String = as_string(bytes, offset, icon_length);
         offset+=icon_length;
 
         let icon_row: u8 = bytes[offset];

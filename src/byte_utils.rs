@@ -29,3 +29,8 @@ pub fn as_u32_array(bytes: &[u8]) -> &[u32] {
         data
     }
 }
+
+pub fn as_string(bytes: &[u8], offset: usize, string_length: usize) -> String {
+    String::from_utf8(bytes[offset..offset + string_length - 1].to_vec())
+        .unwrap()
+}
