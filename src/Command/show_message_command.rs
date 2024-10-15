@@ -8,7 +8,7 @@ pub struct ShowMessageCommand {
 
 impl ShowMessageCommand {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
-        let mut offset: usize = 3;
+        let mut offset: usize = 2;
 
         let message_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
         offset += 4;

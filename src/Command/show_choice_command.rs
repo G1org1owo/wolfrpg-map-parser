@@ -11,36 +11,32 @@ enum Cancel {
 
 #[derive(Serialize)]
 pub struct ShowChoiceCommand {
-    unknown1: u8,
     cancel_case: Cancel,
     selected_choices: u8, // only take lower half for actual choices
     extra_cases: u8, // bitmap
-    unknown2: u16,
-    unknown3: u8,
+    unknown1: u16,
+    unknown2: u8,
     choice_count: u8,
     choices: Vec<String>,
     cases: Vec<Case>,
-    unknown4: u32,
-    unknown5: u32,
 }
 
 impl ShowChoiceCommand {
     pub fn parse(bytes: &[u8]) -> (usize, u32, Self){
         let mut offset: usize = 0;
 
-        let unknown1: u8 = bytes[offset];
-        let selected_choices: u8 = bytes[offset+1];
-        let extra_cases: u8 = bytes[offset+2];
-        let unknown2: u16 = as_u16_le(&bytes[offset+3..offset+5]);
-        let unknown3: u8 = bytes[offset+5];
-        let choice_count: u8 = bytes[offset+6];
-        offset += 7;
+        let selected_choices: u8 = bytes[offset];
+        let extra_cases: u8 = bytes[offset+1];
+        let unknown1: u16 = as_u16_le(&bytes[offset+2..offset+4]);
+        let unknown2: u8 = bytes[offset+4];
+        let choice_count: u8 = bytes[offset+5];
+        offset += 6;
 
         let cancel_case: u8 = (selected_choices >> 4) & 0b00001111;
         let cancel_case: Cancel = match cancel_case {
             0 => Cancel::Separate,
             1 => Cancel::No,
-            _ => Cancel::Choice(cancel_case)
+            _ => Cancel::Choice(cancel_case - 2)
         };
 
         let mut choices: Vec<String> = vec![];
@@ -59,23 +55,19 @@ impl ShowChoiceCommand {
         );
         offset += bytes_read;
 
-        let unknown4: u32 = as_u32_le(&bytes[offset..offset+4]);
-        let unknown5: u32 = as_u32_le(&bytes[offset+4..offset+8]);
+        let end_command = &bytes[offset..offset+8];
         offset += 8;
         commands_read += 1; // This should be some sort of command end signature I guess
 
         (offset, commands_read, Self {
-            unknown1,
             cancel_case,
             selected_choices,
             extra_cases,
+            unknown1,
             unknown2,
-            unknown3,
             choice_count,
             choices,
             cases,
-            unknown4,
-            unknown5,
         })
     }
 

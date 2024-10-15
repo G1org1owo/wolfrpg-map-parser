@@ -5,8 +5,8 @@ import wolf.case;
 
 namespace ShowChoice {
     bitfield SelectedChoices {
-        cancel: 4;
         choice: 4;
+        cancel: 4;
     };
 
     bitfield ExtraCases {

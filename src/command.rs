@@ -25,7 +25,8 @@ impl Command {
 
         let command: Command = match as_u32_be(&bytes[offset..offset+4]) {
             SHOW_MESSAGE_COMMAND => { // Comment and Debug Text have similar codes
-                offset+=4;
+                offset += 5;
+
                 let (bytes_read, command) : (usize, ShowMessageCommand)
                     = ShowMessageCommand::parse(&bytes[offset..]);
                 offset += bytes_read;
@@ -33,7 +34,7 @@ impl Command {
                 Ok(Command::ShowMessage(command))
             },
             SHOW_CHOICE_COMMAND => {
-                offset+=4;
+                offset += 5;
                 let (bytes_read, commands_read, command) : (usize, u32, ShowChoiceCommand)
                     = ShowChoiceCommand::parse(&bytes[offset..]);
                 offset += bytes_read;
@@ -42,8 +43,8 @@ impl Command {
                 Ok(Command::ShowChoice(command))
             },
             EXIT_COMMAND => {
-                offset+=4;
-                offset+=4; // Not sure what the contents of the EXIT command are at the moment
+                offset+=5;
+                offset+=3; // Not sure what the contents of the EXIT command are at the moment
 
                 Ok(Command::Exit())
             }

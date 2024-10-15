@@ -76,13 +76,14 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length      | Content      | Value                |
 |-------------|--------------|----------------------|
 | 4 bytes     | command_code | little-endian uint32 |
+| 1 byte      | padding      | `00`                 |
 | \<variable> | command_data | \<variable>          |
 
 ## Show message Command format
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 65 00 00`         |
-| 1 byte                 | ???            | uint8                 |
+| 1 byte                 | padding        | `00`                  |
 | 1 byte                 | ???            | uint8                 |
 | 1 byte                 | ???            | uint8                 |
 | 4 bytes                | message_length | little-endian uint32  |
@@ -93,7 +94,8 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 67 00 00`         |
-| 3 bytes                | ???            | little-endian uint32  |
+| 1 byte                 | padding        | `00`                  |
+| 2 bytes                | ???            | little-endian uint32  |
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
@@ -102,7 +104,8 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 6A 00 00`         |
-| 3 bytes                | ???            | little-endian uint32  |
+| 1 byte                 | padding        | `00`                  |
+| 2 bytes                | ???            | little-endian uint32  |
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
@@ -111,20 +114,21 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 69 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ## Clear debug text Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 6B 00 00` |
-| 2 bytes | ???          |               |
-
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ## Show choice Command format
 | Length      | Content          | Value                                                                        |
 |-------------|------------------|------------------------------------------------------------------------------|
 | 4 bytes     | command_code     | `02 66 00 00`                                                                |
-| 1 byte      | ???              |                                                                              |
+| 1 byte      | padding          | `00`                                                                         |
 | 1 byte      | selected_choices | high 4 bits for default choice, low 4 bits for choice count                  |
 | 1 byte      | extra_cases      | uint8 bitmap                                                                 |
 | 2 bytes     | ???              |                                                                              |
@@ -133,8 +137,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | \<variable> | choices          | [Choice; choice_count]                                                       |
 | 1 byte      | Choices end      | `00`                                                                         |
 | \<variable> | Cases            | [Case; choice_count + extra_cases (+ 1 if selected_choices high bits are 0)] |
-| 4 bytes     | ???              | `01 F3 00 00`                                                                |
-| 4 bytes     | ???              |                                                                              |
+| 8 bytes     | Command end      | `01 F3 00 00 00 00 00 00`                                                    |
 
 ### Choice format
 | Length              | Content       | Value                 |
@@ -158,7 +161,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `05 79 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 4 bytes | left_side    | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
@@ -170,7 +173,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `05 79 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 4 bytes | left_side    | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
@@ -185,7 +188,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `06 FA 00 00`         |
-| 1 byte                 | ???            |                       |
+| 1 byte                 | padding        | `00`                  |
 | 4 bytes                | db_type        | little-endian uint32  |
 | 4 bytes                | data           | little-endian uint32  |
 | 4 bytes                | field          | little-endian uint32  |
@@ -209,7 +212,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `05 FA 00 00`         |
-| 1 byte                 | ???            |                       |
+| 1 byte                 | padding        | `00`                  |
 | 4 bytes                | db_type        | little-endian uint32  |
 | 4 bytes                | data           | little-endian uint32  |
 | 4 bytes                | field          | little-endian uint32  |
@@ -232,7 +235,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                  | Content         | Value                 |
 |-------------------------|-----------------|-----------------------|
 | 4 bytes                 | command_code    | `06 FB 00 00`         |
-| 1 byte                  | ???             |                       |
+| 1 byte                  | padding         | `00`                  |
 | 4 bytes                 | db_type         | little-endian uint32  |
 | 4 bytes                 | data            | little-endian uint32  |
 | 4 bytes                 | field           | little-endian uint32  |
@@ -257,7 +260,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content        | Value                |
 |---------|----------------|----------------------|
 | 4 bytes | command_code   | `03 7A 00 00`        |
-| 1 byte  | ???            |                      |
+| 1 byte  | padding        | `00`                 |
 | 4 bytes | variable       | little-endian uint32 |
 | 1 byte  | options        | uint8 bitmap         |
 | 1 byte  | operation      | uint8 bitmap         |
@@ -273,7 +276,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content             | Value                |
 |---------|---------------------|----------------------|
 | 4 bytes | command_code        | `04 7A 00 00`        |
-| 1 byte  | ???                 |                      |
+| 1 byte  | padding             | `00`                 |
 | 4 bytes | variable            | little-endian uint32 |
 | 1 byte  | options             | uint8 bitmap         |
 | 1 byte  | operation           | uint8 bitmap         |
@@ -287,7 +290,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `05 7C 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
@@ -301,7 +304,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `05 7C 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
@@ -316,7 +319,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content        | Value                |
 |---------|----------------|----------------------|
 | 4 bytes | command_code   | `05 7C 00 00`        |
-| 1 byte  | ???            |                      |
+| 1 byte  | padding        | `00`                 |
 | 4 bytes | variable       | little-endian uint32 |
 | 1 byte  | options        | uint8 bitmap         |
 | 1 byte  | assignment     | uint8 bitmap         |
@@ -330,7 +333,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `04 7C 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
@@ -343,7 +346,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                  | Content      | Value                                         |
 |-------------------------|--------------|-----------------------------------------------|
 | 4 bytes                 | command_code | `05 6F 00 00`, `08 6F 00 00` or `0B 6F 00 00` |
-| 1 byte                  | ???          |                                               |
+| 1 byte                  | padding      | `00`                                          |
 | 1 byte                  | case_count   | uint8 bitmap                                  |
 | 1 byte                  | padding      | `00`                                          |
 | 12 bytes * `case_count` | conditions   | [Condition; case_count]                       |
@@ -367,7 +370,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length                                            | Content         | Value                                                                                                                    |
 |---------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
 | 4 bytes                                           | command_code    | `03 70 00 00`, `04 70 00 00`, `05 70 00 00`, `06 70 00 00`, `07 70 00 00`, `08 70 00 00`. `09 70 00 00` or `0A 70 00 00` |
-| 1 byte                                            | ???             |                                                                                                                          |
+| 1 byte                                            | padding         | `00`                                                                                                                     |
 | 1 byte                                            | case_count      | uint8 bitmap                                                                                                             |
 | 3 byte                                            | padding         | `00 00 00`                                                                                                               |
 | 5 bytes * `case_count`                            | variables       | [ConditionStringVariable; case_count]                                                                                    |
@@ -397,7 +400,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length      | Content      | Value                                                      |
 |-------------|--------------|------------------------------------------------------------|
 | 4 bytes     | command_code | `03 7B 00 00` or `04 7B 00 00`                             |
-| 1 byte      | ???          |                                                            |
+| 1 byte      | padding      | `00`                                                       |
 | 4 bytes     | variable     | little-endian uint32                                       |
 | 1 byte      | options      | uint8 bitmap                                               |
 | 1 byte      | input_type   | uint8                                                      |
@@ -410,7 +413,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length   | Content      | Value                                                                                    |
 |----------|--------------|------------------------------------------------------------------------------------------|
 | 4 bytes  | command_code | `02 7D 00 00`, `03 7D 00 00` or `04 7D 00 00`                                            |
-| 1 byte   | ???          |                                                                                          |
+| 1 byte   | padding      | `00`                                                                                     |
 | 1 byte   | options      | uint8 bitmap                                                                             |
 | 2 bytes  | ???          |                                                                                          |
 | 1 byte   | input_type   | uint8                                                                                    |
@@ -425,7 +428,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length      | Content        | Value                                                                   |
 |-------------|----------------|-------------------------------------------------------------------------|
 | 4 bytes     | command_code   | `02 7E 00 00`, `03 7E 00 00`                                            |
-| 1 byte      | ???            |                                                                         |
+| 1 byte      | padding        | `00`                                                                    |
 | 1 byte      | inputs         | uint8 bitmap                                                            |
 | 1 byte      | enabled_inputs | uint8 bitmap                                                            |
 | 1 byte      | ???            |                                                                         |
@@ -441,7 +444,7 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `08 22 01 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | options      | uint32 bitmap        |
 | 4 bytes | duration     | little-endian uint32 |
 | 4 bytes | target       | little-endian uint32 |
@@ -455,7 +458,7 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 18 01 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | shake_type   | uint8 bitmap         |
 | 2 bytes | ???          |                      |
@@ -466,7 +469,7 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `04 19 01 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | options      | uint32 bitmap        |
 | 4 bytes | x            | little-endian uint32 |
 | 4 bytes | y            | little-endian uint32 |
@@ -476,7 +479,7 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 97 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 1 byte  | red          | uint8                |
 | 1 byte  | green        | uint8                |
 | 1 byte  | blue         | uint8                |
@@ -492,7 +495,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 DC 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | Operation    | big-endian uint32    |
 | 4 bytes | save_number  | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
@@ -501,7 +504,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content           | Value                |
 |---------|-------------------|----------------------|
 | 4 bytes | command_code      | `05 DD 00 00`        |
-| 1 byte  | ???               |                      |
+| 1 byte  | padding           | `00`                 |
 | 4 bytes | target_variable   | little-endian uint32 |
 | 4 bytes | save_number       | little-endian uint32 |
 | 4 bytes | source_variable   | little-endian uint32 |
@@ -512,7 +515,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content           | Value                |
 |---------|-------------------|----------------------|
 | 4 bytes | command_code      | `05 DE 00 00`        |
-| 1 byte  | ???               |                      |
+| 1 byte  | padding           | `00`                 |
 | 4 bytes | source_variable   | little-endian uint32 |
 | 4 bytes | save_number       | little-endian uint32 |
 | 4 bytes | target_variable   | little-endian uint32 |
@@ -524,7 +527,7 @@ Check `extra/wolf/sound.hexpat`
 | Length                   | Content            | Value                                                  |
 |--------------------------|--------------------|--------------------------------------------------------|
 | 4 bytes                  | command_code       | `03 0E 01 00`                                          |  
-| 1 byte                   | ???                |                                                        |
+| 1 byte                   | padding            | `00`                                                   |
 | 4 bytes                  | options            | uint32 bitmap                                          |
 | 4 bytes                  | member             | little-endian uint32                                   |
 | 1 byte                   | end_options        | `00`                                                   |
@@ -534,20 +537,20 @@ Check `extra/wolf/sound.hexpat`
 | 1 byte                   | Command end        | `00`                                                   |
 
 ### Variable Variant
-| Length  | Content            | Value                |
-|---------|--------------------|----------------------|
-| 4 bytes | command_code       | `04 0E 01 00`        |  
-| 1 byte  | ???                |                      |
-| 4 bytes | options            | uint32 bitmap        |
-| 4 bytes | member             | little-endian uint32 |
-| 4 bytes | graphics           | little-endian uint32 |
-| 3 bytes | Command end        | `00 00 00`           |
+| Length  | Content      | Value                |
+|---------|--------------|----------------------|
+| 4 bytes | command_code | `04 0E 01 00`        |  
+| 1 byte  | padding      | `00`                 |
+| 4 bytes | options      | uint32 bitmap        |
+| 4 bytes | member       | little-endian uint32 |
+| 4 bytes | graphics     | little-endian uint32 |
+| 3 bytes | Command end  | `00 00 00`           |
 
 ### No member Variant
 | Length                   | Content            | Value                                                  |
 |--------------------------|--------------------|--------------------------------------------------------|
 | 4 bytes                  | command_code       | `03 0E 01 00`                                          |  
-| 1 byte                   | ???                |                                                        |
+| 1 byte                   | padding            | `00`                                                   |
 | 4 bytes                  | options            | uint32 bitmap                                          |
 | 1 byte                   | end_options        | `00`                                                   |
 | 1 byte                   | is_graphics_string | bool                                                   |
@@ -560,7 +563,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 F0 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | chip         | little-endian uint32 |
 | 4 bytes | options      | uint32 bitmap        |
 | 3 bytes | Command end  | `00 00 00`           |
@@ -569,7 +572,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `02 F1 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | chipset      | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
@@ -577,7 +580,7 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `07 F2 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | layer        | little-endian uint32 |
 | 4 bytes | position_x   | little-endian uint32 |
 | 4 bytes | position_y   | little-endian uint32 |
@@ -590,7 +593,7 @@ Check `extra/wolf/sound.hexpat`
 | Length   | Content         | Value                                                       |
 |----------|-----------------|-------------------------------------------------------------|
 | 4 bytes  | command_code    | `06 82 00 00`                                               |
-| 1 byte   | ???             |                                                             |
+| 1 byte   | padding         | `00`                                                        |
 | 4 bytes  | target          | little-endian uint32                                        |
 | 4 bytes? | db_variable     | little-endian uint32, only if `target` is `EF D8 FF FF`     |
 | 4 bytes  | destination_x   | little-endian uint32                                        |
@@ -604,7 +607,7 @@ Check `extra/wolf/sound.hexpat`
 | Length      | Content      | Value                     |
 |-------------|--------------|---------------------------|
 | 4 bytes     | command_code | `01 AA 00 00`             |
-| 1 byte      | ???          |                           |
+| 1 byte      | padding      | `00`                      |
 | 3 bytes     | ???          |                           |
 | \<variable> | commands     | [Command]                 |
 | 8 bytes     | Command end  | `01 F2 01 00 00 00 00 00` |
@@ -613,31 +616,35 @@ Check `extra/wolf/sound.hexpat`
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AB 00 00` |
-| 4 bytes | ???          |               |
+| 1 bytes | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Go to loop start Command Format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B0 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Prepare transition Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 A1 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Execute transition Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 A2 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Set transition Command format
 | Length  | Content           | Value                |
 |---------|-------------------|----------------------|
 | 4 bytes | command_code      | `03 A0 00 00`        |
-| 1 byte  | ???               |                      |
+| 1 byte  | padding           | `00`                 |
 | 4 bytes | transition_number | little-endian uint32 |
 | 2 bytes | fade_frames       | little-endian uint16 |
 | 1 byte  | wait_until_done   | bool                 |
@@ -647,7 +654,7 @@ Check `extra/wolf/sound.hexpat`
 | Length      | Content      | Value                |
 |-------------|--------------|----------------------|
 | 4 bytes     | command_code | `02 C9 00 00`        |
-| 1 byte      | ???          |                      |
+| 1 byte      | padding      | `00`                 |
 | 4 bytes     | target       | little-endian uint32 |
 | 4 bytes     | ???          |                      |
 | 4 bytes     | ???          |                      |
@@ -662,55 +669,63 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 CA 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Move during events on Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 E6 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Move during events off Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 E7 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Go to title Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AE 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Game end Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AF 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Stop non picture graphic updates Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B1 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Resume non picture graphic updates Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B2 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Force exit event Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AC 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Erase event Command format
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 AD 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | event        | little-endian uint32 |
 | 4 bytes | fade_frames  | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
@@ -719,7 +734,7 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `02 B4 00 00`        |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | frame_count  | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
@@ -727,7 +742,7 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | Length      | Content      | Value                     |
 |-------------|--------------|---------------------------|
 | 4 bytes     | command_code | `02 B3 00 00`             |
-| 1 byte      | ???          |                           |
+| 1 byte      | padding      | `00`                      |
 | 4 bytes     | loop_count   | little-endian uint32      |
 | 3 bytes     | ???          |                           |
 | \<variable> | commands     | [Command]                 |
@@ -737,13 +752,15 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 D4 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ### Label jump Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 D5 00 00` |
-| 4 bytes | ???          |               |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
 
 ## Common event Command format
 Check `extra/wolf/common_event.hexpat` for details
@@ -752,5 +769,5 @@ Check `extra/wolf/common_event.hexpat` for details
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 00 00 00` |
-| 2 bytes | ???          | uint16        |
-| 2 bytes | ???          | uint16        |
+| 1 byte  | padding      | `00`          |
+| 3 bytes | ???          |               |
