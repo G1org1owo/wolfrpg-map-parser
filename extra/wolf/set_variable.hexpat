@@ -3,7 +3,7 @@
 
 namespace SetVariable {
     bitfield Options {
-        bound_result: 1;
+        bind_result: 1;
         real_number_calculation: 1;
         left_not_variable: 1;
         right_not_variable: 1;

@@ -164,6 +164,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 4 bytes | left_side    | little-endian uint32 |
+| 4 bytes | right_side   | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | operators    | uint8 bitmap         |
 | 4 bytes | ???          |                      |
@@ -172,10 +173,11 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 ### Range variant
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
-| 4 bytes | command_code | `05 79 00 00`        |
+| 4 bytes | command_code | `06 79 00 00`        |
 | 1 byte  | padding      | `00`                 |
 | 4 bytes | variable     | little-endian uint32 |
 | 4 bytes | left_side    | little-endian uint32 |
+| 4 bytes | right_side   | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | operators    | uint8 bitmap         |
 | 2 bytes | range_start  | little-endian uint16 |
