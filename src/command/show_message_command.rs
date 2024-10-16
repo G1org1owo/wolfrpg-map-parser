@@ -15,7 +15,7 @@ impl ShowMessageCommand {
 
         let message: String = as_string(bytes, offset, message_length);
         offset += message_length;
-        offset += 1; // Command end byte, should be 0x00
+        offset += 1; // command end byte, should be 0x00
 
         (offset, Self {
             message

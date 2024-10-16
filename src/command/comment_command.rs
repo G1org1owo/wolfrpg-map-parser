@@ -15,7 +15,7 @@ impl CommentCommand {
         let comment: String = as_string(bytes, offset, comment_length);
         offset += comment_length;
 
-        offset += 1; // Command end signature
+        offset += 1; // command end signature
 
         (offset, Self {
             comment,

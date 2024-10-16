@@ -16,7 +16,7 @@ impl DebugTextCommand {
         let text: String = as_string(bytes, offset, text_length);
         offset += text_length;
 
-        offset += 1; // Command end signature
+        offset += 1; // command end signature
 
         (offset, DebugTextCommand {
             text
