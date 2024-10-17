@@ -24,9 +24,9 @@ const CLEAR_DEBUG_TEXT_COMMAND: u32     = 0x016B0000;
 const SHOW_CHOICE_COMMAND: u32          = 0x02660000;
 const SET_VARIABLE_COMMAND_BASE: u32    = 0x05790000;
 const SET_VARIABLE_COMMAND_RANGE: u32   = 0x06790000;
-const DB_MANAGEMENT_BASE: u32           = 0x06fa0000;
-const DB_MANAGEMENT_STRING: u32         = 0x05fa0000;
-const DB_MANAGEMENT_CSV: u32            = 0x06fb0000;
+const DB_MANAGEMENT_COMMAND_BASE: u32   = 0x06fa0000;
+const DB_MANAGEMENT_COMMAND_STRING: u32 = 0x05fa0000;
+const DB_MANAGEMENT_COMMAND_CSV: u32    = 0x06fb0000;
 const EXIT_COMMAND: u32                 = 0x01000000;
 
 #[derive(Serialize)]
@@ -114,9 +114,27 @@ impl Command {
                 Ok(Command::SetVariable(command))
             }
 
-            DB_MANAGEMENT_BASE => {
+            DB_MANAGEMENT_COMMAND_BASE => {
                 let (bytes_read, command): (usize, DBManagementCommand)
                     = DBManagementCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::DBManagement(command))
+            }
+
+            DB_MANAGEMENT_COMMAND_STRING => {
+                let (bytes_read, command): (usize, DBManagementCommand)
+                    = DBManagementCommand::parse_string(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::DBManagement(command))
+            }
+
+            DB_MANAGEMENT_COMMAND_CSV => {
+                let (bytes_read, command): (usize, DBManagementCommand)
+                    = DBManagementCommand::parse_csv(&bytes[offset..]);
 
                 offset += bytes_read;
 
