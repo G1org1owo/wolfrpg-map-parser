@@ -6,6 +6,7 @@ use show_message_command::ShowMessageCommand;
 use crate::command::comment_command::CommentCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
+use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 
 mod show_choice_command;
@@ -15,6 +16,7 @@ mod debug_text_command;
 mod set_variable_command;
 mod db_management_command;
 mod common;
+mod set_string_command;
 
 const SHOW_MESSAGE_COMMAND: u32         = 0x01650000;
 const COMMENT_COMMAND: u32              = 0x01670000;
@@ -27,6 +29,7 @@ const SET_VARIABLE_COMMAND_RANGE: u32   = 0x06790000;
 const DB_MANAGEMENT_COMMAND_BASE: u32   = 0x06fa0000;
 const DB_MANAGEMENT_COMMAND_STRING: u32 = 0x05fa0000;
 const DB_MANAGEMENT_COMMAND_CSV: u32    = 0x06fb0000;
+const SET_STRING_COMMAND_BASE: u32      = 0x037a0000;
 const EXIT_COMMAND: u32                 = 0x01000000;
 
 #[derive(Serialize)]
@@ -39,6 +42,7 @@ pub enum Command {
     ShowChoice(ShowChoiceCommand),
     SetVariable(SetVariableCommand),
     DBManagement(DBManagementCommand),
+    SetString(SetStringCommand),
     Exit(),
 }
 
@@ -139,6 +143,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::DBManagement(command))
+            }
+
+            SET_STRING_COMMAND_BASE => {
+                let (bytes_read, command): (usize, SetStringCommand)
+                    = SetStringCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SetString(command))
             }
 
             EXIT_COMMAND => {
