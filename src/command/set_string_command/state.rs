@@ -4,13 +4,13 @@ use crate::command::set_string_command::dynamic::Dynamic;
 use crate::command::set_string_command::input::Input;
 
 #[derive(Serialize)]
-pub enum SetStringCommandState {
+pub enum State {
     Base(Base),
     Dynamic(Dynamic),
     Input(Input),
 }
 
-impl SetStringCommandState {
+impl State {
     pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Base) = Base::parse(bytes);
 

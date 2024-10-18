@@ -6,10 +6,10 @@ mod string_operation;
 mod operation;
 mod dynamic;
 mod input;
-mod set_string_command_state;
+mod state;
 
 use serde::Serialize;
-use set_string_command_state::SetStringCommandState;
+use state::State;
 use crate::byte_utils::{as_u16_le, as_u32_le};
 use crate::command::set_string_command::content_type::ContentType;
 use crate::command::set_string_command::operation::Operation;
@@ -21,11 +21,11 @@ pub struct SetStringCommand {
     options: Options,
     operation: Operation,
     unknown1: u16,
-    state: SetStringCommandState
+    state: State
 }
 
 impl SetStringCommand {
-    fn parse(bytes: &[u8], parse_state: fn(&[u8]) -> (usize, SetStringCommandState)) -> (usize, Self) {
+    fn parse(bytes: &[u8], parse_state: fn(&[u8]) -> (usize, State)) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let variable: u32 = as_u32_le(&bytes[offset..offset + 4]);
@@ -41,7 +41,7 @@ impl SetStringCommand {
         let unknown1: u16 = as_u16_le(&bytes[offset..offset + 2]);
         offset += 2;
 
-        let (bytes_read, state): (usize, SetStringCommandState) = parse_state(&bytes[offset..]);
+        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..]);
         offset += bytes_read;
 
         (offset, Self {
@@ -54,13 +54,13 @@ impl SetStringCommand {
     }
 
     pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
-        Self::parse(bytes, SetStringCommandState::parse_base)
+        Self::parse(bytes, State::parse_base)
     }
 
     pub fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
         match Options::new(bytes[4]).content_type() {
-            ContentType::UserInput => Self::parse(bytes, SetStringCommandState::parse_input),
-            _ => Self::parse(bytes, SetStringCommandState::parse_dynamic),
+            ContentType::UserInput => Self::parse(bytes, State::parse_input),
+            _ => Self::parse(bytes, State::parse_dynamic),
         }
     }
 }
