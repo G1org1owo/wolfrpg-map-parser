@@ -1,14 +1,8 @@
 use serde::Serialize;
-use crate::byte_utils::{as_string, as_u16_le, as_u32_le};
-use crate::command::set_string_command::operation::Operation;
-use crate::command::set_string_command::options::Options;
+use crate::byte_utils::{as_string, as_u32_le};
 
 #[derive(Serialize)]
 pub struct Base {
-    variable: u32,
-    options: Options,
-    operation: Operation,
-    unknown1: u16,
     unknown2: u8,
     string: String,
     replace: Option<String>
@@ -17,19 +11,6 @@ pub struct Base {
 impl Base {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
-
-        let variable: u32 = as_u32_le(&bytes[offset..offset + 4]);
-        offset += 4;
-
-        let options: u8 = bytes[offset];
-        let options: Options = Options::new(options);
-
-        let operation: u8 = bytes[offset+1];
-        let operation: Operation = Operation::new(operation);
-        offset += 2;
-
-        let unknown1: u16 = as_u16_le(&bytes[offset..offset + 2]);
-        offset += 2;
 
         let unknown2: u8 = bytes[offset];
         offset += 1;
@@ -58,10 +39,6 @@ impl Base {
         offset += 1; // Command end signature
 
         (offset, Self {
-            variable,
-            options,
-            operation,
-            unknown1,
             unknown2,
             string,
             replace
