@@ -15,5 +15,20 @@ impl Options {
             variable_type: VariableType::new(options >> 4 ),
         }
     }
-}
 
+    pub fn content_type(&self) -> &ContentType {
+        &self.content_type
+    }
+
+    pub fn content_type_mut(&mut self) -> &mut ContentType {
+        &mut self.content_type
+    }
+
+    pub fn variable_type(&self) -> &VariableType {
+        &self.variable_type
+    }
+
+    pub fn variable_type_mut(&mut self) -> &mut VariableType {
+        &mut self.variable_type
+    }
+}

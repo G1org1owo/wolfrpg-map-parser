@@ -4,11 +4,14 @@ mod content_type;
 mod variable_type;
 mod string_operation;
 mod operation;
+mod dynamic;
+mod input;
 mod set_string_command_state;
 
 use serde::Serialize;
 use set_string_command_state::SetStringCommandState;
 use crate::byte_utils::{as_u16_le, as_u32_le};
+use crate::command::set_string_command::content_type::ContentType;
 use crate::command::set_string_command::operation::Operation;
 use crate::command::set_string_command::options::Options;
 
@@ -52,5 +55,12 @@ impl SetStringCommand {
 
     pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, SetStringCommandState::parse_base)
+    }
+
+    pub fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
+        match Options::new(bytes[4]).content_type() {
+            ContentType::UserInput => Self::parse(bytes, SetStringCommandState::parse_input),
+            _ => Self::parse(bytes, SetStringCommandState::parse_dynamic),
+        }
     }
 }

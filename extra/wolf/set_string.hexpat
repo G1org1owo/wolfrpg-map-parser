@@ -72,8 +72,7 @@ namespace SetString {
             (_): u32 source;
         }
 
-        u16 unknown3;
-        u8 command_end;
+        u24 command_end;
     };
 }
 

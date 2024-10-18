@@ -30,6 +30,7 @@ const DB_MANAGEMENT_COMMAND_BASE: u32   = 0x06fa0000;
 const DB_MANAGEMENT_COMMAND_STRING: u32 = 0x05fa0000;
 const DB_MANAGEMENT_COMMAND_CSV: u32    = 0x06fb0000;
 const SET_STRING_COMMAND_BASE: u32      = 0x037a0000;
+const SET_STRING_COMMAND_DYNAMIC: u32   = 0x047a0000;
 const EXIT_COMMAND: u32                 = 0x01000000;
 
 #[derive(Serialize)]
@@ -148,6 +149,15 @@ impl Command {
             SET_STRING_COMMAND_BASE => {
                 let (bytes_read, command): (usize, SetStringCommand)
                     = SetStringCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SetString(command))
+            }
+
+            SET_STRING_COMMAND_DYNAMIC => {
+                let (bytes_read, command): (usize, SetStringCommand)
+                    = SetStringCommand::parse_dynamic(&bytes[offset..]);
 
                 offset += bytes_read;
 
