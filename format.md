@@ -284,8 +284,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte  | operation           | uint8 bitmap         |
 | 2 bytes | ???                 |                      |
 | 4 bytes | source/input_length | little-endian uint32 |
-| 2 bytes | ???                 |                      |
-| 1 byte  | Command end         | `00`                 |
+| 3 bytes | Command end         | `00 00 00`           |
 
 ## Set variable+ Command format
 ### Character Variant
@@ -299,8 +298,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 2 bytes | ???          |                      |
 | 4 bytes | character    | little-endian uint32 |
 | 4 bytes | field        | little-endian uint32 |
-| 2 bytes | ???          |                      |
-| 1 byte  | Command end  | `00`                 |
+| 3 bytes | Command end  | `00 00 00`           |
 
 ### Position Variant
 | Length  | Content      | Value                |
@@ -314,8 +312,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte  | ???          |                      |
 | 4 bytes | position_x   | little-endian uint32 |
 | 4 bytes | position_y   | little-endian uint32 |
-| 2 bytes | ???          |                      |
-| 1 byte  | Command end  | `00`                 |
+| 3 bytes | Command end  | `00 00 00`           |
 
 ### Picture number Variant
 | Length  | Content        | Value                |
@@ -328,8 +325,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 2 bytes | ???            |                      |
 | 4 bytes | picture_number | little-endian uint32 |
 | 4 bytes | field          | little-endian uint32 |
-| 2 bytes | ???            |                      |
-| 1 byte  | Command end    | `00`                 |
+| 3 bytes | Command end    | `00 00 00`           |
 
 ### Other variant
 | Length  | Content      | Value                |
@@ -341,8 +337,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte  | assignment   | uint8 bitmap         |
 | 2 bytes | ???          |                      |
 | 4 bytes | target       | little-endian uint32 |
-| 2 bytes | ???          |                      |
-| 1 byte  | Command end  | `00`                 |
+| 3 byte  | Command end  | `00 00 00`           |
 
 ## Condition number Command format
 | Length                  | Content      | Value                                         |
