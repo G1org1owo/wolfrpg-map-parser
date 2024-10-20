@@ -6,6 +6,7 @@ use show_message_command::ShowMessageCommand;
 use crate::command::comment_command::CommentCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
+use crate::command::number_condition_command::NumberConditionCommand;
 use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
@@ -19,6 +20,7 @@ mod db_management_command;
 mod common;
 mod set_string_command;
 mod set_variable_plus_command;
+mod number_condition_command;
 
 const SHOW_MESSAGE_COMMAND: u32             = 0x01650000;
 const COMMENT_COMMAND: u32                  = 0x01670000;
@@ -35,6 +37,9 @@ const SET_STRING_COMMAND_BASE: u32          = 0x037a0000;
 const SET_STRING_COMMAND_DYNAMIC: u32       = 0x047a0000;
 const SET_VARIABLE_PLUS_COMMAND_BASE: u32   = 0x057c0000;
 const SET_VARIABLE_PLUS_COMMAND_OTHER: u32  = 0x047c0000;
+const NUMBER_CONDITION_COMMAND: u32         = 0x056f0000;
+const NUMBER_CONDITION_COMMAND_DOUBLE: u32  = 0x086f0000;
+const NUMBER_CONDITION_COMMAND_TRIPLE: u32  = 0x0b6f0000;
 const EXIT_COMMAND: u32                     = 0x01000000;
 
 #[derive(Serialize)]
@@ -49,6 +54,7 @@ pub enum Command {
     DBManagement(DBManagementCommand),
     SetString(SetStringCommand),
     SetVariablePlus(SetVariablePlusCommand),
+    NumberConditionCommand(NumberConditionCommand),
     Exit(),
 }
 
@@ -185,6 +191,18 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::SetVariablePlus(command))
+            }
+
+            NUMBER_CONDITION_COMMAND |
+            NUMBER_CONDITION_COMMAND_DOUBLE |
+            NUMBER_CONDITION_COMMAND_TRIPLE => {
+                let (bytes_read, commands_read, command): (usize, u32, NumberConditionCommand)
+                    = NumberConditionCommand::parse(&bytes[offset..]);
+
+                offset += bytes_read;
+                commands += commands_read;
+
+                Ok(Command::NumberConditionCommand(command))
             }
 
             EXIT_COMMAND => {

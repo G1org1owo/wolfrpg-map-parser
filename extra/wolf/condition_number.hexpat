@@ -7,7 +7,9 @@ namespace ConditionNumber {
     bitfield CaseCount {
         case_count: 4;
         else_case: 1;
-        padding: 11;
+        padding: 3;
+
+        padding: 24;
     };
 
     enum CompareOperator: u8 {
@@ -24,22 +26,21 @@ namespace ConditionNumber {
         CompareOperator operator: 4;
         not_variable: 1;
         padding: 3;
+
+        padding: 24;
     };
 
     struct Condition {
-        u16 unknown1;
         u32 variable;
         u32 value;
         Operator operator;
-        u8 unknown2;
     };
 
     struct Command {
         u8 unknown1;
         CaseCount case_count;
         Condition condition;
-        u32 unknown3;
-        u8 unknown4;
+        u24 unknown3;
 
         Case::Case case;
 
@@ -55,8 +56,7 @@ namespace ConditionNumber {
         CaseCount case_count;
         Condition condition1;
         Condition condition2;
-        u32 unknown2;
-        u8 unknown3;
+        u24 unknown2;
 
         Case::Case case1;
         Case::Case case2;
@@ -74,8 +74,7 @@ namespace ConditionNumber {
         Condition condition1;
         Condition condition2;
         Condition condition3;
-        u32 unknown2;
-        u8 unknown3;
+        u24 unknown2;
 
         Case::Case case1;
         Case::Case case2;
