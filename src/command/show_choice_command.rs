@@ -1,6 +1,6 @@
 use serde::Serialize;
 use crate::byte_utils::{as_string, as_u16_le, as_u32_le};
-use crate::case::Case;
+use crate::command::common::case::Case;
 
 #[derive(Serialize)]
 enum Cancel {
@@ -88,7 +88,6 @@ impl ShowChoiceCommand {
             cases.push(case);
             offset += bytes_read;
             commands += commands_read;
-            commands += 1; // case counts as command
         }
 
         (offset, commands, cases)

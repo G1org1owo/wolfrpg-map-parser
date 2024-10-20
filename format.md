@@ -149,10 +149,9 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | Length      | Content      | Value                                         |
 |-------------|--------------|-----------------------------------------------|
 | 4 bytes     | command_code | `02 91 01 00`, `02 92 01 00` or `02 A5 01 00` |
-| 1 byte      | ???          |                                               |
-| 1 byte      | case_id      | uint8                                         |
-| 2 bytes     | ???          |                                               |
-| 4 bytes     | ???          |                                               |
+| 1 byte      | padding      | `00`                                          |
+| 4 bytes     | case_id      | little-endian uint32                          |
+| 3 bytes     | ???          |                                               |
 | \<variable> | commands     | [Command]                                     |
 | 8 bytes     | Exit         |                                               |
 
