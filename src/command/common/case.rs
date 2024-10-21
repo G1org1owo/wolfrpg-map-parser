@@ -49,4 +49,19 @@ impl Case {
             commands,
         })
     }
+
+    pub fn parse_multiple(bytes: &[u8], case_count: usize) -> (usize, u32, Vec<Case>) {
+        let mut cases: Vec<Case> = Vec::with_capacity(case_count);
+        let mut offset: usize = 0;
+        let mut commands: u32 = 0;
+
+        for _i in 0..case_count {
+            let (bytes_read, commands_read, case): (usize, u32, Case) = Self::parse(&bytes[offset..]);
+            cases.push(case);
+            offset += bytes_read;
+            commands += commands_read;
+        }
+
+        (offset, commands, cases)
+    }
 }

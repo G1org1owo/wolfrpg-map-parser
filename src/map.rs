@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::byte_utils::{as_u32_array, as_u32_le};
+use crate::byte_utils::{as_u32_vec, as_u32_le};
 use crate::event::Event;
 
 #[derive(Serialize)]
@@ -24,19 +24,19 @@ impl Map {
         let event_count: u32 = as_u32_le(&bytes[offset+12..offset+16]);
         offset += 16;
 
-        let layer1 = as_u32_array(
+        let layer1: Vec<u32> = as_u32_vec(
             &bytes[offset..offset + (width * height * 4) as usize]
-        ).to_vec();
+        );
         offset += (width * height * 4) as usize;
 
-        let layer2 = as_u32_array(
+        let layer2: Vec<u32> = as_u32_vec(
             &bytes[offset..offset + (width * height * 4) as usize]
-        ).to_vec();
+        );
         offset += (width * height * 4) as usize;
 
-        let layer3 = as_u32_array(
+        let layer3: Vec<u32> = as_u32_vec(
             &bytes[offset..offset + (width * height * 4) as usize]
-        ).to_vec();
+        );
         offset += (width * height * 4) as usize;
 
         let (bytes_read, events): (usize, Vec<Event>) = Map::parse_events(&bytes[offset..], event_count);

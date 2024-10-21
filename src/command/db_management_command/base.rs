@@ -3,13 +3,13 @@ use crate::byte_utils::{as_string, as_u16_le, as_u32_le};
 use crate::command::db_management_command::assignment::Assignment;
 use crate::command::db_management_command::options::Options;
 
-use crate::command::common::value_or_name::ValueOrName;
+use crate::command::common::u32_or_string::U32OrString;
 
 #[derive(Serialize)]
 pub struct Base {
-    db_type: ValueOrName, // name for table?
-    data: ValueOrName,    // name for tuple?
-    field: ValueOrName,
+    db_type: U32OrString, // name for table?
+    data: U32OrString,    // name for tuple?
+    field: U32OrString,
     assignment: Assignment,
     options: Options,
     unknown1: u16,
@@ -56,10 +56,10 @@ impl Base {
         let db_type_string: String = as_string(bytes, offset, db_type_length);
         offset += db_type_length;
 
-        let db_type: ValueOrName = if db_type_string.len() != 0 {
-            ValueOrName::Name(db_type_string)
+        let db_type: U32OrString = if db_type_string.len() != 0 {
+            U32OrString::String(db_type_string)
         } else {
-            ValueOrName::Value(db_type)
+            U32OrString::U32(db_type)
         };
 
         let data_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
@@ -67,10 +67,10 @@ impl Base {
         let data_string: String = as_string(bytes, offset, data_length);
         offset += data_length;
 
-        let data: ValueOrName = if data_string.len() != 0 {
-            ValueOrName::Name(data_string)
+        let data: U32OrString = if data_string.len() != 0 {
+            U32OrString::String(data_string)
         } else {
-            ValueOrName::Value(data)
+            U32OrString::U32(data)
         };
 
         let field_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
@@ -78,10 +78,10 @@ impl Base {
         let field_string: String = as_string(bytes, offset, field_length);
         offset += field_length;
 
-        let field: ValueOrName = if field_string.len() != 0 {
-            ValueOrName::Name(field_string)
+        let field: U32OrString = if field_string.len() != 0 {
+            U32OrString::String(field_string)
         } else {
-            ValueOrName::Value(field)
+            U32OrString::U32(field)
         };
 
         offset += 1; // Command end signature

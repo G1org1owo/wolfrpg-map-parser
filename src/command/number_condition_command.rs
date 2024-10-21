@@ -70,21 +70,7 @@ impl NumberConditionCommand {
     }
 
     fn parse_cases(bytes: &[u8], case_count: usize, else_case: bool) -> (usize, u32, Vec<Case>) {
-        let mut offset: usize = 0;
-        let mut command_count: u32 = 0;
-        let mut cases: Vec<Case> = Vec::with_capacity(case_count);
-
         let else_case: usize = if else_case { 1 } else { 0 };
-
-        for _ in 0..case_count + else_case {
-            let (bytes_read, commands_read, case): (usize, u32, Case)
-                = Case::parse(&bytes[offset..]);
-
-            offset += bytes_read;
-            command_count += commands_read;
-            cases.push(case);
-        }
-
-        (offset, command_count, cases)
+        Case::parse_multiple(bytes, case_count + else_case)
     }
 }

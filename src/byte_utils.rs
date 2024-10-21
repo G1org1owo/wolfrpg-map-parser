@@ -22,12 +22,13 @@ pub fn as_u16_be(bytes: &[u8]) -> u16 {
     ((bytes[1] as u16) << 0)
 }
 
-pub fn as_u32_array(bytes: &[u8]) -> &[u32] {
-    unsafe {
-        let (_, data, _): (&[u8], &[u32], &[u8]) = bytes.align_to::<u32>();
-
-        data
+pub fn as_u32_vec(bytes: &[u8]) -> Vec<u32> {
+    let mut vec: Vec<u32> = vec!();
+    for i in 0 .. (bytes.len() / 4) {
+        vec.push(as_u32_le(&bytes[i*4..][..4]));
     }
+
+    vec
 }
 
 pub fn as_string(bytes: &[u8], offset: usize, string_length: usize) -> String {

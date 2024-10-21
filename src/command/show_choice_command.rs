@@ -49,9 +49,11 @@ impl ShowChoiceCommand {
 
         offset += 1; // should be 0x00 to indicate end of choices
 
-        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>) = Self::parse_cases(
+        let case_count: usize = (choice_count + Self::extra_cases_count(extra_cases, &cancel_case))
+            as usize;
+        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>) = Case::parse_multiple(
             &bytes[offset..],
-            choice_count + Self::extra_cases_count(extra_cases, &cancel_case)
+            case_count
         );
         offset += bytes_read;
 
@@ -76,21 +78,6 @@ impl ShowChoiceCommand {
         let choice: String = as_string(bytes, 4, length);
 
         (length + 4, choice)
-    }
-
-    fn parse_cases(bytes: &[u8], case_count: u8) -> (usize, u32, Vec<Case>) {
-        let mut cases: Vec<Case> = vec![];
-        let mut offset: usize = 0;
-        let mut commands: u32 = 0;
-
-        for _i in 0..case_count {
-            let (bytes_read, commands_read, case): (usize, u32, Case) = Case::parse(&bytes[offset..]);
-            cases.push(case);
-            offset += bytes_read;
-            commands += commands_read;
-        }
-
-        (offset, commands, cases)
     }
 
     fn extra_cases_count(extra_cases: u8, cancel: &Cancel) -> u8 {
