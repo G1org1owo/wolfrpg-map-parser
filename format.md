@@ -366,11 +366,12 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte                                            | padding         | `00`                                                                                                                     |
 | 1 byte                                            | case_count      | uint8 bitmap                                                                                                             |
 | 3 byte                                            | padding         | `00 00 00`                                                                                                               |
-| 5 bytes * `case_count`                            | variables       | [ConditionStringVariable; case_count]                                                                                    |
+| 4 bytes * `case_count`                            | variables       | [ConditionStringVariable; case_count]                                                                                    |
 | 4 bytes * `(command_code >> 24) - 2 - case_count` | values          | [u32; `(command_code >> 24) - 2 - case_count`]                                                                           |
-| 1 byte                                            | ???             |                                                                                                                          |
+| 1 byte                                            | values_end      | `00`                                                                                                                     |
 | 1 byte                                            | condition_count | uint8                                                                                                                    |
 | \<variable>                                       | conditions      | [ConditionStringCondition; condition_count]                                                                              |
+| 1 byte                                            | conditions_end  | `00`                                                                                                                     |
 | \<variable>                                       | cases           | [Case; case_count]                                                                                                       |
 | \<variable>                                       | else_case       | Case? (only if flag is set in case_count)                                                                                |
 | 4 bytes                                           | ???             | `01 F3 00 00`                                                                                                            |
@@ -379,7 +380,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 ### Condition string Variable format
 | Length  | Content  | Value                |
 |---------|----------|----------------------|
-| 4 bytes | variable | little-endian uint32 |
+| 3 bytes | variable | little-endian uint24 |
 | 1 byte  | operator | uint8 bitmap         |
 
 ### Condition string Condition format

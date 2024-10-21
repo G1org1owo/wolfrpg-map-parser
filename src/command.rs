@@ -10,6 +10,7 @@ use crate::command::number_condition_command::NumberConditionCommand;
 use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
+use crate::command::string_condition_command::StringConditionCommand;
 
 mod show_choice_command;
 mod show_message_command;
@@ -21,6 +22,7 @@ mod common;
 mod set_string_command;
 mod set_variable_plus_command;
 mod number_condition_command;
+mod string_condition_command;
 
 const SHOW_MESSAGE_COMMAND: u32             = 0x01650000;
 const COMMENT_COMMAND: u32                  = 0x01670000;
@@ -40,6 +42,14 @@ const SET_VARIABLE_PLUS_COMMAND_OTHER: u32  = 0x047c0000;
 const NUMBER_CONDITION_COMMAND: u32         = 0x056f0000;
 const NUMBER_CONDITION_COMMAND_DOUBLE: u32  = 0x086f0000;
 const NUMBER_CONDITION_COMMAND_TRIPLE: u32  = 0x0b6f0000;
+const STRING_CONDITION_COMMAND: u32         = 0x03700000;
+const STRING_CONDITION_COMMAND_TWO: u32     = 0x04700000;
+const STRING_CONDITION_COMMAND_THREE: u32   = 0x05700000;
+const STRING_CONDITION_COMMAND_FOUR: u32    = 0x06700000;
+const STRING_CONDITION_COMMAND_FIVE: u32    = 0x07700000;
+const STRING_CONDITION_COMMAND_SIX: u32     = 0x08700000;
+const STRING_CONDITION_COMMAND_SEVEN: u32   = 0x09700000;
+const STRING_CONDITION_COMMAND_EIGHT: u32   = 0x0a700000;
 const EXIT_COMMAND: u32                     = 0x01000000;
 
 #[derive(Serialize)]
@@ -55,6 +65,7 @@ pub enum Command {
     SetString(SetStringCommand),
     SetVariablePlus(SetVariablePlusCommand),
     NumberConditionCommand(NumberConditionCommand),
+    StringConditionCommand(StringConditionCommand),
     Exit(),
 }
 
@@ -193,8 +204,7 @@ impl Command {
                 Ok(Command::SetVariablePlus(command))
             }
 
-            NUMBER_CONDITION_COMMAND |
-            NUMBER_CONDITION_COMMAND_DOUBLE |
+            NUMBER_CONDITION_COMMAND | NUMBER_CONDITION_COMMAND_DOUBLE |
             NUMBER_CONDITION_COMMAND_TRIPLE => {
                 let (bytes_read, commands_read, command): (usize, u32, NumberConditionCommand)
                     = NumberConditionCommand::parse(&bytes[offset..]);
@@ -203,6 +213,19 @@ impl Command {
                 commands += commands_read;
 
                 Ok(Command::NumberConditionCommand(command))
+            }
+
+            STRING_CONDITION_COMMAND | STRING_CONDITION_COMMAND_TWO |
+            STRING_CONDITION_COMMAND_THREE | STRING_CONDITION_COMMAND_FOUR |
+            STRING_CONDITION_COMMAND_FIVE | STRING_CONDITION_COMMAND_SIX |
+            STRING_CONDITION_COMMAND_SEVEN | STRING_CONDITION_COMMAND_EIGHT => {
+                let (bytes_read, commands_read, command) : (usize, u32, StringConditionCommand)
+                    = StringConditionCommand::parse(&bytes[offset..], signature);
+
+                offset += bytes_read;
+                commands += commands_read;
+
+                Ok(Command::StringConditionCommand(command))
             }
 
             EXIT_COMMAND => {

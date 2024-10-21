@@ -36,7 +36,9 @@ namespace ConditionString {
     bitfield CaseCount {
         case_count: 4;
         else_case: 1;
-        padding: 27;
+        padding: 3;
+
+        padding: 24;
     };
 
     struct Command<auto total_count> {
@@ -47,7 +49,7 @@ namespace ConditionString {
 
         u32 values[ConditionString::valueCount(total_count, case_count.case_count)];
 
-        u8 unknown2;
+        u8 values_end;
         u8 condition_count;
 
         Condition conditions[condition_count];
