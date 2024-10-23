@@ -68,7 +68,7 @@ namespace InputKey {
             (InputType::Basic): {
                 BasicOptions options;
                 InputType input_type;
-                u32 unknown2;
+                u16 unknown2;
             }
 
             (InputType::KeyBoard | InputType::Pad): {
@@ -76,17 +76,16 @@ namespace InputKey {
                 Input input_type;
                 u16 unknown2;
                 u32 key_code;
-                u16 unknown3;
             }
 
             (InputType::Mouse): {
                 MouseOptions options;
                 InputType input_type;
-                u32 unknown2;
+                u16 unknown2;
             }
         }
 
-        u8 end_command;
+        u24 end_command;
     };
 }
 
@@ -100,6 +99,8 @@ namespace AutomaticInput {
         left: 1;
         right: 1;
         up: 1;
+
+        padding: 16;
     };
 
     enum InputType: u8 {
@@ -109,6 +110,7 @@ namespace AutomaticInput {
     };
 
     enum MouseType: u8 {
+        Click       = 0x00,
         Position    = 0x01,
         Wheel       = 0x02,
     };
@@ -118,6 +120,8 @@ namespace AutomaticInput {
         right_click: 1;
         middle_click: 1;
         MouseType mouse_type: 5;
+
+        padding: 16;
     };
 
     fn read_input_type(u32 address) {
@@ -131,19 +135,17 @@ namespace AutomaticInput {
         match(AutomaticInput::read_input_type($+3)) {
             (InputType::Basic): {
                 BasicOptions options;
-                u16 unknown2;
                 InputType type;
             }
 
             (InputType::KeyBoard): {
-                u24 unknown2;
+                u24 options;
                 InputType type;
                 u32 key_code;
             }
 
             (InputType::Mouse): {
                 MouseOptions options;
-                u16 unknown2;
                 InputType type;
 
                 if(options.mouse_type == MouseType::Position) {
@@ -153,7 +155,7 @@ namespace AutomaticInput {
 
                 if(options.mouse_type == MouseType::Wheel) {
                     u32 wheel_delta;
-                    u32 unknown3;
+                    u32 unknown2;
                 }
             }
         }

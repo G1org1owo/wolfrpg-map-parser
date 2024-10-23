@@ -400,8 +400,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte      | input_type   | uint8                                                      |
 | 2 bytes     | ???          |                                                            |
 | \<variable> | key_code     | little-endian uint32, only if `input_type` is `01` or `02` |
-| 2 bytes     | ???          |                                                            |
-| 1 byte      | Command end  | `00`                                                       |
+| 3 bytes     | Command end  | `00 00 00`                                                 |
 
 ### Automatic input Variant
 | Length   | Content      | Value                                                                                    |
