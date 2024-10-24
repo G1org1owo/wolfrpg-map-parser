@@ -7,6 +7,7 @@ use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
 use crate::command::input_key_command::InputKeyCommand;
 use crate::command::number_condition_command::NumberConditionCommand;
+use crate::command::picture_command::PictureCommand;
 use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
@@ -24,6 +25,7 @@ mod set_variable_plus_command;
 mod number_condition_command;
 mod string_condition_command;
 mod input_key_command;
+mod picture_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -58,6 +60,7 @@ const AUTOMATIC_INPUT_COMMAND_KEYBOARD: u32     = 0x037d0000;
 const AUTOMATIC_INPUT_COMMAND_MOUSE: u32        = 0x047d0000;
 const INPUT_TOGGLE_COMMAND_BASIC: u32           = 0x027e0000;
 const INPUT_TOGGLE_COMMAND_DEVICE: u32          = 0x037e0000;
+const PICTURE_SHOW_COMMAND_BASE: u32            = 0x0c960000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -75,6 +78,7 @@ pub enum Command {
     NumberConditionCommand(NumberConditionCommand),
     StringConditionCommand(StringConditionCommand),
     InputKeyCommand(InputKeyCommand),
+    PictureCommand(PictureCommand),
     Exit(),
 }
 
@@ -280,6 +284,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::InputKeyCommand(command))
+            }
+
+            PICTURE_SHOW_COMMAND_BASE => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_show_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
             }
 
             EXIT_COMMAND => {

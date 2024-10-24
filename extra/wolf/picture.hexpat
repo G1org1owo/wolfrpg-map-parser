@@ -66,6 +66,11 @@ namespace Picture {
         u32 zoom;
         u32 angle;
 
+        if(options.display_type == DisplayType::LoadFileByStringVar ||
+            options.display_type == DisplayType::WindowByStringVar) {
+            u32 filename_variable;
+        }
+
         u8 unknown2;
         bool is_filename_string;
 
