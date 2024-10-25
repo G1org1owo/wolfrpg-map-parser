@@ -21,9 +21,9 @@ impl Options {
         Self {
             display_type: DisplayType::new((options & 0xff) as u8),
             blending_method: BlendingMethod::new(((options >> 8) & 0x0f) as u8),
-            anchor: Anchor::new(((options >> 8) & 0xf0 >> 4) as u8),
+            anchor: Anchor::new((((options >> 8) & 0xf0) >> 4) as u8),
             position_relative: ((options >> 16) & 0b00000001) != 0,
-            zoom: Zoom::new(((options >> 16) & 0xf0 >> 4) as u8),
+            zoom: Zoom::new((((options >> 16) & 0xf0) >> 4) as u8),
             range:          (options >> 24) & 0b00000001 != 0,
             link_to_scroll: (options >> 24) & 0b00000010 != 0,
             free_transform: (options >> 24) & 0b00000100 != 0

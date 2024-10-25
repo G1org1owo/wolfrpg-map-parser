@@ -26,4 +26,10 @@ impl PictureCommand {
 
         (bytes_read, Self::Show(command))
     }
+
+    pub fn parse_show_free_transform(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Show) = Show::parse_free_transform(bytes);
+
+        (bytes_read, Self::Show(command))
+    }
 }

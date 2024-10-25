@@ -5,6 +5,7 @@ use state::State;
 
 mod state;
 mod base;
+mod free_transform;
 mod same_colors_delay;
 mod colors;
 mod parser;
@@ -77,5 +78,9 @@ impl Show {
 
     pub fn parse_same_colors_delay(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_same_colors_delay)
+    }
+
+    pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_free_transform)
     }
 }
