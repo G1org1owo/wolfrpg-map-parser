@@ -5,6 +5,9 @@ use state::State;
 
 mod state;
 mod base;
+mod same_colors_delay;
+mod colors;
+mod parser;
 
 #[derive(Serialize)]
 pub struct Show {
@@ -70,5 +73,9 @@ impl Show {
 
     pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
+    }
+
+    pub fn parse_same_colors_delay(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_same_colors_delay)
     }
 }

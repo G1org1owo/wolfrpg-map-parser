@@ -62,6 +62,7 @@ const INPUT_TOGGLE_COMMAND_BASIC: u32           = 0x027e0000;
 const INPUT_TOGGLE_COMMAND_DEVICE: u32          = 0x037e0000;
 const PICTURE_SHOW_COMMAND_BASE: u32            = 0x0c960000;
 const PICTURE_SHOW_COMMAND_BASE_BY_VAR: u32     = 0x0d960000;
+const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -287,9 +288,18 @@ impl Command {
                 Ok(Command::InputKeyCommand(command))
             }
 
-            PICTURE_SHOW_COMMAND_BASE  | PICTURE_SHOW_COMMAND_BASE_BY_VAR => {
+            PICTURE_SHOW_COMMAND_BASE | PICTURE_SHOW_COMMAND_BASE_BY_VAR => {
                 let (bytes_read, command): (usize, PictureCommand)
                     = PictureCommand::parse_show_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_SHOW_COMMAND_DELAY => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_show_same_colors_delay(&bytes[offset..]);
 
                 offset += bytes_read;
 

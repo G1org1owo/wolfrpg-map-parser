@@ -87,6 +87,39 @@ namespace Picture {
         Different   = 0x02,
     };
 
+    struct ShowColorsCommand {
+        u8 unknown1;
+        Options options;
+        u32 picture;
+        u32 process_time;
+        u32 division_width;
+        u32 division_height;
+        u32 pattern;
+        u32 opacity;
+        u32 position_x;
+        u32 position_y;
+
+        u32 zoom;
+        u32 angle;
+
+        u32 filename_variable;
+
+        u24 unknown2;
+        Colors colors;
+
+        u32 delay;
+
+        u8 unknown3;
+        bool is_filename_string;
+
+        if(is_filename_string) {
+            u32 filename_length;
+            char filename[filename_length];
+        }
+
+        u8 end_command;
+    };
+
     struct ShowCompleteCommand {
         u8 unknown1;
         Options options;
@@ -112,9 +145,13 @@ namespace Picture {
         u24 unknown2;
         Colors colors;
 
-        if(colors == Colors::Different || options.free_transform || options.zoom == Zoom::Different) {
+        if(colors == Colors::Different || options.free_transform ||
+           options.zoom == Zoom::Different || options.range) {
             u32 delay;
             u32 range_count;
+        }
+
+        if(colors == Colors::Different || options.free_transform || options.zoom == Zoom::Different) {
             u32 color1;
             u32 color2;
             u32 color3;
@@ -135,7 +172,7 @@ namespace Picture {
             u32 bottom_right_y;
         }
 
-        u8 unknown4;
+        u8 unknown3;
         bool is_filename_string;
 
         if(is_filename_string) {

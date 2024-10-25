@@ -66,6 +66,8 @@ enum CommandSignature: u32 {
     PictureShow4                = 0x13960000,
     PictureShow5                = 0x14960000,
     PictureShow6                = 0x0E960000,
+    PictureShow7                = 0x0F960000,
+    PictureShow8                = 0x10960000,
     PictureErase1               = 0x04960000,
     PictureErase2               = 0x07960000,
     PictureErase3               = 0x05960000,
@@ -182,8 +184,10 @@ struct Command {
         (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command;
         
         (CommandSignature::PictureShow1 | CommandSignature::PictureShow2): Picture::ShowCommand;
+        (CommandSignature::PictureShow7): Picture::ShowColorsCommand;
         (CommandSignature::PictureShow3 | CommandSignature::PictureShow4 |
-         CommandSignature::PictureShow5 | CommandSignature::PictureShow6): Picture::ShowCompleteCommand;
+         CommandSignature::PictureShow5 | CommandSignature::PictureShow6 |
+         CommandSignature::PictureShow8): Picture::ShowCompleteCommand;
          
         (CommandSignature::PictureErase1 | CommandSignature::PictureErase4): Picture::EraseCommand command;
         (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand;
