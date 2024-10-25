@@ -2,13 +2,13 @@ use serde::Serialize;
 use crate::command::picture_command::show::base::Base;
 use crate::command::picture_command::options::Options;
 use crate::command::picture_command::show::free_transform::FreeTransform;
-use crate::command::picture_command::show::same_colors_delay::SameColorsDelay;
+use crate::command::picture_command::show::delay::Delay;
 use crate::command::picture_command::show::zoom::Zoom;
 
 #[derive(Serialize)]
 pub enum State {
     Base(Base),
-    SameColorsDelay(SameColorsDelay),
+    Delay(Delay),
     Zoom(Zoom),
     FreeTransform(FreeTransform)
 }
@@ -20,10 +20,10 @@ impl State {
         (bytes_read, Self::Base(state))
     }
 
-    pub fn parse_same_colors_delay(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, SameColorsDelay) = SameColorsDelay::parse(bytes, options);
+    pub fn parse_delay(bytes: &[u8], options: &Options) -> (usize, State) {
+        let (bytes_read, state): (usize, Delay) = Delay::parse(bytes, options);
 
-        (bytes_read, Self::SameColorsDelay(state))
+        (bytes_read, Self::Delay(state))
     }
 
     pub fn parse_zoom(bytes: &[u8], options: &Options) -> (usize, State) {

@@ -1,26 +1,16 @@
-use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::common::u32_or_string::U32OrString;
-use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::options::Options;
+use crate::command::picture_command::show::free_transform_state::FreeTransformState;
 use crate::command::picture_command::show::parser::{make_filename_and_string, parse_string_value};
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct FreeTransform {
     top_left_x: u32,
     top_left_y: u32,
     unknown1: [u8; 3],
-    colors: Colors,
-    delay: u32,
-    range_count: u32,
-    color_values: [u32; 3],
-    zoom_height: u32,
-    top_right_x: u32,
-    top_right_y: u32,
-    bottom_left_x: u32,
-    bottom_left_y: u32,
-    bottom_right_x: u32,
-    bottom_right_y: u32,
+    state: FreeTransformState,
     unknown2: u8,
     filename: Option<U32OrString>,
     string: Option<String>,
@@ -45,43 +35,9 @@ impl FreeTransform {
         let unknown1: [u8; 3] = bytes[offset..offset+3].try_into().unwrap();
         offset += 3;
 
-        let colors: u8 = bytes[offset];
-        let colors: Colors = Colors::new(colors);
-        offset += 1;
-
-        let delay: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let range_count: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let color_values: [u32; 3] = [
-            as_u32_le(&bytes[offset..offset+4]),
-            as_u32_le(&bytes[offset+4..offset+8]),
-            as_u32_le(&bytes[offset+8..offset+12]),
-        ];
-        offset += 12;
-
-        let zoom_height: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let top_right_x: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let top_right_y: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let bottom_left_x: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let bottom_left_y: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let bottom_right_x: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
-
-        let bottom_right_y: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
+        let (bytes_read, state): (usize, FreeTransformState)
+            = FreeTransformState::parse(&bytes[offset..]);
+        offset += bytes_read;
 
         let unknown2: u8 = bytes[offset];
         offset += 1;
@@ -97,17 +53,7 @@ impl FreeTransform {
             top_left_x,
             top_left_y,
             unknown1,
-            colors,
-            delay,
-            range_count,
-            color_values,
-            zoom_height,
-            top_right_x,
-            top_right_y,
-            bottom_left_x,
-            bottom_left_y,
-            bottom_right_x,
-            bottom_right_y,
+            state,
             unknown2,
             filename,
             string

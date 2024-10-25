@@ -301,7 +301,7 @@ impl Command {
 
             PICTURE_SHOW_COMMAND_DELAY => {
                 let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_same_colors_delay(&bytes[offset..]);
+                    = PictureCommand::parse_show_delay(&bytes[offset..]);
 
                 offset += bytes_read;
 

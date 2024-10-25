@@ -1,23 +1,22 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::common::u32_or_string::U32OrString;
 use crate::command::picture_command::options::Options;
+use crate::command::picture_command::show::delay_state::DelayState;
 use crate::command::picture_command::show::parser::{make_filename_and_string, parse_string_value};
 use serde::Serialize;
-use crate::command::picture_command::colors::Colors;
 
 #[derive(Serialize)]
-pub struct SameColorsDelay {
+pub struct Delay {
     position_x: u32,
     position_y: u32,
     unknown1: [u8; 3],
-    colors: Colors,
-    delay: u32,
+    state: DelayState,
     unknown2: u8,
     filename: Option<U32OrString>,
     string: Option<String>,
 }
 
-impl SameColorsDelay {
+impl Delay {
     pub fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
         let mut offset: usize = 0;
 
@@ -36,12 +35,8 @@ impl SameColorsDelay {
         let unknown1: [u8; 3] = bytes[offset..offset+3].try_into().unwrap();
         offset += 3;
 
-        let colors: u8 = bytes[offset];
-        let colors: Colors = Colors::new(colors);
-        offset += 1;
-
-        let delay: u32 = as_u32_le(&bytes[offset..offset+4]);
-        offset += 4;
+        let (bytes_read, state): (usize, DelayState) = DelayState::parse(&bytes[offset..]);
+        offset += bytes_read;
 
         let unknown2: u8 = bytes[offset];
         offset += 1;
@@ -57,9 +52,8 @@ impl SameColorsDelay {
             position_x,
             position_y,
             unknown1,
-            colors,
+            state,
             unknown2,
-            delay,
             filename,
             string
         })
