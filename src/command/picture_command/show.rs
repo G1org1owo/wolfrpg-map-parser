@@ -7,7 +7,6 @@ mod state;
 mod base;
 mod free_transform;
 mod same_colors_delay;
-mod colors;
 mod parser;
 mod zoom;
 

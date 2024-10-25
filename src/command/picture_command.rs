@@ -7,6 +7,7 @@ mod display_type;
 mod blending_method;
 mod anchor;
 mod zoom;
+mod colors;
 
 #[derive(Serialize)]
 pub enum PictureCommand {

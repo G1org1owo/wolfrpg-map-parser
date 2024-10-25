@@ -1,8 +1,8 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::common::u32_or_string::U32OrString;
+use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::options::Options;
-use crate::command::picture_command::show::colors::Colors;
 use crate::command::picture_command::show::parser::{make_filename_and_string, parse_string_value};
 
 #[derive(Serialize)]
