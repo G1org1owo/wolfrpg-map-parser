@@ -1,6 +1,7 @@
 use serde::Serialize;
 use crate::command::picture_command::show::base::Base;
 use crate::command::picture_command::options::Options;
+use crate::command::picture_command::show::color_values::ColorValues;
 use crate::command::picture_command::show::free_transform::FreeTransform;
 use crate::command::picture_command::show::delay::Delay;
 use crate::command::picture_command::show::zoom::Zoom;
@@ -9,6 +10,7 @@ use crate::command::picture_command::show::zoom::Zoom;
 pub enum State {
     Base(Base),
     Delay(Delay),
+    ColorValues(ColorValues),
     Zoom(Zoom),
     FreeTransform(FreeTransform)
 }
@@ -24,6 +26,12 @@ impl State {
         let (bytes_read, state): (usize, Delay) = Delay::parse(bytes, options);
 
         (bytes_read, Self::Delay(state))
+    }
+
+    pub fn parse_color_values(bytes: &[u8], options: &Options) -> (usize, State) {
+        let (bytes_read, state): (usize, ColorValues) = ColorValues::parse(bytes, options);
+
+        (bytes_read, Self::ColorValues(state))
     }
 
     pub fn parse_zoom(bytes: &[u8], options: &Options) -> (usize, State) {

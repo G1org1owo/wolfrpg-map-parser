@@ -9,8 +9,9 @@ mod free_transform;
 mod delay;
 mod parser;
 mod zoom;
+mod color_values;
 mod range_state;
-mod colors_state;
+mod color_values_state;
 mod zoom_state;
 mod free_transform_state;
 mod delay_state;
@@ -85,11 +86,15 @@ impl Show {
         Self::parse(bytes, State::parse_delay)
     }
 
-    pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
-        Self::parse(bytes, State::parse_free_transform)
+    pub fn parse_color_values(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_color_values)
     }
 
     pub fn parse_zoom(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_zoom)
+    }
+
+    pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_free_transform)
     }
 }

@@ -3,12 +3,12 @@ use crate::command::picture_command::show::range_state::RangeState;
 use serde::Serialize;
 
 #[derive(Serialize)]
-pub struct ColorsState {
+pub struct ColorValuesState {
     range_state: RangeState,
     color_values: [u32; 3]
 }
 
-impl ColorsState {
+impl ColorValuesState {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 

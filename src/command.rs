@@ -65,6 +65,7 @@ const PICTURE_SHOW_COMMAND_BASE_BY_VAR: u32     = 0x0d960000;
 const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
 const PICTURE_SHOW_COMMAND_FREE_TRANSFORM: u32  = 0x1a960000;
 const PICTURE_SHOW_COMMAND_ZOOM: u32            = 0x14960000;
+const PICTURE_SHOW_COMMAND_COLOR_VALUES: u32    = 0x13960000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -308,9 +309,9 @@ impl Command {
                 Ok(Command::PictureCommand(command))
             }
 
-            PICTURE_SHOW_COMMAND_FREE_TRANSFORM => {
+            PICTURE_SHOW_COMMAND_COLOR_VALUES => {
                 let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_free_transform(&bytes[offset..]);
+                    = PictureCommand::parse_color_values(&bytes[offset..]);
 
                 offset += bytes_read;
 
@@ -320,6 +321,15 @@ impl Command {
             PICTURE_SHOW_COMMAND_ZOOM => {
                 let (bytes_read, command): (usize, PictureCommand)
                     = PictureCommand::parse_show_zoom(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_SHOW_COMMAND_FREE_TRANSFORM => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_show_free_transform(&bytes[offset..]);
 
                 offset += bytes_read;
 
