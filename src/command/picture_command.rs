@@ -22,6 +22,12 @@ impl PictureCommand {
         (bytes_read, Self::Show(command))
     }
 
+    pub fn parse_show_colors(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Show) = Show::parse_colors(bytes);
+
+        (bytes_read, Self::Show(command))
+    }
+
     pub fn parse_show_delay(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Show) = Show::parse_delay(bytes);
 

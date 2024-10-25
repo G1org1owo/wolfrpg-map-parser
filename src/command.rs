@@ -66,6 +66,7 @@ const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
 const PICTURE_SHOW_COMMAND_FREE_TRANSFORM: u32  = 0x1a960000;
 const PICTURE_SHOW_COMMAND_ZOOM: u32            = 0x14960000;
 const PICTURE_SHOW_COMMAND_COLOR_VALUES: u32    = 0x13960000;
+const PICTURE_SHOW_COMMAND_COLORS: u32          = 0x0e960000;
 const PICTURE_SHOW_COMMAND_RANGE: u32           = 0x10960000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
@@ -295,6 +296,15 @@ impl Command {
             PICTURE_SHOW_COMMAND_BASE | PICTURE_SHOW_COMMAND_BASE_BY_VAR => {
                 let (bytes_read, command): (usize, PictureCommand)
                     = PictureCommand::parse_show_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_SHOW_COMMAND_COLORS => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_show_colors(&bytes[offset..]);
 
                 offset += bytes_read;
 
