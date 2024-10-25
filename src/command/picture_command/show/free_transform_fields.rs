@@ -1,10 +1,11 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
-use crate::command::picture_command::show::zoom_state::ZoomState;
+use crate::command::picture_command::show::parsable_fields::ParsableFields;
+use crate::command::picture_command::show::zoom_fields::ZoomFields;
 
 #[derive(Serialize)]
-pub struct FreeTransformState {
-    zoom_state: ZoomState,
+pub struct FreeTransformFields {
+    zoom_state: ZoomFields,
     top_right_x: u32,
     top_right_y: u32,
     bottom_left_x: u32,
@@ -13,11 +14,11 @@ pub struct FreeTransformState {
     bottom_right_y: u32
 }
 
-impl FreeTransformState {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+impl ParsableFields<FreeTransformFields> for FreeTransformFields {
+    fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
-        let (bytes_read, zoom_state): (usize, ZoomState) = ZoomState::parse(bytes);
+        let (bytes_read, zoom_state): (usize, ZoomFields) = ZoomFields::parse(bytes);
         offset += bytes_read;
 
         let top_right_x: u32 = as_u32_le(&bytes[offset..offset+4]);

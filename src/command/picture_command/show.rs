@@ -10,14 +10,16 @@ mod delay;
 mod parser;
 mod zoom;
 mod color_values;
-mod range_state;
-mod color_values_state;
-mod zoom_state;
-mod free_transform_state;
-mod delay_state;
+mod range_fields;
+mod color_values_fields;
+mod zoom_fields;
+mod free_transform_fields;
+mod delay_fields;
 mod range;
-mod colors_state;
+mod colors_fields;
 mod colors;
+mod parsable_fields;
+mod parsable_state;
 
 #[derive(Serialize)]
 pub struct Show {
