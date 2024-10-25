@@ -15,6 +15,7 @@ mod color_values_state;
 mod zoom_state;
 mod free_transform_state;
 mod delay_state;
+mod range;
 
 #[derive(Serialize)]
 pub struct Show {
@@ -84,6 +85,10 @@ impl Show {
 
     pub fn parse_delay(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_delay)
+    }
+
+    pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_range)
     }
 
     pub fn parse_color_values(bytes: &[u8]) -> (usize, Self) {

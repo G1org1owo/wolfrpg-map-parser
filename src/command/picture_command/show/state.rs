@@ -4,12 +4,14 @@ use crate::command::picture_command::options::Options;
 use crate::command::picture_command::show::color_values::ColorValues;
 use crate::command::picture_command::show::free_transform::FreeTransform;
 use crate::command::picture_command::show::delay::Delay;
+use crate::command::picture_command::show::range::Range;
 use crate::command::picture_command::show::zoom::Zoom;
 
 #[derive(Serialize)]
 pub enum State {
     Base(Base),
     Delay(Delay),
+    Range(Range),
     ColorValues(ColorValues),
     Zoom(Zoom),
     FreeTransform(FreeTransform)
@@ -26,6 +28,12 @@ impl State {
         let (bytes_read, state): (usize, Delay) = Delay::parse(bytes, options);
 
         (bytes_read, Self::Delay(state))
+    }
+
+    pub fn parse_range(bytes: &[u8], options: &Options) -> (usize, State) {
+        let (bytes_read, state): (usize, Range) = Range::parse(bytes, options);
+
+        (bytes_read, Self::Range(state))
     }
 
     pub fn parse_color_values(bytes: &[u8], options: &Options) -> (usize, State) {

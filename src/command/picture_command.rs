@@ -28,6 +28,12 @@ impl PictureCommand {
         (bytes_read, Self::Show(command))
     }
 
+    pub fn parse_show_range(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Show) = Show::parse_range(bytes);
+
+        (bytes_read, Self::Show(command))
+    }
+
     pub fn parse_color_values(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Show) = Show::parse_color_values(bytes);
 
