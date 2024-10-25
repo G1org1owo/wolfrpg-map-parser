@@ -32,4 +32,10 @@ impl PictureCommand {
 
         (bytes_read, Self::Show(command))
     }
+
+    pub fn parse_show_zoom(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Show) = Show::parse_zoom(bytes);
+
+        (bytes_read, Self::Show(command))
+    }
 }

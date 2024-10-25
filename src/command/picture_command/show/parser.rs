@@ -56,3 +56,20 @@ pub fn make_filename_and_string(string_value: Option<String>, filename_variable:
 
     (filename, string)
 }
+
+pub fn parse_color_values(bytes: &[u8]) -> (usize, [u32; 3]) {
+    let mut offset: usize = 0;
+
+    let color1: u32 = as_u32_le(&bytes[offset..offset+4]);
+    offset += 4;
+    let color2: u32 = as_u32_le(&bytes[offset..offset+4]);
+    offset += 4;
+    let color3: u32 = as_u32_le(&bytes[offset..offset+4]);
+    offset += 4;
+
+    (offset, [
+        color1,
+        color2,
+        color3
+    ])
+}

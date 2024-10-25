@@ -9,6 +9,7 @@ mod free_transform;
 mod same_colors_delay;
 mod colors;
 mod parser;
+mod zoom;
 
 #[derive(Serialize)]
 pub struct Show {
@@ -82,5 +83,9 @@ impl Show {
 
     pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_free_transform)
+    }
+
+    pub fn parse_zoom(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_zoom)
     }
 }
