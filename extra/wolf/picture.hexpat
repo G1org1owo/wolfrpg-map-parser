@@ -207,8 +207,10 @@ namespace Picture {
         u32 process_time;
         u32 delay;
 
-        u32 unknown2;
-        u32 range_count;
+        if(options.range) {
+            u32 unknown2;
+            u32 range_count;
+        }
 
         u24 end_command;
     };

@@ -1,4 +1,5 @@
 use serde::Serialize;
+use crate::command::picture_command::erase::Erase;
 use crate::command::picture_command::show::Show;
 
 mod show;
@@ -8,11 +9,12 @@ mod blending_method;
 mod anchor;
 mod zoom;
 mod colors;
+mod erase;
 
 #[derive(Serialize)]
 pub enum PictureCommand {
     Show(Show),
-    Erase
+    Erase(Erase),
 }
 
 impl PictureCommand {
@@ -56,5 +58,29 @@ impl PictureCommand {
         let (bytes_read, command): (usize, Show) = Show::parse_free_transform(bytes);
 
         (bytes_read, Self::Show(command))
+    }
+
+    pub fn parse_erase_delay_reset(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Erase) = Erase::parse_delay_reset(bytes);
+
+        (bytes_read, Self::Erase(command))
+    }
+
+    pub fn parse_erase_base(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Erase) = Erase::parse_base(bytes);
+
+        (bytes_read, Self::Erase(command))
+    }
+
+    pub fn parse_erase_delay(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Erase) = Erase::parse_delay(bytes);
+
+        (bytes_read, Self::Erase(command))
+    }
+
+    pub fn parse_erase_range(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Erase) = Erase::parse_range(bytes);
+
+        (bytes_read, Self::Erase(command))
     }
 }

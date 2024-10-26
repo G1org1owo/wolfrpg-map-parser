@@ -62,12 +62,16 @@ const INPUT_TOGGLE_COMMAND_BASIC: u32           = 0x027e0000;
 const INPUT_TOGGLE_COMMAND_DEVICE: u32          = 0x037e0000;
 const PICTURE_SHOW_COMMAND_BASE: u32            = 0x0c960000;
 const PICTURE_SHOW_COMMAND_BASE_BY_VAR: u32     = 0x0d960000;
-const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
-const PICTURE_SHOW_COMMAND_FREE_TRANSFORM: u32  = 0x1a960000;
-const PICTURE_SHOW_COMMAND_ZOOM: u32            = 0x14960000;
-const PICTURE_SHOW_COMMAND_COLOR_VALUES: u32    = 0x13960000;
 const PICTURE_SHOW_COMMAND_COLORS: u32          = 0x0e960000;
+const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
 const PICTURE_SHOW_COMMAND_RANGE: u32           = 0x10960000;
+const PICTURE_SHOW_COMMAND_COLOR_VALUES: u32    = 0x13960000;
+const PICTURE_SHOW_COMMAND_ZOOM: u32            = 0x14960000;
+const PICTURE_SHOW_COMMAND_FREE_TRANSFORM: u32  = 0x1a960000;
+const PICTURE_ERASE_COMMAND_DELAY_RESET: u32    = 0x03960000;
+const PICTURE_ERASE_COMMAND_BASE: u32           = 0x04960000;
+const PICTURE_ERASE_COMMAND_DELAY: u32          = 0x05960000;
+const PICTURE_ERASE_COMMAND_RANGE: u32          = 0x07960000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -350,6 +354,42 @@ impl Command {
             PICTURE_SHOW_COMMAND_FREE_TRANSFORM => {
                 let (bytes_read, command): (usize, PictureCommand)
                     = PictureCommand::parse_show_free_transform(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_ERASE_COMMAND_DELAY_RESET => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_erase_delay_reset(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_ERASE_COMMAND_BASE => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_erase_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_ERASE_COMMAND_DELAY => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_erase_delay(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PictureCommand(command))
+            }
+
+            PICTURE_ERASE_COMMAND_RANGE => {
+                let (bytes_read, command): (usize, PictureCommand)
+                    = PictureCommand::parse_erase_range(&bytes[offset..]);
 
                 offset += bytes_read;
 
