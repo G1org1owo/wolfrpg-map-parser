@@ -63,22 +63,24 @@ namespace Effect {
 }
 
 namespace EffectMapShake {
-    bitfield Options {
-        power: 4;
-        speed: 4;
-    };
-
     enum Shake: u8 {
         Vertical    = 0x00,
         Horizontal  = 0x01,
         Stop        = 0x02
     };
 
+    bitfield Options {
+        power: 4;
+        speed: 4;
+
+        Shake shake_type: 8;
+
+        padding: 16;
+    };
+
     struct Command {
         u8 unknown1;
         Options options;
-        Shake shake_type;
-        u16 unknown2;
         u32 duration;
 
         u24 end_command;
