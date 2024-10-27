@@ -77,6 +77,7 @@ const PICTURE_ERASE_COMMAND_RANGE: u32          = 0x07960000;
 const EFFECT_COMMAND_BASE: u32                  = 0x08220100;
 const EFFECT_COMMAND_MAP_SHAKE: u32             = 0x03180100;
 const EFFECT_COMMAND_SCROLL_SCREEN: u32         = 0x04190100;
+const EFFECT_COMMAND_CHANGE_COLOR: u32          = 0x03970000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -423,6 +424,15 @@ impl Command {
             EFFECT_COMMAND_SCROLL_SCREEN => {
                 let (bytes_read, command): (usize, EffectCommand)
                     = EffectCommand::parse_scroll_screen(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EffectCommand(command))
+            }
+
+            EFFECT_COMMAND_CHANGE_COLOR => {
+                let (bytes_read, command): (usize, EffectCommand)
+                    = EffectCommand::parse_change_color(&bytes[offset..]);
 
                 offset += bytes_read;
 

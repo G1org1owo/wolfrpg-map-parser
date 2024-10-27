@@ -454,7 +454,7 @@ Quite complex, check `extra/wolf/picture.hexpat`
 | 1 byte  | padding      | `00`                 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | shake_type   | uint8 bitmap         |
-| 2 bytes | ???          |                      |
+| 2 bytes | padding      | `00 00`              |
 | 4 bytes | duration     | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
