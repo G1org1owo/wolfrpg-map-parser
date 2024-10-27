@@ -5,7 +5,7 @@ namespace Sound {
     enum ProcessType: u8 {
         Playback    = 0x00,
         Preload     = 0x01,
-        FreeMemory  = 0x02,
+        FreeMemory  = 0x03,
     };
 
     enum Operation: u8 {
@@ -19,10 +19,17 @@ namespace Sound {
         Operation operation: 4;
     };
 
+    enum SoundType: u8 {
+        DBEntry     = 0x00,
+        Variable    = 0x01,
+        Filename    = 0x02,
+    };
+
     struct FilenameCommand {
         u8 unknown1;
         Options options;
-        u24 unknown2;
+        u16 systemdb_entry;
+        SoundType sound_type;
 
         if(options.operation == Operation::SetSE) {
             u32 delay_playback;
@@ -30,7 +37,7 @@ namespace Sound {
             u32 fade_time;
         }
 
-        u32 unknown3;
+        u32 variable;
         u32 start_time;
         u32 volume;
         u32 tempo;
@@ -50,16 +57,11 @@ namespace Sound {
         u8 end_command;
     };
 
-    enum VariableType: u8 {
-        DBEntry     = 0x00,
-        Variable    = 0x01,
-    };
-
     struct VariableCommand {
         u8 unknown1;
         Options options;
         u16 systemdb_entry;
-        VariableType variable_type;
+        SoundType sound_type;
 
         if(options.operation == Operation::SetSE) {
             u32 delay_playback;
@@ -67,7 +69,7 @@ namespace Sound {
             u32 fade_time;
         }
 
-        u32 unknown3;
+        u32 variable;
         u32 start_time;
 
         u24 end_command;
@@ -77,11 +79,11 @@ namespace Sound {
         u8 unknown1;
         Options options;
         u16 systemdb_entry;
-        VariableType variable_type;
+        SoundType sound_type;
 
-        if(variable_type == VariableType::Variable) {
-            u32 variable;
+        if(sound_type == SoundType::Variable) {
             u32 unknown2;
+            u32 variable;
         }
 
         u24 end_command;
