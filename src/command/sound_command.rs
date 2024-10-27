@@ -21,7 +21,8 @@ pub struct SoundCommand {
 }
 
 impl SoundCommand {
-    fn parse(bytes: &[u8], parse_state: fn(&[u8], &Options) -> (usize, State)) -> (usize, Self) {
+    fn parse(bytes: &[u8], parse_state: fn(&[u8], &Options, &SoundType) -> (usize, State))
+        -> (usize, Self) {
         let mut offset: usize = 0;
 
         let options: u8 = bytes[offset];
@@ -34,7 +35,8 @@ impl SoundCommand {
         let sound_type: SoundType = SoundType::new(bytes[offset]);
         offset += 1;
 
-        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..], &options);
+        let (bytes_read, state): (usize, State)
+            = parse_state(&bytes[offset..], &options, &sound_type);
         offset += bytes_read;
 
         offset += 1; // Command end signature
@@ -53,5 +55,9 @@ impl SoundCommand {
 
     pub fn parse_variable(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_variable)
+    }
+
+    pub fn parse_free_all(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_free_all)
     }
 }

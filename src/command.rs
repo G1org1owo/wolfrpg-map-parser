@@ -83,6 +83,8 @@ const EFFECT_COMMAND_CHANGE_COLOR: u32          = 0x03970000;
 const SOUND_COMMAND_FILENAME: u32               = 0x088c0000;
 const SOUND_COMMAND_FILENAME_SE: u32            = 0x078c0000;
 const SOUND_COMMAND_VARIABLE: u32               = 0x058c0000;
+const SOUND_COMMAND_FREE_ALL: u32               = 0x028c0000;
+const SOUND_COMMAND_FREE_ALL_VARIABLE: u32      = 0x048c0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -457,6 +459,15 @@ impl Command {
             SOUND_COMMAND_VARIABLE => {
                 let (bytes_read, command): (usize, SoundCommand)
                     = SoundCommand::parse_variable(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SoundCommand(command))
+            }
+
+            SOUND_COMMAND_FREE_ALL | SOUND_COMMAND_FREE_ALL_VARIABLE => {
+                let (bytes_read, command): (usize, SoundCommand)
+                    = SoundCommand::parse_free_all(&bytes[offset..]);
 
                 offset += bytes_read;
 
