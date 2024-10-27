@@ -100,7 +100,6 @@ namespace EffectScrollScreen {
         Instant     = 0x08,
         ThirtyTwo   = 0x09,
         SixtyFour   = 0x0A,
-
     };
 
     enum ScrollOperation: u8 {

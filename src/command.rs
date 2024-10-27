@@ -76,6 +76,7 @@ const PICTURE_ERASE_COMMAND_DELAY: u32          = 0x05960000;
 const PICTURE_ERASE_COMMAND_RANGE: u32          = 0x07960000;
 const EFFECT_COMMAND_BASE: u32                  = 0x08220100;
 const EFFECT_COMMAND_MAP_SHAKE: u32             = 0x03180100;
+const EFFECT_COMMAND_SCROLL_SCREEN: u32         = 0x04190100;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -413,6 +414,15 @@ impl Command {
             EFFECT_COMMAND_MAP_SHAKE => {
                 let (bytes_read, command): (usize, EffectCommand)
                     = EffectCommand::parse_map_shake(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EffectCommand(command))
+            }
+
+            EFFECT_COMMAND_SCROLL_SCREEN => {
+                let (bytes_read, command): (usize, EffectCommand)
+                    = EffectCommand::parse_scroll_screen(&bytes[offset..]);
 
                 offset += bytes_read;
 
