@@ -3,14 +3,7 @@ use crate::command::effect_command::base::Base;
 use crate::command::effect_command::map_shake::MapShake;
 
 mod base;
-mod base_options;
-mod effect_target;
-mod effect_type;
-mod picture_effect_type;
-mod character_effect_type;
-mod map_effect_type;
 mod map_shake;
-mod shake_type;
 
 #[derive(Serialize)]
 pub enum EffectCommand {

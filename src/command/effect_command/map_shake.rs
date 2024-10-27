@@ -1,6 +1,8 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
-use crate::command::effect_command::shake_type::ShakeType;
+use shake_type::ShakeType;
+
+mod shake_type;
 
 #[derive(Serialize)]
 pub struct MapShake {

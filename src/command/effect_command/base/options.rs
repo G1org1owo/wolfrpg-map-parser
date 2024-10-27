@@ -1,17 +1,17 @@
 use serde::Serialize;
-use crate::command::effect_command::character_effect_type::CharacterEffectType;
-use crate::command::effect_command::effect_target::EffectTarget;
-use crate::command::effect_command::effect_type::EffectType;
-use crate::command::effect_command::map_effect_type::MapEffectType;
-use crate::command::effect_command::picture_effect_type::PictureEffectType;
+use crate::command::effect_command::base::character_effect_type::CharacterEffectType;
+use crate::command::effect_command::base::effect_target::EffectTarget;
+use crate::command::effect_command::base::effect_type::EffectType;
+use crate::command::effect_command::base::map_effect_type::MapEffectType;
+use crate::command::effect_command::base::picture_effect_type::PictureEffectType;
 
 #[derive(Serialize)]
-pub struct BaseOptions {
+pub struct Options {
     target: EffectTarget,
     effect_type: EffectType
 }
 
-impl BaseOptions {
+impl Options {
     pub fn new(options: u32) -> Self {
         let target: EffectTarget = EffectTarget::new((options & 0x0f) as u8);
         let effect_type: u8 = ((options & 0xf0) >> 4) as u8;
