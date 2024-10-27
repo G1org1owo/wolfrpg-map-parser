@@ -10,6 +10,7 @@ mod operation;
 mod sound_type;
 mod state;
 mod filename;
+mod variable;
 
 #[derive(Serialize)]
 pub struct SoundCommand {
@@ -48,5 +49,9 @@ impl SoundCommand {
 
     pub fn parse_filename(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_filename)
+    }
+
+    pub fn parse_variable(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_variable)
     }
 }
