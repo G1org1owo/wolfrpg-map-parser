@@ -5,6 +5,7 @@ use show_message_command::ShowMessageCommand;
 use crate::command::comment_command::CommentCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
+use crate::command::effect_command::EffectCommand;
 use crate::command::input_key_command::InputKeyCommand;
 use crate::command::number_condition_command::NumberConditionCommand;
 use crate::command::picture_command::PictureCommand;
@@ -26,6 +27,7 @@ mod number_condition_command;
 mod string_condition_command;
 mod input_key_command;
 mod picture_command;
+mod effect_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -72,6 +74,7 @@ const PICTURE_ERASE_COMMAND_DELAY_RESET: u32    = 0x03960000;
 const PICTURE_ERASE_COMMAND_BASE: u32           = 0x04960000;
 const PICTURE_ERASE_COMMAND_DELAY: u32          = 0x05960000;
 const PICTURE_ERASE_COMMAND_RANGE: u32          = 0x07960000;
+const EFFECT_COMMAND_BASE: u32                  = 0x08220100;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -90,6 +93,7 @@ pub enum Command {
     StringConditionCommand(StringConditionCommand),
     InputKeyCommand(InputKeyCommand),
     PictureCommand(PictureCommand),
+    EffectCommand(EffectCommand),
     Exit(),
 }
 
@@ -394,6 +398,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::PictureCommand(command))
+            }
+
+            EFFECT_COMMAND_BASE => {
+                let (bytes_read, command): (usize, EffectCommand)
+                    = EffectCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EffectCommand(command))
             }
 
             EXIT_COMMAND => {
