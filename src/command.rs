@@ -88,6 +88,8 @@ const SOUND_COMMAND_VARIABLE: u32               = 0x058c0000;
 const SOUND_COMMAND_FREE_ALL: u32               = 0x028c0000;
 const SOUND_COMMAND_FREE_ALL_VARIABLE: u32      = 0x048c0000;
 const SAVE_LOAD_COMMAND_BASE: u32               = 0x03dc0000;
+const SAVE_LOAD_COMMAND_LOAD_VARIABLE: u32      = 0x05dd0000;
+const SAVE_LOAD_COMMAND_SAVE_VARIABLE: u32      = 0x05de0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -481,6 +483,24 @@ impl Command {
             SAVE_LOAD_COMMAND_BASE => {
                 let (bytes_read, command): (usize, SaveLoadCommand)
                     = SaveLoadCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SaveLoadCommand(command))
+            }
+
+            SAVE_LOAD_COMMAND_LOAD_VARIABLE => {
+                let (bytes_read, command): (usize, SaveLoadCommand)
+                    = SaveLoadCommand::parse_load_variable(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SaveLoadCommand(command))
+            }
+
+            SAVE_LOAD_COMMAND_SAVE_VARIABLE => {
+                let (bytes_read, command): (usize, SaveLoadCommand)
+                    = SaveLoadCommand::parse_save_variable(&bytes[offset..]);
 
                 offset += bytes_read;
 
