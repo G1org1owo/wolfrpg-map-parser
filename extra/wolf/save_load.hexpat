@@ -3,13 +3,13 @@
 
 namespace SaveLoad {
     enum Operation: u32 {
-        save = 0x00000000,
-        Load = 0x01000000,
+        Save = 0x00000000,
+        Load = 0x00000001,
     };
 
     struct Command {
         u8 unknown1;
-        be Operation operation;
+        Operation operation;
         u32 save_number;
 
         u24 end_command;

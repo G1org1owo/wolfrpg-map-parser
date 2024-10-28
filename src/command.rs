@@ -9,6 +9,7 @@ use crate::command::effect_command::EffectCommand;
 use crate::command::input_key_command::InputKeyCommand;
 use crate::command::number_condition_command::NumberConditionCommand;
 use crate::command::picture_command::PictureCommand;
+use crate::command::save_load_command::SaveLoadCommand;
 use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
@@ -30,6 +31,7 @@ mod input_key_command;
 mod picture_command;
 mod effect_command;
 mod sound_command;
+mod save_load_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -85,6 +87,7 @@ const SOUND_COMMAND_FILENAME_SE: u32            = 0x078c0000;
 const SOUND_COMMAND_VARIABLE: u32               = 0x058c0000;
 const SOUND_COMMAND_FREE_ALL: u32               = 0x028c0000;
 const SOUND_COMMAND_FREE_ALL_VARIABLE: u32      = 0x048c0000;
+const SAVE_LOAD_COMMAND_BASE: u32               = 0x03dc0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -105,6 +108,7 @@ pub enum Command {
     PictureCommand(PictureCommand),
     EffectCommand(EffectCommand),
     SoundCommand(SoundCommand),
+    SaveLoadCommand(SaveLoadCommand),
     Exit(),
 }
 
@@ -472,6 +476,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::SoundCommand(command))
+            }
+
+            SAVE_LOAD_COMMAND_BASE => {
+                let (bytes_read, command): (usize, SaveLoadCommand)
+                    = SaveLoadCommand::parse_base(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::SaveLoadCommand(command))
             }
 
             EXIT_COMMAND => {

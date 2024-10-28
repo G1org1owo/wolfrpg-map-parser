@@ -489,7 +489,7 @@ Check `extra/wolf/sound.hexpat`
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `03 DC 00 00`        |
 | 1 byte  | padding      | `00`                 |
-| 4 bytes | Operation    | big-endian uint32    |
+| 4 bytes | Operation    | little-endian uint32 |
 | 4 bytes | save_number  | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
@@ -504,7 +504,7 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes | target_is_pointer | little-endian uint32 |
 | 3 bytes | Command end       | `00 00 00`           |
 
-### Load variable Variant
+### Save variable Variant
 | Length  | Content           | Value                |
 |---------|-------------------|----------------------|
 | 4 bytes | command_code      | `05 DE 00 00`        |
