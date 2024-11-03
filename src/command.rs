@@ -8,6 +8,7 @@ use crate::command::debug_text_command::DebugTextCommand;
 use crate::command::effect_command::EffectCommand;
 use crate::command::input_key_command::InputKeyCommand;
 use crate::command::number_condition_command::NumberConditionCommand;
+use crate::command::party_graphics_command::PartyGraphicsCommand;
 use crate::command::picture_command::PictureCommand;
 use crate::command::save_load_command::SaveLoadCommand;
 use crate::command::set_string_command::SetStringCommand;
@@ -32,6 +33,7 @@ mod picture_command;
 mod effect_command;
 mod sound_command;
 mod save_load_command;
+mod party_graphics_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -90,6 +92,9 @@ const SOUND_COMMAND_FREE_ALL_VARIABLE: u32      = 0x048c0000;
 const SAVE_LOAD_COMMAND_BASE: u32               = 0x03dc0000;
 const SAVE_LOAD_COMMAND_LOAD_VARIABLE: u32      = 0x05dd0000;
 const SAVE_LOAD_COMMAND_SAVE_VARIABLE: u32      = 0x05de0000;
+const PARTY_GRAPHICS_COMMAND_BASE: u32          = 0x030e0100;
+const PARTY_GRAPHICS_COMMAND_VARIABLE: u32      = 0x040e0100;
+const PARTY_GRAPHICS_COMMAND_NO_MEMBER: u32     = 0x020e0100;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -111,6 +116,7 @@ pub enum Command {
     EffectCommand(EffectCommand),
     SoundCommand(SoundCommand),
     SaveLoadCommand(SaveLoadCommand),
+    PartyGraphicsCommand(PartyGraphicsCommand),
     Exit(),
 }
 
@@ -505,6 +511,16 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::SaveLoadCommand(command))
+            }
+
+            PARTY_GRAPHICS_COMMAND_BASE | PARTY_GRAPHICS_COMMAND_VARIABLE |
+            PARTY_GRAPHICS_COMMAND_NO_MEMBER => {
+                let (bytes_read, command): (usize, PartyGraphicsCommand)
+                    = PartyGraphicsCommand::parse(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::PartyGraphicsCommand(command))
             }
 
             EXIT_COMMAND => {

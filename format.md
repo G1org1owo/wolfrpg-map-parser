@@ -542,7 +542,7 @@ Check `extra/wolf/sound.hexpat`
 ### No member Variant
 | Length                   | Content            | Value                                                  |
 |--------------------------|--------------------|--------------------------------------------------------|
-| 4 bytes                  | command_code       | `03 0E 01 00`                                          |  
+| 4 bytes                  | command_code       | `02 0E 01 00`                                          |  
 | 1 byte                   | padding            | `00`                                                   |
 | 4 bytes                  | options            | uint32 bitmap                                          |
 | 1 byte                   | end_options        | `00`                                                   |
