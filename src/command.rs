@@ -2,6 +2,7 @@ use serde::Serialize;
 use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
 use show_message_command::ShowMessageCommand;
+use crate::command::chip_management_command::ChipManagementCommand;
 use crate::command::comment_command::CommentCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
@@ -34,6 +35,7 @@ mod effect_command;
 mod sound_command;
 mod save_load_command;
 mod party_graphics_command;
+mod chip_management_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -95,6 +97,7 @@ const SAVE_LOAD_COMMAND_SAVE_VARIABLE: u32      = 0x05de0000;
 const PARTY_GRAPHICS_COMMAND_BASE: u32          = 0x030e0100;
 const PARTY_GRAPHICS_COMMAND_VARIABLE: u32      = 0x040e0100;
 const PARTY_GRAPHICS_COMMAND_NO_MEMBER: u32     = 0x020e0100;
+const CHIP_MANAGEMENT_COMMAND_SETTINGS: u32     = 0x03f00000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -117,6 +120,7 @@ pub enum Command {
     Sound(SoundCommand),
     SaveLoad(SaveLoadCommand),
     PartyGraphics(PartyGraphicsCommand),
+    ChipManagement(ChipManagementCommand),
     Exit(),
 }
 
@@ -521,6 +525,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::PartyGraphics(command))
+            }
+
+            CHIP_MANAGEMENT_COMMAND_SETTINGS => {
+                let (bytes_read, command): (usize, ChipManagementCommand)
+                    = ChipManagementCommand::parse_map_chip_settings(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::ChipManagement(command))
             }
 
             EXIT_COMMAND => {
