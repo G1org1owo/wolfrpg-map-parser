@@ -109,14 +109,14 @@ pub enum Command {
     DBManagement(DBManagementCommand),
     SetString(SetStringCommand),
     SetVariablePlus(SetVariablePlusCommand),
-    NumberConditionCommand(NumberConditionCommand),
-    StringConditionCommand(StringConditionCommand),
-    InputKeyCommand(InputKeyCommand),
-    PictureCommand(PictureCommand),
-    EffectCommand(EffectCommand),
-    SoundCommand(SoundCommand),
-    SaveLoadCommand(SaveLoadCommand),
-    PartyGraphicsCommand(PartyGraphicsCommand),
+    NumberCondition(NumberConditionCommand),
+    StringCondition(StringConditionCommand),
+    InputKey(InputKeyCommand),
+    Picture(PictureCommand),
+    Effect(EffectCommand),
+    Sound(SoundCommand),
+    SaveLoad(SaveLoadCommand),
+    PartyGraphics(PartyGraphicsCommand),
     Exit(),
 }
 
@@ -263,7 +263,7 @@ impl Command {
                 offset += bytes_read;
                 commands += commands_read;
 
-                Ok(Command::NumberConditionCommand(command))
+                Ok(Command::NumberCondition(command))
             }
 
             STRING_CONDITION_COMMAND | STRING_CONDITION_COMMAND_TWO |
@@ -276,7 +276,7 @@ impl Command {
                 offset += bytes_read;
                 commands += commands_read;
 
-                Ok(Command::StringConditionCommand(command))
+                Ok(Command::StringCondition(command))
             }
 
             INPUT_KEY_COMMAND_BASE => {
@@ -285,7 +285,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::InputKeyCommand(command))
+                Ok(Command::InputKey(command))
             }
 
             INPUT_KEY_COMMAND_KEYBOARD_OR_PAD => {
@@ -294,7 +294,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::InputKeyCommand(command))
+                Ok(Command::InputKey(command))
             }
 
             AUTOMATIC_INPUT_COMMAND_BASIC | AUTOMATIC_INPUT_COMMAND_MOUSE => {
@@ -303,7 +303,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::InputKeyCommand(command))
+                Ok(Command::InputKey(command))
             }
 
             AUTOMATIC_INPUT_COMMAND_KEYBOARD => {
@@ -312,7 +312,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::InputKeyCommand(command))
+                Ok(Command::InputKey(command))
             }
 
             INPUT_TOGGLE_COMMAND_BASIC | INPUT_TOGGLE_COMMAND_DEVICE => {
@@ -321,7 +321,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::InputKeyCommand(command))
+                Ok(Command::InputKey(command))
             }
 
             PICTURE_SHOW_COMMAND_BASE | PICTURE_SHOW_COMMAND_BASE_BY_VAR => {
@@ -330,7 +330,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_COLORS => {
@@ -339,7 +339,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_DELAY => {
@@ -348,7 +348,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_RANGE => {
@@ -357,7 +357,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_COLOR_VALUES => {
@@ -366,7 +366,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_ZOOM => {
@@ -375,7 +375,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_SHOW_COMMAND_FREE_TRANSFORM => {
@@ -384,7 +384,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_ERASE_COMMAND_DELAY_RESET => {
@@ -393,7 +393,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_ERASE_COMMAND_BASE => {
@@ -402,7 +402,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_ERASE_COMMAND_DELAY => {
@@ -411,7 +411,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             PICTURE_ERASE_COMMAND_RANGE => {
@@ -420,7 +420,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PictureCommand(command))
+                Ok(Command::Picture(command))
             }
 
             EFFECT_COMMAND_BASE => {
@@ -429,7 +429,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::EffectCommand(command))
+                Ok(Command::Effect(command))
             }
 
             EFFECT_COMMAND_MAP_SHAKE => {
@@ -438,7 +438,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::EffectCommand(command))
+                Ok(Command::Effect(command))
             }
 
             EFFECT_COMMAND_SCROLL_SCREEN => {
@@ -447,7 +447,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::EffectCommand(command))
+                Ok(Command::Effect(command))
             }
 
             EFFECT_COMMAND_CHANGE_COLOR => {
@@ -456,7 +456,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::EffectCommand(command))
+                Ok(Command::Effect(command))
             }
 
             SOUND_COMMAND_FILENAME | SOUND_COMMAND_FILENAME_SE => {
@@ -465,7 +465,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SoundCommand(command))
+                Ok(Command::Sound(command))
             }
 
             SOUND_COMMAND_VARIABLE => {
@@ -474,7 +474,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SoundCommand(command))
+                Ok(Command::Sound(command))
             }
 
             SOUND_COMMAND_FREE_ALL | SOUND_COMMAND_FREE_ALL_VARIABLE => {
@@ -483,7 +483,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SoundCommand(command))
+                Ok(Command::Sound(command))
             }
 
             SAVE_LOAD_COMMAND_BASE => {
@@ -492,7 +492,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SaveLoadCommand(command))
+                Ok(Command::SaveLoad(command))
             }
 
             SAVE_LOAD_COMMAND_LOAD_VARIABLE => {
@@ -501,7 +501,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SaveLoadCommand(command))
+                Ok(Command::SaveLoad(command))
             }
 
             SAVE_LOAD_COMMAND_SAVE_VARIABLE => {
@@ -510,7 +510,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::SaveLoadCommand(command))
+                Ok(Command::SaveLoad(command))
             }
 
             PARTY_GRAPHICS_COMMAND_BASE | PARTY_GRAPHICS_COMMAND_VARIABLE |
@@ -520,7 +520,7 @@ impl Command {
 
                 offset += bytes_read;
 
-                Ok(Command::PartyGraphicsCommand(command))
+                Ok(Command::PartyGraphics(command))
             }
 
             EXIT_COMMAND => {
