@@ -17,6 +17,7 @@ use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
 use crate::command::sound_command::SoundCommand;
 use crate::command::string_condition_command::StringConditionCommand;
+use crate::command::transfer_command::TransferCommand;
 
 mod show_choice_command;
 mod show_message_command;
@@ -36,6 +37,7 @@ mod sound_command;
 mod save_load_command;
 mod party_graphics_command;
 mod chip_management_command;
+mod transfer_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -100,6 +102,7 @@ const PARTY_GRAPHICS_COMMAND_NO_MEMBER: u32     = 0x020e0100;
 const CHIP_MANAGEMENT_COMMAND_SETTINGS: u32     = 0x03f00000;
 const CHIP_MANAGEMENT_COMMAND_SWITCH_SET: u32   = 0x02f10000;
 const CHIP_MANAGEMENT_COMMAND_OVERWRITE: u32    = 0x07f20000;
+const TRANSFER_COMMAND: u32                     = 0x06820000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -123,6 +126,7 @@ pub enum Command {
     SaveLoad(SaveLoadCommand),
     PartyGraphics(PartyGraphicsCommand),
     ChipManagement(ChipManagementCommand),
+    Transfer(TransferCommand),
     Exit(),
 }
 
@@ -554,6 +558,15 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::ChipManagement(command))
+            }
+
+            TRANSFER_COMMAND => {
+                let (bytes_read, command): (usize, TransferCommand)
+                    = TransferCommand::parse(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::Transfer(command))
             }
 
             EXIT_COMMAND => {

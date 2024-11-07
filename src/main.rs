@@ -19,4 +19,6 @@ fn main() {
     let map: Map = Map::parse(&bytes);
 
     println!("{}", serde_json::to_string_pretty(&map).expect("Serialization failed!"));
+    fs::write("out.json", serde_json::to_string_pretty(&map).expect("Serialization failed!"))
+        .expect("Write failed!");
 }

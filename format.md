@@ -591,7 +591,7 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes? | db_variable     | little-endian uint32, only if `target` is `EF D8 FF FF`     |
 | 4 bytes  | destination_x   | little-endian uint32                                        |
 | 4 bytes  | destination_y   | little-endian uint32                                        |
-| 4 bytes  | destination_map | little-endian uint32, only if `target` is not `EF D8 FF FF` |
+| 4 bytes? | destination_map | little-endian uint32, only if `target` is not `EF D8 FF FF` |
 | 4 bytes  | options         | uint32 bitmap                                               |
 | 3 bytes  | Command end     | `00 00 00`                                                  |
 
