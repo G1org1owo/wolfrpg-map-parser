@@ -99,6 +99,7 @@ const PARTY_GRAPHICS_COMMAND_VARIABLE: u32      = 0x040e0100;
 const PARTY_GRAPHICS_COMMAND_NO_MEMBER: u32     = 0x020e0100;
 const CHIP_MANAGEMENT_COMMAND_SETTINGS: u32     = 0x03f00000;
 const CHIP_MANAGEMENT_COMMAND_SWITCH_SET: u32   = 0x02f10000;
+const CHIP_MANAGEMENT_COMMAND_OVERWRITE: u32    = 0x07f20000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -540,6 +541,15 @@ impl Command {
             CHIP_MANAGEMENT_COMMAND_SWITCH_SET => {
                 let (bytes_read, command): (usize, ChipManagementCommand)
                     = ChipManagementCommand::parse_switch_chipset(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::ChipManagement(command))
+            }
+
+            CHIP_MANAGEMENT_COMMAND_OVERWRITE => {
+                let (bytes_read, command): (usize, ChipManagementCommand)
+                    = ChipManagementCommand::parse_overwrite_map_chips(&bytes[offset..]);
 
                 offset += bytes_read;
 

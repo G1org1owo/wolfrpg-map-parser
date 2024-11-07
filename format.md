@@ -569,7 +569,7 @@ Check `extra/wolf/sound.hexpat`
 | 4 bytes | chipset      | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
-### Map chip settings Variant
+### Overwrite map chips Variant
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `07 F2 00 00`        |
