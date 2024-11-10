@@ -106,6 +106,10 @@ const CHIP_MANAGEMENT_COMMAND_SWITCH_SET: u32   = 0x02f10000;
 const CHIP_MANAGEMENT_COMMAND_OVERWRITE: u32    = 0x07f20000;
 const TRANSFER_COMMAND: u32                     = 0x06820000;
 const LOOP_COMMAND: u32                         = 0x01aa0000;
+const BREAK_LOOP_COMMAND: u32                   = 0x01ab0000;
+const GOTO_LOOP_START_COMMAND: u32              = 0x01b00000;
+const PREPARE_TRANSITION_COMMAND: u32           = 0x01a10000;
+const EXECUTE_TRANSITION_COMMAND: u32           = 0x01a20000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -579,6 +583,42 @@ impl Command {
 
                 offset += bytes_read;
                 commands += commands_read;
+
+                Ok(Command::EventControl(command))
+            }
+
+            BREAK_LOOP_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_break_loop(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            }
+
+            GOTO_LOOP_START_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_goto_loop_start(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            }
+
+            PREPARE_TRANSITION_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_prepare_transition(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            }
+
+            EXECUTE_TRANSITION_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_execute_transition(&bytes[offset..]);
+
+                offset += bytes_read;
 
                 Ok(Command::EventControl(command))
             }

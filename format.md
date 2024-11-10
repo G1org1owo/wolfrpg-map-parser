@@ -610,28 +610,28 @@ Check `extra/wolf/sound.hexpat`
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AB 00 00` |
 | 1 bytes | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Go to loop start Command Format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B0 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Prepare transition Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 A1 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Execute transition Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 A2 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Set transition Command format
 | Length  | Content           | Value                |

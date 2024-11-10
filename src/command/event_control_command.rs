@@ -3,6 +3,8 @@ use crate::command::event_control_command::loop_command::Loop;
 
 mod loop_command;
 
+const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
+
 #[derive(Serialize)]
 pub enum EventControlCommand {
     Loop(Loop),
@@ -28,9 +30,28 @@ pub enum EventControlCommand {
 }
 
 impl EventControlCommand {
+    fn parse_empty_command(command: EventControlCommand) -> (usize, Self) {
+        (COMMAND_END_SIGNATURE_LENGTH, command)
+    }
     pub fn parse_loop(bytes: &[u8]) -> (usize, u32, Self) {
         let (bytes_read, commands_read, command): (usize, u32, Loop) = Loop::parse(bytes);
 
         (bytes_read, commands_read, Self::Loop(command))
+    }
+
+    pub fn parse_break_loop(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::BreakLoop)
+    }
+
+    pub fn parse_goto_loop_start(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::GotoLoopStart)
+    }
+
+    pub fn parse_prepare_transition(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::PrepareTransition)
+    }
+
+    pub fn parse_execute_transition(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::ExecuteTransition)
     }
 }
