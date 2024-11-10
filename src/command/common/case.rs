@@ -29,17 +29,20 @@ impl Case {
 
         let mut commands: Vec<Command> = vec![];
         let mut command_count: u32 = 1; // Case counts as command
-        loop {
+        let mut exit: bool = false;
+
+        while(!exit) {
             let (bytes_read, commands_read, command): (usize, u32, Command)
                 = Command::parse(&bytes[offset..]);
+
+            exit = match command {
+                Command::Exit() => true,
+                _ => false
+            };
 
             commands.push(command);
             offset += bytes_read;
             command_count += commands_read;
-
-            if let Command::Exit() = commands.last().unwrap() {
-                break;
-            };
         }
 
         (offset, command_count, Self {
