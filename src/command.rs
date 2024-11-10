@@ -7,6 +7,7 @@ use crate::command::comment_command::CommentCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
 use crate::command::effect_command::EffectCommand;
+use crate::command::event_control_command::EventControlCommand;
 use crate::command::input_key_command::InputKeyCommand;
 use crate::command::number_condition_command::NumberConditionCommand;
 use crate::command::party_graphics_command::PartyGraphicsCommand;
@@ -38,6 +39,7 @@ mod save_load_command;
 mod party_graphics_command;
 mod chip_management_command;
 mod transfer_command;
+mod event_control_command;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -103,6 +105,7 @@ const CHIP_MANAGEMENT_COMMAND_SETTINGS: u32     = 0x03f00000;
 const CHIP_MANAGEMENT_COMMAND_SWITCH_SET: u32   = 0x02f10000;
 const CHIP_MANAGEMENT_COMMAND_OVERWRITE: u32    = 0x07f20000;
 const TRANSFER_COMMAND: u32                     = 0x06820000;
+const LOOP_COMMAND: u32                         = 0x01aa0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -127,6 +130,7 @@ pub enum Command {
     PartyGraphics(PartyGraphicsCommand),
     ChipManagement(ChipManagementCommand),
     Transfer(TransferCommand),
+    EventControl(EventControlCommand),
     Exit(),
 }
 
@@ -567,6 +571,16 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::Transfer(command))
+            }
+
+            LOOP_COMMAND => {
+                let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
+                    = EventControlCommand::parse_loop(&bytes[offset..]);
+
+                offset += bytes_read;
+                commands += commands_read;
+
+                Ok(Command::EventControl(command))
             }
 
             EXIT_COMMAND => {

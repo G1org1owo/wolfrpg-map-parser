@@ -13,7 +13,6 @@ import wolf.save_load;
 import wolf.party_graphics;
 import wolf.chip_management;
 import wolf.transfer;
-import wolf.event_control;
 import wolf.common_event;
 
 import wolf.case_commands;
