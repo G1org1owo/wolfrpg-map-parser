@@ -110,6 +110,7 @@ const BREAK_LOOP_COMMAND: u32                   = 0x01ab0000;
 const GOTO_LOOP_START_COMMAND: u32              = 0x01b00000;
 const PREPARE_TRANSITION_COMMAND: u32           = 0x01a10000;
 const EXECUTE_TRANSITION_COMMAND: u32           = 0x01a20000;
+const SET_TRANSITION_COMMAND: u32               = 0x03a00000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -617,6 +618,15 @@ impl Command {
             EXECUTE_TRANSITION_COMMAND => {
                 let (bytes_read, command): (usize, EventControlCommand)
                     = EventControlCommand::parse_execute_transition(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            }
+
+            SET_TRANSITION_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_set_transition(&bytes[offset..]);
 
                 offset += bytes_read;
 

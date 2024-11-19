@@ -1,7 +1,9 @@
 use serde::Serialize;
 use crate::command::event_control_command::loop_command::Loop;
+use crate::command::event_control_command::set_transition::SetTransition;
 
 mod loop_command;
+mod set_transition;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
@@ -12,7 +14,7 @@ pub enum EventControlCommand {
     GotoLoopStart,
     PrepareTransition,
     ExecuteTransition,
-    SetTransition,
+    SetTransition(SetTransition),
     MoveRoute,
     WaitForMoveRoute,
     MoveDuringEventsOn,
@@ -53,5 +55,11 @@ impl EventControlCommand {
 
     pub fn parse_execute_transition(bytes: &[u8]) -> (usize, Self) {
         Self::parse_empty_command(Self::ExecuteTransition)
+    }
+
+    pub fn parse_set_transition(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, SetTransition) = SetTransition::parse(bytes);
+
+        (bytes_read, Self::SetTransition(command))
     }
 }
