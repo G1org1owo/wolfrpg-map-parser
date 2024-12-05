@@ -111,6 +111,7 @@ const GOTO_LOOP_START_COMMAND: u32              = 0x01b00000;
 const PREPARE_TRANSITION_COMMAND: u32           = 0x01a10000;
 const EXECUTE_TRANSITION_COMMAND: u32           = 0x01a20000;
 const SET_TRANSITION_COMMAND: u32               = 0x03a00000;
+const MOVE_COMMAND: u32                         = 0x02c90000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -631,7 +632,16 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::EventControl(command))
-            }
+            },
+
+            MOVE_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_move_route(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
 
             EXIT_COMMAND => {
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment
