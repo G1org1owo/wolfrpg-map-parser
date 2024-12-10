@@ -1,4 +1,5 @@
 use serde::Serialize;
+use crate::command::event_control_command::erase_event::EraseEvent;
 use crate::command::event_control_command::loop_command::Loop;
 use crate::command::event_control_command::move_route::MoveRoute;
 use crate::command::event_control_command::set_transition::SetTransition;
@@ -6,6 +7,7 @@ use crate::command::event_control_command::set_transition::SetTransition;
 mod loop_command;
 mod set_transition;
 mod move_route;
+mod erase_event;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
@@ -26,7 +28,7 @@ pub enum EventControlCommand {
     StopNonPictureGraphicUpdates,
     ResumeNonPictureGraphicUpdates,
     ForceExitEvent,
-    EraseEvent,
+    EraseEvent(EraseEvent),
     WaitEvent,
     LoopForCount,
     LabelPoint,
@@ -101,5 +103,11 @@ impl EventControlCommand {
 
     pub fn parse_force_exit_event(bytes: &[u8]) -> (usize, Self) {
         Self::parse_empty_command(Self::ForceExitEvent)
+    }
+
+    pub fn parse_erase_event(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command) = EraseEvent::parse(bytes);
+
+        (bytes_read, Self::EraseEvent(command))
     }
 }

@@ -120,6 +120,7 @@ const GAME_END_COMMAND: u32                     = 0x01af0000;
 const STOP_GRAPHIC_UPDATES_COMMAND: u32         = 0x01b10000;
 const RESUME_GRAPHIC_UPDATES_COMMAND: u32       = 0x01b20000;
 const FORCE_EXIT_EVENT_COMMAND: u32             = 0x01ac0000;
+const ERASE_EVENT_COMMAND: u32                  = 0x03ad0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -721,7 +722,16 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::EventControl(command))
-            }
+            },
+
+            ERASE_EVENT_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_erase_event(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
 
             EXIT_COMMAND => {
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment
