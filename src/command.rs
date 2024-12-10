@@ -112,6 +112,14 @@ const PREPARE_TRANSITION_COMMAND: u32           = 0x01a10000;
 const EXECUTE_TRANSITION_COMMAND: u32           = 0x01a20000;
 const SET_TRANSITION_COMMAND: u32               = 0x03a00000;
 const MOVE_COMMAND: u32                         = 0x02c90000;
+const WAIT_FOR_MOVE_COMMAND: u32                = 0x01ca0000;
+const MOVE_DURING_EVENTS_ON_COMMAND: u32        = 0x01e60000;
+const MOVE_DURING_EVENTS_OFF_COMMAND: u32       = 0x01e70000;
+const GOTO_TITLE_COMMAND: u32                   = 0x01ae0000;
+const GAME_END_COMMAND: u32                     = 0x01af0000;
+const STOP_GRAPHIC_UPDATES_COMMAND: u32         = 0x01b10000;
+const RESUME_GRAPHIC_UPDATES_COMMAND: u32       = 0x01b20000;
+const FORCE_EXIT_EVENT_COMMAND: u32             = 0x01ac0000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -642,6 +650,78 @@ impl Command {
 
                 Ok(Command::EventControl(command))
             },
+
+            WAIT_FOR_MOVE_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_wait_for_move_route(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            MOVE_DURING_EVENTS_ON_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_move_during_events_on(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            MOVE_DURING_EVENTS_OFF_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_move_during_events_off(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            GOTO_TITLE_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_goto_title(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            GAME_END_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_game_end(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            STOP_GRAPHIC_UPDATES_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_stop_non_picture_graphic_updates(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            RESUME_GRAPHIC_UPDATES_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_resume_non_picture_graphic_updates(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            FORCE_EXIT_EVENT_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_force_exit_event(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            }
 
             EXIT_COMMAND => {
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment

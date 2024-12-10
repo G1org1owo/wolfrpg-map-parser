@@ -70,4 +70,36 @@ impl EventControlCommand {
 
         (bytes_read, Self::MoveRoute(command))
     }
+
+    pub fn parse_wait_for_move_route(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::WaitForMoveRoute)
+    }
+
+    pub fn parse_move_during_events_on(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::MoveDuringEventsOn)
+    }
+
+    pub fn parse_move_during_events_off(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::MoveDuringEventsOff)
+    }
+
+    pub fn parse_goto_title(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::GotoTitle)
+    }
+
+    pub fn parse_game_end(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::GameEnd)
+    }
+
+    pub fn parse_stop_non_picture_graphic_updates(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::StopNonPictureGraphicUpdates)
+    }
+
+    pub fn parse_resume_non_picture_graphic_updates(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::ResumeNonPictureGraphicUpdates)
+    }
+
+    pub fn parse_force_exit_event(bytes: &[u8]) -> (usize, Self) {
+        Self::parse_empty_command(Self::ForceExitEvent)
+    }
 }

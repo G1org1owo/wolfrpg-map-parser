@@ -663,56 +663,56 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 CA 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Move during events on Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 E6 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Move during events off Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 E7 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Go to title Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AE 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Game end Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AF 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Stop non picture graphic updates Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B1 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Resume non picture graphic updates Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 B2 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Force exit event Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 AC 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ### Erase event Command format
 | Length  | Content      | Value                |
