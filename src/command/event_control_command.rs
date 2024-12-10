@@ -3,11 +3,13 @@ use crate::command::event_control_command::erase_event::EraseEvent;
 use crate::command::event_control_command::loop_command::Loop;
 use crate::command::event_control_command::move_route::MoveRoute;
 use crate::command::event_control_command::set_transition::SetTransition;
+use crate::command::event_control_command::wait::Wait;
 
 mod loop_command;
 mod set_transition;
 mod move_route;
 mod erase_event;
+mod wait;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
@@ -29,7 +31,7 @@ pub enum EventControlCommand {
     ResumeNonPictureGraphicUpdates,
     ForceExitEvent,
     EraseEvent(EraseEvent),
-    WaitEvent,
+    Wait(Wait),
     LoopForCount,
     LabelPoint,
     LabelJump
@@ -68,7 +70,7 @@ impl EventControlCommand {
     }
 
     pub fn parse_move_route(bytes: &[u8]) -> (usize, Self) {
-        let (bytes_read, command) = MoveRoute::parse(bytes);
+        let (bytes_read, command): (usize, MoveRoute) = MoveRoute::parse(bytes);
 
         (bytes_read, Self::MoveRoute(command))
     }
@@ -106,8 +108,14 @@ impl EventControlCommand {
     }
 
     pub fn parse_erase_event(bytes: &[u8]) -> (usize, Self) {
-        let (bytes_read, command) = EraseEvent::parse(bytes);
+        let (bytes_read, command): (usize, EraseEvent) = EraseEvent::parse(bytes);
 
         (bytes_read, Self::EraseEvent(command))
+    }
+
+    pub fn parse_wait(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Wait) = Wait::parse(bytes);
+
+        (bytes_read, Self::Wait(command))
     }
 }

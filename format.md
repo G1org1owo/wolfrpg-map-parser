@@ -723,7 +723,7 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | 4 bytes | fade_frames  | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
 
-### Wait event Command format
+### Wait Command format
 | Length  | Content      | Value                |
 |---------|--------------|----------------------|
 | 4 bytes | command_code | `02 B4 00 00`        |
