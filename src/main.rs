@@ -2,6 +2,7 @@ mod map;
 mod event;
 mod command;
 mod byte_utils;
+mod common;
 
 use std::{env, fs};
 use serde_json;

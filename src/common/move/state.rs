@@ -1,6 +1,6 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
-use crate::command::common::r#move::move_type::MoveType;
+use crate::common::r#move::move_type::MoveType;
 
 #[derive(Serialize)]
 pub enum State {

@@ -1,7 +1,7 @@
 use serde::Serialize;
 use move_type::MoveType;
 use crate::byte_utils::as_u16_le;
-use crate::command::common::r#move::state::State;
+use crate::common::r#move::state::State;
 
 mod move_type;
 mod state;
@@ -29,5 +29,18 @@ impl Move {
             move_type,
             state
         })
+    }
+
+    pub fn parse_multiple(bytes: &[u8], move_count: u32) -> (usize, Vec<Move>) {
+        let mut offset: usize = 0;
+        let mut moves: Vec<Move> = Vec::with_capacity(move_count as usize);
+
+        for _ in 0..move_count {
+            let (bytes_read, mov): (usize, Move) = Move::parse(&bytes[offset..]);
+            offset += bytes_read;
+            moves.push(mov);
+        }
+
+        (offset, moves)
     }
 }

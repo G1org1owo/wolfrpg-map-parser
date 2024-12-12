@@ -1,6 +1,7 @@
 use serde::Serialize;
 use crate::byte_utils::{as_string, as_u32_le};
 use crate::command::Command;
+use crate::common::r#move::Move;
 
 #[derive(Serialize)]
 pub struct Condition {
@@ -25,6 +26,7 @@ pub struct Page {
     options: u8, // bitmask
     unknown2: u8,
     move_count: u32,
+    moves: Vec<Move>,
     command_count: u32,
     commands: Vec<Command>,
     unknown4: u32,
@@ -69,8 +71,10 @@ impl Page {
         let move_count: u32 = as_u32_le(&bytes[offset+6..offset+10]);
         offset+=10;
 
-        // TODO: Parse moves
-
+        let (bytes_read, moves): (usize, Vec<Move>) 
+            = Move::parse_multiple(&bytes[offset..], move_count);
+        offset += bytes_read;
+        
         let command_count = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
@@ -104,6 +108,7 @@ impl Page {
             options,
             unknown2,
             move_count,
+            moves,
             command_count,
             commands,
             unknown4,

@@ -2,7 +2,7 @@ mod options;
 
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
-use crate::command::common::r#move::Move;
+use crate::common::r#move::Move;
 use crate::command::event_control_command::move_route::options::Options;
 
 #[derive(Serialize)]
@@ -36,7 +36,7 @@ impl MoveRoute {
         offset += 4;
 
         let (bytes_read, moves): (usize, Vec<Move>)
-            = Self::parse_moves(&bytes[offset..], move_count);
+            = Move::parse_multiple(&bytes[offset..], move_count);
         offset += bytes_read;
 
         (offset, Self {
@@ -47,20 +47,6 @@ impl MoveRoute {
             move_count,
             moves
         })
-    }
-
-    fn parse_moves(bytes: &[u8], move_count: u32) -> (usize, Vec<Move>) {
-        let mut offset: usize = 0;
-        let mut moves: Vec<Move> = Vec::with_capacity(move_count as usize);
-
-        for i in 0..move_count {
-            let (bytes_read, mov): (usize, Move) = Move::parse(&bytes[offset..]);
-            offset += bytes_read;
-            moves.push(mov);
-
-        }
-
-        (offset, moves)
     }
 }
 
