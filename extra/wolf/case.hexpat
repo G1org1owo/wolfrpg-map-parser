@@ -1,6 +1,6 @@
 #pragma once
 
-using Command;
+import wolf.command_placeholder;
 
 namespace Case {
     enum CaseType: u32 {
@@ -16,6 +16,6 @@ namespace Case {
         u8 case_id;
         u16 unknown2;
         u32 unknown3;
-        Command commands[9999];
+        CommandPlaceholder commands[9999];
     };
 }

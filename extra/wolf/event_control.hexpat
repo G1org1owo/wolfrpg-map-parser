@@ -1,14 +1,13 @@
-#ifndef EVENT_CONTROL_HEXPAT
-#define EVENT_CONTROL_HEXPAT
+#pragma once
 
-using Command;
+import wolf.command_placeholder;
 
 namespace Loop {
     struct Command {
         u8 unknown1;
         u24 unknown2;
 
-        Command commands[9999];
+        CommandPlaceholder commands[9999];
 
         u64 end_command;
     };
@@ -27,7 +26,7 @@ namespace Loop {
 
         u24 unknown2;
 
-        Command commands[9999];
+        CommandPlaceholder commands[9999];
 
         u64 end_command;
     };
@@ -269,5 +268,3 @@ namespace Label {
         u8 end_command;
     };
 }
-
-#endif
