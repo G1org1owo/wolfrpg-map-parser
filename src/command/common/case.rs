@@ -27,23 +27,11 @@ impl Case {
         let unknown1: [u8; 3] = bytes[offset..offset+3].try_into().unwrap();
         offset += 3;
 
-        let mut commands: Vec<Command> = vec![];
         let mut command_count: u32 = 1; // Case counts as command
-        let mut exit: bool = false;
-
-        while(!exit) {
-            let (bytes_read, commands_read, command): (usize, u32, Command)
-                = Command::parse(&bytes[offset..]);
-
-            exit = match command {
-                Command::Exit() => true,
-                _ => false
-            };
-
-            commands.push(command);
-            offset += bytes_read;
-            command_count += commands_read;
-        }
+        let (bytes_read, commands_read, commands): (usize, u32, Vec<Command>)
+            = Command::parse_multiple(&bytes[offset..]);
+        offset += bytes_read;
+        command_count += commands_read;
 
         (offset, command_count, Self {
             case_type,

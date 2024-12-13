@@ -601,9 +601,9 @@ Check `extra/wolf/sound.hexpat`
 |-------------|--------------|---------------------------|
 | 4 bytes     | command_code | `01 AA 00 00`             |
 | 1 byte      | padding      | `00`                      |
-| 3 bytes     | ???          |                           |
+| 3 bytes     | Command end  | `00 00 00`                |
 | \<variable> | commands     | [Command]                 |
-| 8 bytes     | Command end  | `01 F2 01 00 00 00 00 00` |
+| 8 bytes     | Loop end     | `01 F2 01 00 00 00 00 00` |
 
 ### Break loop Command Format
 | Length  | Content      | Value         |
@@ -737,9 +737,9 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | 4 bytes     | command_code | `02 B3 00 00`             |
 | 1 byte      | padding      | `00`                      |
 | 4 bytes     | loop_count   | little-endian uint32      |
-| 3 bytes     | ???          |                           |
+| 3 bytes     | Command end  | `00 00 00`                |
 | \<variable> | commands     | [Command]                 |
-| 8 bytes     | Command end  | `01 F2 01 00 00 00 00 00` |
+| 8 bytes     | Loop end     | `01 F2 01 00 00 00 00 00` |
 
 ### Label point Command format
 | Length  | Content      | Value         |

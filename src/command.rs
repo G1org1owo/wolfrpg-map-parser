@@ -122,6 +122,7 @@ const RESUME_GRAPHIC_UPDATES_COMMAND: u32       = 0x01b20000;
 const FORCE_EXIT_EVENT_COMMAND: u32             = 0x01ac0000;
 const ERASE_EVENT_COMMAND: u32                  = 0x03ad0000;
 const WAIT_COMMAND: u32                         = 0x02b40000;
+const LOOP_COUNT_COMMAND: u32                   = 0x02b30000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -741,7 +742,17 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::EventControl(command))
-            }
+            },
+
+            LOOP_COUNT_COMMAND => {
+                let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
+                    = EventControlCommand::parse_loop_count(&bytes[offset..]);
+
+                offset += bytes_read;
+                commands += commands_read;
+
+                Ok(Command::EventControl(command))
+            },
 
             EXIT_COMMAND => {
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment
@@ -753,5 +764,29 @@ impl Command {
             .as_str());
 
         (offset, commands, command)
+    }
+
+    fn parse_multiple(bytes: &[u8]) -> (usize, u32, Vec<Command>) {
+        let mut offset: usize = 0;
+        let mut command_count: u32 = 0;
+        let mut commands: Vec<Command> = vec![];
+
+        let mut exit: bool = false;
+
+        while(!exit) {
+            let (bytes_read, commands_read, command): (usize, u32, Command)
+                = Command::parse(&bytes[offset..]);
+
+            exit = match command {
+                Command::Exit() => true,
+                _ => false
+            };
+
+            offset += bytes_read;
+            command_count += commands_read;
+            commands.push(command);
+        }
+
+        (offset, command_count, commands)
     }
 }

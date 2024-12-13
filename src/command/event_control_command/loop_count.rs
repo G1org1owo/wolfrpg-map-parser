@@ -1,14 +1,20 @@
 use serde::Serialize;
+use crate::byte_utils::as_u32_le;
 use crate::command::Command;
 
 #[derive(Serialize)]
-pub struct Loop {
-    commands: Vec<Command>,
+pub struct LoopCount {
+    loop_count: u32,
+    commands: Vec<Command>
 }
 
-impl Loop {
+impl LoopCount {
     pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
+
+        let loop_count: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+
         offset += 3; // Command end signature
 
         let (bytes_read, mut commands_read, commands): (usize, u32, Vec<Command>)
@@ -20,6 +26,7 @@ impl Loop {
         commands_read += 1;
 
         (offset, commands_read, Self {
+            loop_count,
             commands
         })
     }
