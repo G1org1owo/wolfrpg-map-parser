@@ -134,6 +134,8 @@ const CALL_EVENT_BY_NAME1_COMMAND: u32          = 0x062C0100;
 const CALL_EVENT_BY_NAME2_COMMAND: u32          = 0x052C0100;
 const CALL_EVENT_BY_NAME3_COMMAND: u32          = 0x0B2C0100;
 const CALL_EVENT_BY_NAME4_COMMAND: u32          = 0x032c0100;
+const CALL_EVENT_BY_VARIABLE_COMMAND: u32       = 0x03D20000;
+const RESERVE_EVENT_COMMAND: u32                = 0x03D30000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -784,9 +786,10 @@ impl Command {
                 Ok(Command::EventControl(command))
             },
 
-            CALL_EVENT1_COMMAND | CALL_EVENT2_COMMAND | CALL_EVENT3_COMMAND |
-            CALL_EVENT_BY_NAME1_COMMAND | CALL_EVENT_BY_NAME2_COMMAND |
-            CALL_EVENT_BY_NAME3_COMMAND | CALL_EVENT_BY_NAME4_COMMAND => {
+            CALL_EVENT1_COMMAND | CALL_EVENT2_COMMAND |
+            CALL_EVENT3_COMMAND | CALL_EVENT_BY_NAME1_COMMAND |
+            CALL_EVENT_BY_NAME2_COMMAND | CALL_EVENT_BY_NAME3_COMMAND |
+            CALL_EVENT_BY_NAME4_COMMAND | CALL_EVENT_BY_VARIABLE_COMMAND => {
                 let (bytes_read, command): (usize, CommonEvent)
                     = CommonEvent::parse_call_event(&bytes[offset..]);
 
@@ -794,6 +797,15 @@ impl Command {
 
                 Ok(Command::CommonEvent(command))
             },
+
+            RESERVE_EVENT_COMMAND => {
+                let (bytes_read, command): (usize, CommonEvent)
+                    = CommonEvent::parse_reserve_event(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::CommonEvent(command))
+            }
 
             EXIT_COMMAND => {
                 offset+=3; // Not sure what the contents of the EXIT command are at the moment

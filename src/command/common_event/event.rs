@@ -7,7 +7,7 @@ use crate::command::common_event::argument_count::ArgumentCount;
 use crate::command::common_event::options::Options;
 
 #[derive(Serialize)]
-pub struct CallEvent {
+pub struct Event {
     target: u32,
     argument_count: ArgumentCount,
     options: Options,
@@ -17,7 +17,7 @@ pub struct CallEvent {
     event_name: Option<String>,
 }
 
-impl CallEvent {
+impl Event {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 

@@ -1,21 +1,26 @@
 use serde::Serialize;
-use crate::command::common_event::call_event::CallEvent;
+use crate::command::common_event::event::Event;
 
-mod call_event;
+mod event;
 mod argument_count;
 mod options;
 
 #[derive(Serialize)]
 pub enum CommonEvent {
-    CallEvent(CallEvent),
-    CallEventByVariable,
-    ReserveEvent
+    CallEvent(Event),
+    ReserveEvent(Event)
 }
 
 impl CommonEvent {
     pub fn parse_call_event(bytes: &[u8]) -> (usize, Self) {
-        let (bytes_read, command): (usize, CallEvent) = CallEvent::parse(bytes);
+        let (bytes_read, command): (usize, Event) = Event::parse(bytes);
 
         (bytes_read, Self::CallEvent(command))
+    }
+
+    pub fn parse_reserve_event(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Event) = Event::parse(bytes);
+
+        (bytes_read, Self::ReserveEvent(command))
     }
 }

@@ -241,14 +241,12 @@ struct Command {
         (CommandSignature::LoopCount): Loop::CountCommand;
 
         (CommandSignature::LabelPoint | CommandSignature::LabelJump): Label::Command;
-        
+
         (CommandSignature::CallEvent1 | CommandSignature::CallEvent2 |
          CommandSignature::CallEvent3 | CommandSignature::CallEventByName1 |
          CommandSignature::CallEventByName2 | CommandSignature::CallEventByName3 |
-         CommandSignature::CallEventByName4): CommonEvent::CallEventCommand;
-         
-        (CommandSignature::CallEventByVariable): CommonEvent::CallEventByVariableCommand;
-        (CommandSignature::ReserveEvent): CommonEvent::ReserveEventCommand;
+         CommandSignature::CallEventByName4 | CommandSignature::CallEventByVariable |
+         CommandSignature::ReserveEvent): CommonEvent::Command;
 
         (CommandSignature::Exit): {
             ExitCommand;

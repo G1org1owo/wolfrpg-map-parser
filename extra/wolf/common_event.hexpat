@@ -23,7 +23,7 @@ namespace CommonEvent {
         char string[string_length];
     };
 
-    struct CallEventCommand {
+    struct Command {
         u8 unknown1;
         u32 target;
         Arguments argument_count;
@@ -45,22 +45,6 @@ namespace CommonEvent {
         }
 
         u8 end_command;
-    };
-
-    struct CallEventByVariableCommand {
-        u8 unknown1;
-        u32 target;
-        u32 page;
-
-        u24 end_command;
-    };
-
-    struct ReserveEventCommand {
-        u8 unknown1;
-        u32 target;
-        u32 unknown2;
-
-        u24 end_command;
     };
 }
 
