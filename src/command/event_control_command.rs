@@ -1,5 +1,6 @@
 use serde::Serialize;
 use crate::command::event_control_command::erase_event::EraseEvent;
+use crate::command::event_control_command::label::Label;
 use crate::command::event_control_command::loop_command::Loop;
 use crate::command::event_control_command::loop_count::LoopCount;
 use crate::command::event_control_command::move_route::MoveRoute;
@@ -12,6 +13,7 @@ mod move_route;
 mod erase_event;
 mod wait;
 mod loop_count;
+mod label;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
@@ -35,8 +37,8 @@ pub enum EventControlCommand {
     EraseEvent(EraseEvent),
     Wait(Wait),
     LoopCount(LoopCount),
-    LabelPoint,
-    LabelJump
+    LabelPoint(Label),
+    LabelJump(Label)
 }
 
 impl EventControlCommand {
@@ -125,5 +127,17 @@ impl EventControlCommand {
         let (bytes_read, commands_read, command): (usize, u32, LoopCount) = LoopCount::parse(bytes);
 
         (bytes_read, commands_read, Self::LoopCount(command))
+    }
+
+    pub fn parse_label_point(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Label) = Label::parse(bytes);
+
+        (bytes_read, Self::LabelPoint(command))
+    }
+
+    pub fn parse_label_jump(bytes: &[u8]) -> (usize, Self) {
+        let (bytes_read, command): (usize, Label) = Label::parse(bytes);
+
+        (bytes_read, Self::LabelJump(command))
     }
  }

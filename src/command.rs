@@ -123,6 +123,8 @@ const FORCE_EXIT_EVENT_COMMAND: u32             = 0x01ac0000;
 const ERASE_EVENT_COMMAND: u32                  = 0x03ad0000;
 const WAIT_COMMAND: u32                         = 0x02b40000;
 const LOOP_COUNT_COMMAND: u32                   = 0x02b30000;
+const LABEL_POINT_COMMAND: u32                  = 0x01d40000;
+const LABEL_JUMP_COMMAND: u32                   = 0x01d50000;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -750,6 +752,24 @@ impl Command {
 
                 offset += bytes_read;
                 commands += commands_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            LABEL_POINT_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_label_point(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::EventControl(command))
+            },
+
+            LABEL_JUMP_COMMAND => {
+                let (bytes_read, command): (usize, EventControlCommand)
+                    = EventControlCommand::parse_label_jump(&bytes[offset..]);
+
+                offset += bytes_read;
 
                 Ok(Command::EventControl(command))
             },

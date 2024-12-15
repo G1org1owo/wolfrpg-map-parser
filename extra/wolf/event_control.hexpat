@@ -260,7 +260,8 @@ namespace Event {
 
 namespace Label {
     struct Command {
-        u24 unknown1;
+        u16 unknown1;
+        u8 string_count;
 
         u32 label_length;
         char label[label_length];

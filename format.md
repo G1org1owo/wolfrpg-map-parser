@@ -742,18 +742,26 @@ Varies between 4 and 12 bytes, check `extra/wolf/event_control.hexpat` for more 
 | 8 bytes     | Loop end     | `01 F2 01 00 00 00 00 00` |
 
 ### Label point Command format
-| Length  | Content      | Value         |
-|---------|--------------|---------------|
-| 4 bytes | command_code | `01 D4 00 00` |
-| 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| Length               | Content      | Value                 |
+|----------------------|--------------|-----------------------|
+| 4 bytes              | command_code | `01 D4 00 00`         |
+| 1 byte               | padding      | `00`                  |
+| 1 byte               | padding      | `00`                  |
+| 1 byte               | string_count | `01`                  |
+| 4 bytes              | label_length | little-endian uint32  |
+| `label_length` bytes | label        | NUL-terminated string |
+| 1 byte               | Command end  | `00`                  |
 
 ### Label jump Command format
-| Length  | Content      | Value         |
-|---------|--------------|---------------|
-| 4 bytes | command_code | `01 D5 00 00` |
-| 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| Length               | Content      | Value                 |
+|----------------------|--------------|-----------------------|
+| 4 bytes              | command_code | `01 D5 00 00`         |
+| 1 byte               | padding      | `00`                  |
+| 1 byte               | padding      | `00`                  |
+| 1 byte               | string_count | `01`                  |
+| 4 bytes              | label_length | little-endian uint32  |
+| `label_length` bytes | label        | NUL-terminated string |
+| 1 byte               | Command end  | `00`                  |
 
 ## Common event Command format
 Check `extra/wolf/common_event.hexpat` for details
@@ -763,4 +771,4 @@ Check `extra/wolf/common_event.hexpat` for details
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 00 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
