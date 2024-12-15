@@ -1,3 +1,6 @@
+use std::borrow::Cow;
+use encoding_rs::{Encoding, SHIFT_JIS};
+
 pub fn as_u32_le(bytes: &[u8]) -> u32 {
     ((bytes[0] as u32) <<  0) |
     ((bytes[1] as u32) <<  8) |
@@ -32,6 +35,13 @@ pub fn as_u32_vec(bytes: &[u8]) -> Vec<u32> {
 }
 
 pub fn as_string(bytes: &[u8], offset: usize, string_length: usize) -> String {
-    String::from_utf8(bytes[offset..offset + string_length - 1].to_vec())
-        .unwrap()
+    let string_bytes: &[u8] = &bytes[offset..offset + string_length - 1];
+
+    let (cow, encoding, had_errors): (Cow<str>, &Encoding, bool) = SHIFT_JIS.decode(string_bytes);
+
+    if encoding != SHIFT_JIS || had_errors {
+        panic!("String is not SHIFT-JIS");
+    }
+
+    cow.to_string()
 }
