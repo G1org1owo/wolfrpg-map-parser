@@ -13,6 +13,9 @@ namespace CommonEvent {
         bool is_arg2_string: 1;
         bool is_arg3_string: 1;
         bool is_arg4_string: 1;
+        padding: 8;
+        bool has_return_value: 1;
+        padding: 7;
     };
 
     struct String {
@@ -25,17 +28,15 @@ namespace CommonEvent {
         u32 target;
         Arguments argument_count;
         Options options;
-        u8 unknown2;
-        bool has_return_value;
 
         u32 arguments[argument_count.number_arguments];
         u32 string_arguments_variables[argument_count.string_arguments];
 
-        if(has_return_value) {
+        if(options.has_return_value) {
             u32 return_variable;
         }
 
-        u8 unknown3;
+        u8 unknown2;
         u8 string_count;
 
         if(string_count > 0) {

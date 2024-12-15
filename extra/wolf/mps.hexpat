@@ -133,6 +133,7 @@ enum CommandSignature: u32 {
     CallEventByName1            = 0x062C0100,
     CallEventByName2            = 0x052C0100,
     CallEventByName3            = 0x0B2C0100,
+    CallEventByName4            = 0x032c0100,
     ReserveEvent                = 0x03D30000,
 
     Exit                        = 0x01000000,
@@ -243,7 +244,8 @@ struct Command {
         
         (CommandSignature::CallEvent1 | CommandSignature::CallEvent2 |
          CommandSignature::CallEvent3 | CommandSignature::CallEventByName1 |
-         CommandSignature::CallEventByName2 | CommandSignature::CallEventByName3): CommonEvent::CallEventCommand;
+         CommandSignature::CallEventByName2 | CommandSignature::CallEventByName3 |
+         CommandSignature::CallEventByName4): CommonEvent::CallEventCommand;
          
         (CommandSignature::CallEventByVariable): CommonEvent::CallEventByVariableCommand;
         (CommandSignature::ReserveEvent): CommonEvent::ReserveEventCommand;

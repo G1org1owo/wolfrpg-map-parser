@@ -4,6 +4,7 @@ use show_choice_command::ShowChoiceCommand;
 use show_message_command::ShowMessageCommand;
 use crate::command::chip_management_command::ChipManagementCommand;
 use crate::command::comment_command::CommentCommand;
+use crate::command::common_event::CommonEvent;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::debug_text_command::DebugTextCommand;
 use crate::command::effect_command::EffectCommand;
@@ -40,6 +41,7 @@ mod party_graphics_command;
 mod chip_management_command;
 mod transfer_command;
 mod event_control_command;
+mod common_event;
 
 const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
 const COMMENT_COMMAND: u32                      = 0x01670000;
@@ -125,6 +127,13 @@ const WAIT_COMMAND: u32                         = 0x02b40000;
 const LOOP_COUNT_COMMAND: u32                   = 0x02b30000;
 const LABEL_POINT_COMMAND: u32                  = 0x01d40000;
 const LABEL_JUMP_COMMAND: u32                   = 0x01d50000;
+const CALL_EVENT1_COMMAND: u32                  = 0x06d20000;
+const CALL_EVENT2_COMMAND: u32                  = 0x05D20000;
+const CALL_EVENT3_COMMAND: u32                  = 0x07D20000;
+const CALL_EVENT_BY_NAME1_COMMAND: u32          = 0x062C0100;
+const CALL_EVENT_BY_NAME2_COMMAND: u32          = 0x052C0100;
+const CALL_EVENT_BY_NAME3_COMMAND: u32          = 0x0B2C0100;
+const CALL_EVENT_BY_NAME4_COMMAND: u32          = 0x032c0100;
 const EXIT_COMMAND: u32                         = 0x01000000;
 
 #[derive(Serialize)]
@@ -150,6 +159,7 @@ pub enum Command {
     ChipManagement(ChipManagementCommand),
     Transfer(TransferCommand),
     EventControl(EventControlCommand),
+    CommonEvent(CommonEvent),
     Exit(),
 }
 
@@ -772,6 +782,17 @@ impl Command {
                 offset += bytes_read;
 
                 Ok(Command::EventControl(command))
+            },
+
+            CALL_EVENT1_COMMAND | CALL_EVENT2_COMMAND | CALL_EVENT3_COMMAND |
+            CALL_EVENT_BY_NAME1_COMMAND | CALL_EVENT_BY_NAME2_COMMAND |
+            CALL_EVENT_BY_NAME3_COMMAND | CALL_EVENT_BY_NAME4_COMMAND => {
+                let (bytes_read, command): (usize, CommonEvent)
+                    = CommonEvent::parse_call_event(&bytes[offset..]);
+
+                offset += bytes_read;
+
+                Ok(Command::CommonEvent(command))
             },
 
             EXIT_COMMAND => {
