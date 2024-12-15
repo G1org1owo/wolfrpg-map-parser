@@ -17,7 +17,7 @@ pub struct Event {
 
 impl Event {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
-        let mut offset = 5;
+        let mut offset: usize = 5;
         let id: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
@@ -28,13 +28,19 @@ impl Event {
         offset+=name_length;
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);
-        let position_y: u32 = as_u32_le(&bytes[offset+4..offset+8]);
-        let page_count: u32 = as_u32_le(&bytes[offset+8..offset+12]);
-        let unknown1: u32 = as_u32_le(&bytes[offset+12..offset+16]);
-        offset += 16;
+        offset += 4;
+
+        let position_y: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+
+        let page_count: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+
+        let unknown1: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
 
         let mut pages: Vec<Page> = vec![];
-        for i in 0..page_count {
+        for _ in 0..page_count {
             let (bytes_read, page): (usize, Page) = Page::parse(&bytes[offset..]);
             offset += bytes_read;
             pages.push(page);

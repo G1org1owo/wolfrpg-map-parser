@@ -132,7 +132,8 @@ impl Page {
 
         let mut i: u32 = 0;
         while i<command_count {
-            let (bytes_read, commands_read, command): (usize, u32, Command) = Command::parse(&bytes[offset..]);
+            let (bytes_read, commands_read, command): (usize, u32, Command)
+                = Command::parse(&bytes[offset..]);
             offset += bytes_read;
             commands.push(command);
 

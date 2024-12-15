@@ -17,6 +17,7 @@ use crate::command::save_load_command::SaveLoadCommand;
 use crate::command::set_string_command::SetStringCommand;
 use crate::command::set_variable_command::SetVariableCommand;
 use crate::command::set_variable_plus_command::SetVariablePlusCommand;
+use crate::command::signature::Signature;
 use crate::command::sound_command::SoundCommand;
 use crate::command::string_condition_command::StringConditionCommand;
 use crate::command::transfer_command::TransferCommand;
@@ -42,101 +43,7 @@ mod chip_management_command;
 mod transfer_command;
 mod event_control_command;
 mod common_event;
-
-const SHOW_MESSAGE_COMMAND: u32                 = 0x01650000;
-const COMMENT_COMMAND: u32                      = 0x01670000;
-const DEBUG_TEXT_COMMAND: u32                   = 0x016A0000;
-const FORCE_CLOSE_MESSAGE_COMMAND: u32          = 0x01690000;
-const CLEAR_DEBUG_TEXT_COMMAND: u32             = 0x016B0000;
-const SHOW_CHOICE_COMMAND: u32                  = 0x02660000;
-const SET_VARIABLE_COMMAND_BASE: u32            = 0x05790000;
-const SET_VARIABLE_COMMAND_RANGE: u32           = 0x06790000;
-const DB_MANAGEMENT_COMMAND_BASE: u32           = 0x06fa0000;
-const DB_MANAGEMENT_COMMAND_STRING: u32         = 0x05fa0000;
-const DB_MANAGEMENT_COMMAND_CSV: u32            = 0x06fb0000;
-const SET_STRING_COMMAND_BASE: u32              = 0x037a0000;
-const SET_STRING_COMMAND_DYNAMIC: u32           = 0x047a0000;
-const SET_VARIABLE_PLUS_COMMAND_BASE: u32       = 0x057c0000;
-const SET_VARIABLE_PLUS_COMMAND_OTHER: u32      = 0x047c0000;
-const NUMBER_CONDITION_COMMAND: u32             = 0x056f0000;
-const NUMBER_CONDITION_COMMAND_DOUBLE: u32      = 0x086f0000;
-const NUMBER_CONDITION_COMMAND_TRIPLE: u32      = 0x0b6f0000;
-const STRING_CONDITION_COMMAND: u32             = 0x03700000;
-const STRING_CONDITION_COMMAND_TWO: u32         = 0x04700000;
-const STRING_CONDITION_COMMAND_THREE: u32       = 0x05700000;
-const STRING_CONDITION_COMMAND_FOUR: u32        = 0x06700000;
-const STRING_CONDITION_COMMAND_FIVE: u32        = 0x07700000;
-const STRING_CONDITION_COMMAND_SIX: u32         = 0x08700000;
-const STRING_CONDITION_COMMAND_SEVEN: u32       = 0x09700000;
-const STRING_CONDITION_COMMAND_EIGHT: u32       = 0x0a700000;
-const INPUT_KEY_COMMAND_BASE: u32               = 0x037b0000;
-const INPUT_KEY_COMMAND_KEYBOARD_OR_PAD: u32    = 0x047b0000;
-const AUTOMATIC_INPUT_COMMAND_BASIC: u32        = 0x027d0000;
-const AUTOMATIC_INPUT_COMMAND_KEYBOARD: u32     = 0x037d0000;
-const AUTOMATIC_INPUT_COMMAND_MOUSE: u32        = 0x047d0000;
-const INPUT_TOGGLE_COMMAND_BASIC: u32           = 0x027e0000;
-const INPUT_TOGGLE_COMMAND_DEVICE: u32          = 0x037e0000;
-const PICTURE_SHOW_COMMAND_BASE: u32            = 0x0c960000;
-const PICTURE_SHOW_COMMAND_BASE_BY_VAR: u32     = 0x0d960000;
-const PICTURE_SHOW_COMMAND_COLORS: u32          = 0x0e960000;
-const PICTURE_SHOW_COMMAND_DELAY: u32           = 0x0f960000;
-const PICTURE_SHOW_COMMAND_RANGE: u32           = 0x10960000;
-const PICTURE_SHOW_COMMAND_COLOR_VALUES: u32    = 0x13960000;
-const PICTURE_SHOW_COMMAND_ZOOM: u32            = 0x14960000;
-const PICTURE_SHOW_COMMAND_FREE_TRANSFORM: u32  = 0x1a960000;
-const PICTURE_ERASE_COMMAND_DELAY_RESET: u32    = 0x03960000;
-const PICTURE_ERASE_COMMAND_BASE: u32           = 0x04960000;
-const PICTURE_ERASE_COMMAND_DELAY: u32          = 0x05960000;
-const PICTURE_ERASE_COMMAND_RANGE: u32          = 0x07960000;
-const EFFECT_COMMAND_BASE: u32                  = 0x08220100;
-const EFFECT_COMMAND_MAP_SHAKE: u32             = 0x03180100;
-const EFFECT_COMMAND_SCROLL_SCREEN: u32         = 0x04190100;
-const EFFECT_COMMAND_CHANGE_COLOR: u32          = 0x03970000;
-const SOUND_COMMAND_FILENAME: u32               = 0x088c0000;
-const SOUND_COMMAND_FILENAME_SE: u32            = 0x078c0000;
-const SOUND_COMMAND_VARIABLE: u32               = 0x058c0000;
-const SOUND_COMMAND_FREE_ALL: u32               = 0x028c0000;
-const SOUND_COMMAND_FREE_ALL_VARIABLE: u32      = 0x048c0000;
-const SAVE_LOAD_COMMAND_BASE: u32               = 0x03dc0000;
-const SAVE_LOAD_COMMAND_LOAD_VARIABLE: u32      = 0x05dd0000;
-const SAVE_LOAD_COMMAND_SAVE_VARIABLE: u32      = 0x05de0000;
-const PARTY_GRAPHICS_COMMAND_BASE: u32          = 0x030e0100;
-const PARTY_GRAPHICS_COMMAND_VARIABLE: u32      = 0x040e0100;
-const PARTY_GRAPHICS_COMMAND_NO_MEMBER: u32     = 0x020e0100;
-const CHIP_MANAGEMENT_COMMAND_SETTINGS: u32     = 0x03f00000;
-const CHIP_MANAGEMENT_COMMAND_SWITCH_SET: u32   = 0x02f10000;
-const CHIP_MANAGEMENT_COMMAND_OVERWRITE: u32    = 0x07f20000;
-const TRANSFER_COMMAND: u32                     = 0x06820000;
-const LOOP_COMMAND: u32                         = 0x01aa0000;
-const BREAK_LOOP_COMMAND: u32                   = 0x01ab0000;
-const GOTO_LOOP_START_COMMAND: u32              = 0x01b00000;
-const PREPARE_TRANSITION_COMMAND: u32           = 0x01a10000;
-const EXECUTE_TRANSITION_COMMAND: u32           = 0x01a20000;
-const SET_TRANSITION_COMMAND: u32               = 0x03a00000;
-const MOVE_COMMAND: u32                         = 0x02c90000;
-const WAIT_FOR_MOVE_COMMAND: u32                = 0x01ca0000;
-const MOVE_DURING_EVENTS_ON_COMMAND: u32        = 0x01e60000;
-const MOVE_DURING_EVENTS_OFF_COMMAND: u32       = 0x01e70000;
-const GOTO_TITLE_COMMAND: u32                   = 0x01ae0000;
-const GAME_END_COMMAND: u32                     = 0x01af0000;
-const STOP_GRAPHIC_UPDATES_COMMAND: u32         = 0x01b10000;
-const RESUME_GRAPHIC_UPDATES_COMMAND: u32       = 0x01b20000;
-const FORCE_EXIT_EVENT_COMMAND: u32             = 0x01ac0000;
-const ERASE_EVENT_COMMAND: u32                  = 0x03ad0000;
-const WAIT_COMMAND: u32                         = 0x02b40000;
-const LOOP_COUNT_COMMAND: u32                   = 0x02b30000;
-const LABEL_POINT_COMMAND: u32                  = 0x01d40000;
-const LABEL_JUMP_COMMAND: u32                   = 0x01d50000;
-const CALL_EVENT1_COMMAND: u32                  = 0x06d20000;
-const CALL_EVENT2_COMMAND: u32                  = 0x05D20000;
-const CALL_EVENT3_COMMAND: u32                  = 0x07D20000;
-const CALL_EVENT_BY_NAME1_COMMAND: u32          = 0x062C0100;
-const CALL_EVENT_BY_NAME2_COMMAND: u32          = 0x052C0100;
-const CALL_EVENT_BY_NAME3_COMMAND: u32          = 0x0B2C0100;
-const CALL_EVENT_BY_NAME4_COMMAND: u32          = 0x032c0100;
-const CALL_EVENT_BY_VARIABLE_COMMAND: u32       = 0x03D20000;
-const RESERVE_EVENT_COMMAND: u32                = 0x03D30000;
-const EXIT_COMMAND: u32                         = 0x01000000;
+mod signature;
 
 #[derive(Serialize)]
 pub enum Command {
@@ -168,665 +75,129 @@ pub enum Command {
 impl Command {
     pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
-        let mut commands = 1;
+        let commands: u32 = 1;
 
-        let signature = as_u32_be(&bytes[offset..offset+4]);
-        offset += 5;
+        let signature: u32 = as_u32_be(&bytes[offset..offset+4]);
+        offset += 4;
+        offset += 1; // padding
 
-        let command: Command = match signature {
-            SHOW_MESSAGE_COMMAND => {
-                let (bytes_read, command) : (usize, ShowMessageCommand)
-                    = ShowMessageCommand::parse(&bytes[offset..]);
-                offset += bytes_read;
+        let command_parser: fn(&[u8], u32) -> (usize, u32, Self) = match Signature::new(signature) {
+            Signature::ShowMessage => Self::parse_show_message,
+            Signature::Comment => Self::parse_comment,
+            Signature::DebugText => Self::parse_debug_text,
+            Signature::ForceCloseMessage => Self::parse_force_close_message,
+            Signature::ClearDebugText => Self::parse_clear_debug_text,
+            Signature::ShowChoice => Self::parse_show_choice,
+            Signature::SetVariableBase => Self::parse_set_variable_base,
+            Signature::SetVariableRange => Self::parse_set_variable_range,
+            Signature::DBManagementBase => Self::parse_db_management_base,
+            Signature::DBManagementString => Self::parse_db_management_string,
+            Signature::DBManagementCsv => Self::parse_db_management_csv,
+            Signature::SetStringBase => Self::parse_set_string_base,
+            Signature::SetStringDynamic => Self::parse_set_string_dynamic,
+            Signature::SetVariablePlusBase => Self::parse_set_variable_plus_base,
+            Signature::SetVariablePlusOther => Self::parse_set_variable_plus_other,
 
-                Ok(Command::ShowMessage(command))
-            },
+            Signature::NumberCondition | Signature::NumberConditionDouble |
 
-            COMMENT_COMMAND => {
-                let (bytes_read, command): (usize, CommentCommand)
-                    = CommentCommand::parse(&bytes[offset..]);
-                offset += bytes_read;
+            Signature::NumberConditionTriple => Self::parse_number_condition,
 
-                Ok(Command::Comment(command))
-            },
+            Signature::StringCondition | Signature::StringConditionTwo |
+            Signature::StringConditionThree | Signature::StringConditionFour |
+            Signature::StringConditionFive | Signature::StringConditionSix |
+            Signature::StringConditionSeven | Signature::StringConditionEight
+                => Self::parse_string_condition,
 
-            DEBUG_TEXT_COMMAND => {
-                let (bytes_read, command): (usize,DebugTextCommand)
-                    = DebugTextCommand::parse(&bytes[offset..]);
-                offset += bytes_read;
+            Signature::InputKeyBase => Self::parse_input_key_base,
+            Signature::InputKeyKeyboardOrPad => Self::parse_input_key_keyboard_or_pad,
 
-                Ok(Command::DebugText(command))
+            Signature::AutomaticInputBasic | Signature::AutomaticInputMouse => Self::parse_automatic_input_base,
+
+            Signature::AutomaticInputKeyboard => Self::parse_automatic_input_keyboard,
+
+            Signature::InputToggleBasic | Signature::InputToggleDevice => Self::parse_input_toggle,
+
+            Signature::PictureShowBase | Signature::PictureShowBaseByVar => Self::parse_picture_show_base,
+
+            Signature::PictureShowColors => Self::parse_picture_show_colors,
+            Signature::PictureShowDelay => Self::parse_picture_show_delay,
+            Signature::PictureShowRange => Self::parse_picture_show_range,
+            Signature::PictureShowColorValues => Self::parse_picture_show_color_values,
+            Signature::PictureShowZoom => Self::parse_picture_show_zoom,
+            Signature::PictureShowFreeTransform => Self::parse_picture_show_free_transform,
+            Signature::PictureEraseDelayReset => Self::parse_picture_erase_delay_reset,
+            Signature::PictureEraseBase => Self::parse_picture_erase_base,
+            Signature::PictureEraseDelay => Self::parse_picture_erase_delay,
+            Signature::PictureEraseRange => Self::parse_picture_erase_range,
+            Signature::EffectBase => Self::parse_effect_base,
+            Signature::EffectMapShake => Self::parse_effect_map_shake,
+            Signature::EffectScrollScreen => Self::parse_effect_scroll_screen,
+            Signature::EffectChangeColor => Self::parse_effect_change_color,
+
+            Signature::SoundFilename | Signature::SoundFilenameSe => Self::parse_sound_filename,
+
+            Signature::SoundVariable => Self::parse_sound_variable,
+
+            Signature::SoundFreeAll | Signature::SoundFreeAllVariable => Self::parse_sound_free_all,
+
+            Signature::SaveLoadBase => Self::parse_save_load_base,
+            Signature::LoadVariable => Self::parse_load_variable,
+            Signature::SaveVariable => Self::parse_save_variable,
+
+            Signature::PartyGraphicsBase | Signature::PartyGraphicsVariable |
+            Signature::PartyGraphicsNoMember => Self::parse_party_graphics,
+
+            Signature::ChipManagementSettings => Self::parse_chip_management_settings,
+            Signature::ChipManagementSwitchSet => Self::parse_chip_management_switch_set,
+            Signature::ChipManagementOverwrite => Self::parse_chip_management_overwrite,
+            Signature::Transfer => Self::parse_transfer,
+            Signature::Loop => Self::parse_loop,
+            Signature::BreakLoop => Self::parse_break_loop,
+            Signature::GotoLoopStart => Self::parse_goto_loop_start,
+            Signature::PrepareTransition => Self::parse_prepare_transition,
+            Signature::ExecuteTransition => Self::parse_execute_transition,
+            Signature::SetTransition => Self::parse_set_transition,
+            Signature::Move => Self::parse_move,
+            Signature::WaitForMove => Self::parse_wait_for_move,
+            Signature::MoveDuringEventsOn => Self::parse_move_during_events_on,
+            Signature::MoveDuringEventsOff => Self::parse_move_during_events_off,
+            Signature::GotoTitle => Self::parse_goto_title,
+            Signature::GameEnd => Self::parse_game_end,
+            Signature::StopNonPictureGraphicUpdates => Self::parse_stop_non_picture_graphic_updates,
+            Signature::ResumeNonPictureGraphicUpdates => Self::parse_resume_non_picture_graphic_updates,
+            Signature::ForceExitEvent => Self::parse_force_exit_event,
+            Signature::EraseEvent => Self::parse_erase_event,
+            Signature::Wait => Self::parse_wait,
+            Signature::LoopCount => Self::parse_loop_count,
+            Signature::LabelPoint => Self::parse_label_point,
+            Signature::LabelJump => Self::parse_label_jump,
+
+            Signature::CallEvent1 | Signature::CallEvent2 |
+            Signature::CallEvent3 | Signature::CallEventByName1 |
+            Signature::CallEventByName2 | Signature::CallEventByName3 |
+            Signature::CallEventByName4 | Signature::CallEventByVariable => Self::parse_call_common_event,
+
+            Signature::ReserveEvent => Self::parse_reserve_common_event,
+            Signature::Exit => Self::parse_exit,
+            _ => |bytes: &[u8], signature: u32| {
+                panic!("Unknown command code {:08x}", signature)
             }
+        };
 
-            FORCE_CLOSE_MESSAGE_COMMAND => {
-                offset += 3;
+        let (bytes_read, commands_read, command): (usize, u32, Self)
+            = command_parser(&bytes[offset..], signature);
 
-                Ok(Command::ForceCloseMessage())
-            }
-
-            CLEAR_DEBUG_TEXT_COMMAND => {
-                offset += 3;
-
-                Ok(Command::ClearDebugText())
-            }
-
-            SHOW_CHOICE_COMMAND => {
-                let (bytes_read, commands_read, command) : (usize, u32, ShowChoiceCommand)
-                    = ShowChoiceCommand::parse(&bytes[offset..]);
-                offset += bytes_read;
-                commands += commands_read;
-
-                Ok(Command::ShowChoice(command))
-            },
-
-            SET_VARIABLE_COMMAND_BASE => {
-                let (bytes_read, command): (usize, SetVariableCommand)
-                    = SetVariableCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetVariable(command))
-            }
-
-            SET_VARIABLE_COMMAND_RANGE => {
-                let (bytes_read, command): (usize, SetVariableCommand)
-                    = SetVariableCommand::parse_range(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetVariable(command))
-            }
-
-            DB_MANAGEMENT_COMMAND_BASE => {
-                let (bytes_read, command): (usize, DBManagementCommand)
-                    = DBManagementCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::DBManagement(command))
-            }
-
-            DB_MANAGEMENT_COMMAND_STRING => {
-                let (bytes_read, command): (usize, DBManagementCommand)
-                    = DBManagementCommand::parse_string(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::DBManagement(command))
-            }
-
-            DB_MANAGEMENT_COMMAND_CSV => {
-                let (bytes_read, command): (usize, DBManagementCommand)
-                    = DBManagementCommand::parse_csv(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::DBManagement(command))
-            }
-
-            SET_STRING_COMMAND_BASE => {
-                let (bytes_read, command): (usize, SetStringCommand)
-                    = SetStringCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetString(command))
-            }
-
-            SET_STRING_COMMAND_DYNAMIC => {
-                let (bytes_read, command): (usize, SetStringCommand)
-                    = SetStringCommand::parse_dynamic(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetString(command))
-            }
-
-            SET_VARIABLE_PLUS_COMMAND_BASE => {
-                let (bytes_read, command): (usize, SetVariablePlusCommand)
-                    = SetVariablePlusCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetVariablePlus(command))
-            }
-
-            SET_VARIABLE_PLUS_COMMAND_OTHER => {
-                let (bytes_read, command): (usize, SetVariablePlusCommand)
-                    = SetVariablePlusCommand::parse_other(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SetVariablePlus(command))
-            }
-
-            NUMBER_CONDITION_COMMAND | NUMBER_CONDITION_COMMAND_DOUBLE |
-            NUMBER_CONDITION_COMMAND_TRIPLE => {
-                let (bytes_read, commands_read, command): (usize, u32, NumberConditionCommand)
-                    = NumberConditionCommand::parse(&bytes[offset..]);
-
-                offset += bytes_read;
-                commands += commands_read;
-
-                Ok(Command::NumberCondition(command))
-            }
-
-            STRING_CONDITION_COMMAND | STRING_CONDITION_COMMAND_TWO |
-            STRING_CONDITION_COMMAND_THREE | STRING_CONDITION_COMMAND_FOUR |
-            STRING_CONDITION_COMMAND_FIVE | STRING_CONDITION_COMMAND_SIX |
-            STRING_CONDITION_COMMAND_SEVEN | STRING_CONDITION_COMMAND_EIGHT => {
-                let (bytes_read, commands_read, command) : (usize, u32, StringConditionCommand)
-                    = StringConditionCommand::parse(&bytes[offset..], signature);
-
-                offset += bytes_read;
-                commands += commands_read;
-
-                Ok(Command::StringCondition(command))
-            }
-
-            INPUT_KEY_COMMAND_BASE => {
-                let (bytes_read, command): (usize, InputKeyCommand)
-                    = InputKeyCommand::parse_input_key_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::InputKey(command))
-            }
-
-            INPUT_KEY_COMMAND_KEYBOARD_OR_PAD => {
-                let (bytes_read, command): (usize, InputKeyCommand)
-                    = InputKeyCommand::parse_input_key_keyboard_or_pad(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::InputKey(command))
-            }
-
-            AUTOMATIC_INPUT_COMMAND_BASIC | AUTOMATIC_INPUT_COMMAND_MOUSE => {
-                let (bytes_read, command): (usize, InputKeyCommand)
-                    = InputKeyCommand::parse_automatic_input_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::InputKey(command))
-            }
-
-            AUTOMATIC_INPUT_COMMAND_KEYBOARD => {
-                let (bytes_read, command): (usize, InputKeyCommand)
-                    = InputKeyCommand::parse_automatic_input_keyboard(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::InputKey(command))
-            }
-
-            INPUT_TOGGLE_COMMAND_BASIC | INPUT_TOGGLE_COMMAND_DEVICE => {
-                let (bytes_read, command): (usize, InputKeyCommand)
-                    = InputKeyCommand::parse_input_toggle(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::InputKey(command))
-            }
-
-            PICTURE_SHOW_COMMAND_BASE | PICTURE_SHOW_COMMAND_BASE_BY_VAR => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_COLORS => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_colors(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_DELAY => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_delay(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_RANGE => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_range(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_COLOR_VALUES => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_color_values(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_ZOOM => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_zoom(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_SHOW_COMMAND_FREE_TRANSFORM => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_show_free_transform(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_ERASE_COMMAND_DELAY_RESET => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_erase_delay_reset(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_ERASE_COMMAND_BASE => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_erase_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_ERASE_COMMAND_DELAY => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_erase_delay(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            PICTURE_ERASE_COMMAND_RANGE => {
-                let (bytes_read, command): (usize, PictureCommand)
-                    = PictureCommand::parse_erase_range(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Picture(command))
-            }
-
-            EFFECT_COMMAND_BASE => {
-                let (bytes_read, command): (usize, EffectCommand)
-                    = EffectCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Effect(command))
-            }
-
-            EFFECT_COMMAND_MAP_SHAKE => {
-                let (bytes_read, command): (usize, EffectCommand)
-                    = EffectCommand::parse_map_shake(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Effect(command))
-            }
-
-            EFFECT_COMMAND_SCROLL_SCREEN => {
-                let (bytes_read, command): (usize, EffectCommand)
-                    = EffectCommand::parse_scroll_screen(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Effect(command))
-            }
-
-            EFFECT_COMMAND_CHANGE_COLOR => {
-                let (bytes_read, command): (usize, EffectCommand)
-                    = EffectCommand::parse_change_color(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Effect(command))
-            }
-
-            SOUND_COMMAND_FILENAME | SOUND_COMMAND_FILENAME_SE => {
-                let (bytes_read, command): (usize, SoundCommand)
-                    = SoundCommand::parse_filename(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Sound(command))
-            }
-
-            SOUND_COMMAND_VARIABLE => {
-                let (bytes_read, command): (usize, SoundCommand)
-                    = SoundCommand::parse_variable(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Sound(command))
-            }
-
-            SOUND_COMMAND_FREE_ALL | SOUND_COMMAND_FREE_ALL_VARIABLE => {
-                let (bytes_read, command): (usize, SoundCommand)
-                    = SoundCommand::parse_free_all(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Sound(command))
-            }
-
-            SAVE_LOAD_COMMAND_BASE => {
-                let (bytes_read, command): (usize, SaveLoadCommand)
-                    = SaveLoadCommand::parse_base(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SaveLoad(command))
-            }
-
-            SAVE_LOAD_COMMAND_LOAD_VARIABLE => {
-                let (bytes_read, command): (usize, SaveLoadCommand)
-                    = SaveLoadCommand::parse_load_variable(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SaveLoad(command))
-            }
-
-            SAVE_LOAD_COMMAND_SAVE_VARIABLE => {
-                let (bytes_read, command): (usize, SaveLoadCommand)
-                    = SaveLoadCommand::parse_save_variable(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::SaveLoad(command))
-            }
-
-            PARTY_GRAPHICS_COMMAND_BASE | PARTY_GRAPHICS_COMMAND_VARIABLE |
-            PARTY_GRAPHICS_COMMAND_NO_MEMBER => {
-                let (bytes_read, command): (usize, PartyGraphicsCommand)
-                    = PartyGraphicsCommand::parse(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::PartyGraphics(command))
-            }
-
-            CHIP_MANAGEMENT_COMMAND_SETTINGS => {
-                let (bytes_read, command): (usize, ChipManagementCommand)
-                    = ChipManagementCommand::parse_map_chip_settings(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::ChipManagement(command))
-            }
-
-            CHIP_MANAGEMENT_COMMAND_SWITCH_SET => {
-                let (bytes_read, command): (usize, ChipManagementCommand)
-                    = ChipManagementCommand::parse_switch_chipset(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::ChipManagement(command))
-            }
-
-            CHIP_MANAGEMENT_COMMAND_OVERWRITE => {
-                let (bytes_read, command): (usize, ChipManagementCommand)
-                    = ChipManagementCommand::parse_overwrite_map_chips(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::ChipManagement(command))
-            }
-
-            TRANSFER_COMMAND => {
-                let (bytes_read, command): (usize, TransferCommand)
-                    = TransferCommand::parse(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::Transfer(command))
-            }
-
-            LOOP_COMMAND => {
-                let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
-                    = EventControlCommand::parse_loop(&bytes[offset..]);
-
-                offset += bytes_read;
-                commands += commands_read;
-
-                Ok(Command::EventControl(command))
-            }
-
-            BREAK_LOOP_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_break_loop(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            }
-
-            GOTO_LOOP_START_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_goto_loop_start(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            }
-
-            PREPARE_TRANSITION_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_prepare_transition(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            }
-
-            EXECUTE_TRANSITION_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_execute_transition(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            }
-
-            SET_TRANSITION_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_set_transition(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            MOVE_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_move_route(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            WAIT_FOR_MOVE_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_wait_for_move_route(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            MOVE_DURING_EVENTS_ON_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_move_during_events_on(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            MOVE_DURING_EVENTS_OFF_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_move_during_events_off(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            GOTO_TITLE_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_goto_title(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            GAME_END_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_game_end(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            STOP_GRAPHIC_UPDATES_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_stop_non_picture_graphic_updates(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            RESUME_GRAPHIC_UPDATES_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_resume_non_picture_graphic_updates(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            FORCE_EXIT_EVENT_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_force_exit_event(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            ERASE_EVENT_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_erase_event(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            WAIT_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_wait(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            LOOP_COUNT_COMMAND => {
-                let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
-                    = EventControlCommand::parse_loop_count(&bytes[offset..]);
-
-                offset += bytes_read;
-                commands += commands_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            LABEL_POINT_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_label_point(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            LABEL_JUMP_COMMAND => {
-                let (bytes_read, command): (usize, EventControlCommand)
-                    = EventControlCommand::parse_label_jump(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::EventControl(command))
-            },
-
-            CALL_EVENT1_COMMAND | CALL_EVENT2_COMMAND |
-            CALL_EVENT3_COMMAND | CALL_EVENT_BY_NAME1_COMMAND |
-            CALL_EVENT_BY_NAME2_COMMAND | CALL_EVENT_BY_NAME3_COMMAND |
-            CALL_EVENT_BY_NAME4_COMMAND | CALL_EVENT_BY_VARIABLE_COMMAND => {
-                let (bytes_read, command): (usize, CommonEvent)
-                    = CommonEvent::parse_call_event(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::CommonEvent(command))
-            },
-
-            RESERVE_EVENT_COMMAND => {
-                let (bytes_read, command): (usize, CommonEvent)
-                    = CommonEvent::parse_reserve_event(&bytes[offset..]);
-
-                offset += bytes_read;
-
-                Ok(Command::CommonEvent(command))
-            }
-
-            EXIT_COMMAND => {
-                offset+=3; // Not sure what the contents of the EXIT command are at the moment
-
-                Ok(Command::Exit())
-            }
-            _ => Err("Unknown command code")
-        }.expect(format!("Could not interpret command 0x{:08x}", signature)
-            .as_str());
-
-        (offset, commands, command)
+        (offset + bytes_read, commands + commands_read, command)
     }
 
-    fn parse_multiple(bytes: &[u8]) -> (usize, u32, Vec<Command>) {
+    pub fn parse_multiple(bytes: &[u8]) -> (usize, u32, Vec<Command>) {
         let mut offset: usize = 0;
         let mut command_count: u32 = 0;
         let mut commands: Vec<Command> = vec![];
 
         let mut exit: bool = false;
 
-        while(!exit) {
+        while !exit {
             let (bytes_read, commands_read, command): (usize, u32, Command)
                 = Command::parse(&bytes[offset..]);
 
@@ -841,5 +212,494 @@ impl Command {
         }
 
         (offset, command_count, commands)
+    }
+
+    fn parse_show_message(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, ShowMessageCommand) = ShowMessageCommand::parse(bytes);
+
+        (bytes_read, 0, Command::ShowMessage(command))
+    }
+
+    fn parse_comment(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, CommentCommand) = CommentCommand::parse(bytes);
+
+        (bytes_read, 0, Command::Comment(command))
+    }
+
+    fn parse_debug_text(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, DebugTextCommand)
+            = DebugTextCommand::parse(bytes);
+
+        (bytes_read, 0, Command::DebugText(command))
+    }
+
+    fn parse_force_close_message(_: &[u8], _: u32) -> (usize, u32, Self) {
+        Self::parse_empty(Self::ForceCloseMessage())
+    }
+
+    fn parse_clear_debug_text(_: &[u8], _: u32) -> (usize, u32, Self) {
+        Self::parse_empty(Self::ClearDebugText())
+    }
+
+    fn parse_show_choice(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, commands_read, command): (usize, u32, ShowChoiceCommand)
+            = ShowChoiceCommand::parse(bytes);
+
+        (bytes_read, commands_read, Command::ShowChoice(command))
+    }
+
+    fn parse_set_variable_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetVariableCommand)
+            = SetVariableCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::SetVariable(command))
+    }
+
+    fn parse_set_variable_range(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetVariableCommand)
+            = SetVariableCommand::parse_range(bytes);
+
+        (bytes_read, 0, Command::SetVariable(command))
+    }
+
+    fn parse_db_management_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, DBManagementCommand)
+            = DBManagementCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::DBManagement(command))
+    }
+
+    fn parse_db_management_string(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, DBManagementCommand)
+            = DBManagementCommand::parse_string(bytes);
+
+        (bytes_read, 0, Command::DBManagement(command))
+    }
+
+    fn parse_db_management_csv(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, DBManagementCommand)
+            = DBManagementCommand::parse_csv(bytes);
+
+        (bytes_read, 0, Command::DBManagement(command))
+    }
+
+    fn parse_set_string_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetStringCommand) = SetStringCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::SetString(command))
+    }
+
+    fn parse_set_string_dynamic(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetStringCommand)
+            = SetStringCommand::parse_dynamic(bytes);
+
+        (bytes_read, 0, Command::SetString(command))
+    }
+
+    fn parse_set_variable_plus_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetVariablePlusCommand)
+            = SetVariablePlusCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::SetVariablePlus(command))
+    }
+
+    fn parse_set_variable_plus_other(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetVariablePlusCommand)
+            = SetVariablePlusCommand::parse_other(bytes);
+
+        (bytes_read, 0, Command::SetVariablePlus(command))
+    }
+
+    fn parse_number_condition(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, commands_read, command): (usize, u32, NumberConditionCommand)
+            = NumberConditionCommand::parse(bytes);
+
+        (bytes_read, commands_read, Command::NumberCondition(command))
+    }
+
+    fn parse_string_condition(bytes: &[u8], signature: u32) -> (usize, u32, Self) {
+        let (bytes_read, commands_read, command): (usize, u32, StringConditionCommand)
+            = StringConditionCommand::parse(bytes, signature);
+
+        (bytes_read, commands_read, Command::StringCondition(command))
+    }
+
+    fn parse_input_key_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, InputKeyCommand)
+            = InputKeyCommand::parse_input_key_base(bytes);
+
+        (bytes_read, 0, Command::InputKey(command))
+    }
+
+    fn parse_input_key_keyboard_or_pad(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, InputKeyCommand)
+            = InputKeyCommand::parse_input_key_keyboard_or_pad(bytes);
+
+        (bytes_read, 0, Command::InputKey(command))
+    }
+
+    fn parse_automatic_input_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, InputKeyCommand)
+            = InputKeyCommand::parse_automatic_input_base(bytes);
+
+        (bytes_read, 0, Command::InputKey(command))
+    }
+
+    fn parse_automatic_input_keyboard(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, InputKeyCommand)
+            = InputKeyCommand::parse_automatic_input_keyboard(bytes);
+
+        (bytes_read, 0, Command::InputKey(command))
+    }
+
+    fn parse_input_toggle(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, InputKeyCommand)
+            = InputKeyCommand::parse_input_toggle(bytes);
+
+        (bytes_read, 0, Command::InputKey(command))
+    }
+
+    fn parse_picture_show_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_base(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_colors(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_colors(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_delay(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_delay(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_range(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_range(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_color_values(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_color_values(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_zoom(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_zoom(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_show_free_transform(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_show_free_transform(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_erase_delay_reset(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_erase_delay_reset(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_erase_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_erase_base(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_erase_delay(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_erase_delay(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_picture_erase_range(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PictureCommand)
+            = PictureCommand::parse_erase_range(bytes);
+
+        (bytes_read, 0, Command::Picture(command))
+    }
+
+    fn parse_effect_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EffectCommand)
+            = EffectCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::Effect(command))
+    }
+
+    fn parse_effect_map_shake(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EffectCommand)
+            = EffectCommand::parse_map_shake(bytes);
+
+        (bytes_read, 0, Command::Effect(command))
+    }
+
+    fn parse_effect_scroll_screen(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EffectCommand)
+            = EffectCommand::parse_scroll_screen(bytes);
+
+        (bytes_read, 0, Command::Effect(command))
+    }
+
+    fn parse_effect_change_color(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EffectCommand)
+            = EffectCommand::parse_change_color(bytes);
+
+        (bytes_read, 0, Command::Effect(command))
+    }
+
+    fn parse_sound_filename(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SoundCommand)
+            = SoundCommand::parse_filename(bytes);
+
+        (bytes_read, 0, Command::Sound(command))
+    }
+
+    fn parse_sound_variable(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SoundCommand)
+            = SoundCommand::parse_variable(bytes);
+
+        (bytes_read, 0, Command::Sound(command))
+    }
+
+    fn parse_sound_free_all(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SoundCommand)
+            = SoundCommand::parse_free_all(bytes);
+
+        (bytes_read, 0, Command::Sound(command))
+    }
+
+    fn parse_save_load_base(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SaveLoadCommand)
+            = SaveLoadCommand::parse_base(bytes);
+
+        (bytes_read, 0, Command::SaveLoad(command))
+    }
+
+    fn parse_load_variable(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SaveLoadCommand)
+            = SaveLoadCommand::parse_load_variable(bytes);
+
+        (bytes_read, 0, Command::SaveLoad(command))
+    }
+
+    fn parse_save_variable(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SaveLoadCommand)
+            = SaveLoadCommand::parse_save_variable(bytes);
+
+        (bytes_read, 0, Command::SaveLoad(command))
+    }
+
+    fn parse_party_graphics(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, PartyGraphicsCommand)
+            = PartyGraphicsCommand::parse(bytes);
+
+        (bytes_read, 0, Command::PartyGraphics(command))
+    }
+
+    fn parse_chip_management_settings(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, ChipManagementCommand)
+            = ChipManagementCommand::parse_map_chip_settings(bytes);
+
+        (bytes_read, 0, Command::ChipManagement(command))
+    }
+
+    fn parse_chip_management_switch_set(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, ChipManagementCommand)
+            = ChipManagementCommand::parse_switch_chipset(bytes);
+
+        (bytes_read, 0, Command::ChipManagement(command))
+    }
+
+    fn parse_chip_management_overwrite(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, ChipManagementCommand)
+            = ChipManagementCommand::parse_overwrite_map_chips(bytes);
+
+        (bytes_read, 0, Command::ChipManagement(command))
+    }
+
+    fn parse_transfer(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, TransferCommand)
+            = TransferCommand::parse(bytes);
+
+        (bytes_read, 0, Command::Transfer(command))
+    }
+
+    fn parse_loop(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
+            = EventControlCommand::parse_loop(bytes);
+
+        (bytes_read, commands_read, Command::EventControl(command))
+    }
+
+    fn parse_break_loop(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_break_loop(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_goto_loop_start(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_goto_loop_start(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_prepare_transition(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_prepare_transition(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_execute_transition(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_execute_transition(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_set_transition(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_set_transition(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_move(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_move_route(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_wait_for_move(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_wait_for_move_route(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_move_during_events_on(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_move_during_events_on(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_move_during_events_off(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_move_during_events_off(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_goto_title(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_goto_title(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_game_end(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_game_end(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_stop_non_picture_graphic_updates(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_stop_non_picture_graphic_updates(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_resume_non_picture_graphic_updates(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_resume_non_picture_graphic_updates(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_force_exit_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_force_exit_event(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_erase_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_erase_event(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_wait(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_wait(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_loop_count(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, commands_read, command): (usize, u32, EventControlCommand)
+            = EventControlCommand::parse_loop_count(bytes);
+
+        (bytes_read, commands_read, Command::EventControl(command))
+    }
+
+    fn parse_label_point(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_label_point(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_label_jump(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, EventControlCommand)
+            = EventControlCommand::parse_label_jump(bytes);
+
+        (bytes_read, 0, Command::EventControl(command))
+    }
+
+    fn parse_call_common_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, CommonEvent)
+            = CommonEvent::parse_call_event(bytes);
+
+        (bytes_read, 0, Command::CommonEvent(command))
+    }
+
+    fn parse_reserve_common_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, CommonEvent)
+            = CommonEvent::parse_reserve_event(bytes);
+
+        (bytes_read, 0, Command::CommonEvent(command))
+    }
+
+    fn parse_exit(_: &[u8], _: u32) -> (usize, u32, Self) {
+        Self::parse_empty(Self::Exit())
+    }
+
+    fn parse_empty(ret: Self) -> (usize, u32, Self) {
+        (3, 0, ret)
     }
 }
