@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::command::number_condition_command::compare_operator::CompareOperator;
+use crate::common::compare_operator::CompareOperator;
 
 #[derive(Serialize)]
 pub struct Operator {

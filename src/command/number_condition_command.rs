@@ -4,7 +4,6 @@ use crate::command::number_condition_command::condition::Condition;
 
 mod condition;
 mod operator;
-mod compare_operator;
 
 #[derive(Serialize)]
 pub struct NumberConditionCommand {

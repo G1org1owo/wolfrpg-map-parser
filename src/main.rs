@@ -3,6 +3,7 @@ mod event;
 mod command;
 mod byte_utils;
 mod common;
+mod page;
 
 use std::{env, fs};
 use serde_json;

@@ -1,8 +1,8 @@
-mod page;
-
 use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
-use crate::event::page::Page;
+use crate::byte_utils::{as_string, as_u32_be, as_u32_le};
+use crate::page::Page;
+
+const EVENT_SIGNATURE: u32 = 0x6f393000;
 
 #[derive(Serialize)]
 pub struct Event {
@@ -10,19 +10,28 @@ pub struct Event {
     name: String,
     position_x: u32,
     position_y: u32,
-    page_count: u32,
     unknown1: u32,
     pages: Vec<Page>
 }
 
 impl Event {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
-        let mut offset: usize = 5;
+        let mut offset: usize = 0;
+
+        let signature: u32 = as_u32_be(&bytes[offset..offset + 4]);
+        offset += 4;
+
+        if signature != EVENT_SIGNATURE {
+            panic!("Invalid event signature: {:02x}.", signature);
+        }
+
+        offset += 1; // padding
+
         let id: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
         let name_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-        offset+=4;
+        offset += 4;
 
         let name: String = as_string(bytes, offset, name_length);
         offset+=name_length;
@@ -47,16 +56,69 @@ impl Event {
         }
 
         let event_end: u8 = bytes[offset];
-        offset+=1; // TODO: throw error if not page/event end signature
+        offset += 1;
+
+        if event_end != 0x70 {
+            panic!("Expected event end but found {:02x}.", event_end);
+        }
 
         (offset, Self {
             id,
             name,
             position_x,
             position_y,
-            page_count,
             unknown1,
             pages,
         })
+    }
+
+    pub fn parse_multiple(bytes: &[u8], count: u32) -> (usize, Vec<Self>) {
+        let mut offset: usize = 0;
+        let mut events: Vec<Event> = Vec::new();
+
+        for _ in 0..count {
+            let (bytes_read, event): (usize, Self) = Self::parse(&bytes[offset..]);
+
+            offset += bytes_read;
+            events.push(event);
+        }
+
+        (offset, events)
+    }
+
+    pub fn id(&self) -> u32 {
+        self.id
+    }
+
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn name_mut(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    pub fn position_x(&self) -> u32 {
+        self.position_x
+    }
+
+    pub fn position_x_mut(&mut self) -> &mut u32 {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> u32 {
+        self.position_y
+    }
+
+    pub fn position_y_mut(&mut self) -> &mut u32 {
+        &mut self.position_y
+    }
+
+    pub fn pages(&self) -> &Vec<Page> {
+        &self.pages
+    }
+
+    pub fn pages_mut(&mut self) -> &mut Vec<Page> {
+        &mut self.pages
     }
 }
