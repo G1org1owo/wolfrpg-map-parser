@@ -1,12 +1,10 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
-use show_message_command::ShowMessageCommand;
+use show_text_command::ShowTextCommand;
 use crate::command::chip_management_command::ChipManagementCommand;
-use crate::command::comment_command::CommentCommand;
 use crate::command::common_event::CommonEvent;
 use crate::command::db_management_command::DBManagementCommand;
-use crate::command::debug_text_command::DebugTextCommand;
 use crate::command::effect_command::EffectCommand;
 use crate::command::event_control_command::EventControlCommand;
 use crate::command::input_key_command::InputKeyCommand;
@@ -23,9 +21,7 @@ use crate::command::string_condition_command::StringConditionCommand;
 use crate::command::transfer_command::TransferCommand;
 
 mod show_choice_command;
-mod show_message_command;
-mod comment_command;
-mod debug_text_command;
+mod show_text_command;
 mod set_variable_command;
 mod db_management_command;
 mod common;
@@ -47,9 +43,9 @@ mod signature;
 
 #[derive(Serialize)]
 pub enum Command {
-    ShowMessage(ShowMessageCommand),
-    Comment(CommentCommand),
-    DebugText(DebugTextCommand),
+    ShowMessage(ShowTextCommand),
+    Comment(ShowTextCommand),
+    DebugText(ShowTextCommand),
     ForceCloseMessage(),
     ClearDebugText(),
     ShowChoice(ShowChoiceCommand),
@@ -99,7 +95,6 @@ impl Command {
             Signature::SetVariablePlusOther => Self::parse_set_variable_plus_other,
 
             Signature::NumberCondition | Signature::NumberConditionDouble |
-
             Signature::NumberConditionTriple => Self::parse_number_condition,
 
             Signature::StringCondition | Signature::StringConditionTwo |
@@ -111,13 +106,16 @@ impl Command {
             Signature::InputKeyBase => Self::parse_input_key_base,
             Signature::InputKeyKeyboardOrPad => Self::parse_input_key_keyboard_or_pad,
 
-            Signature::AutomaticInputBasic | Signature::AutomaticInputMouse => Self::parse_automatic_input_base,
+            Signature::AutomaticInputBasic | Signature::AutomaticInputMouse
+                => Self::parse_automatic_input_base,
 
             Signature::AutomaticInputKeyboard => Self::parse_automatic_input_keyboard,
 
-            Signature::InputToggleBasic | Signature::InputToggleDevice => Self::parse_input_toggle,
+            Signature::InputToggleBasic | Signature::InputToggleDevice
+                => Self::parse_input_toggle,
 
-            Signature::PictureShowBase | Signature::PictureShowBaseByVar => Self::parse_picture_show_base,
+            Signature::PictureShowBase | Signature::PictureShowBaseByVar
+                => Self::parse_picture_show_base,
 
             Signature::PictureShowColors => Self::parse_picture_show_colors,
             Signature::PictureShowDelay => Self::parse_picture_show_delay,
@@ -164,7 +162,8 @@ impl Command {
             Signature::GotoTitle => Self::parse_goto_title,
             Signature::GameEnd => Self::parse_game_end,
             Signature::StopNonPictureGraphicUpdates => Self::parse_stop_non_picture_graphic_updates,
-            Signature::ResumeNonPictureGraphicUpdates => Self::parse_resume_non_picture_graphic_updates,
+            Signature::ResumeNonPictureGraphicUpdates
+                => Self::parse_resume_non_picture_graphic_updates,
             Signature::ForceExitEvent => Self::parse_force_exit_event,
             Signature::EraseEvent => Self::parse_erase_event,
             Signature::Wait => Self::parse_wait,
@@ -175,7 +174,8 @@ impl Command {
             Signature::CallEvent1 | Signature::CallEvent2 |
             Signature::CallEvent3 | Signature::CallEventByName1 |
             Signature::CallEventByName2 | Signature::CallEventByName3 |
-            Signature::CallEventByName4 | Signature::CallEventByVariable => Self::parse_call_common_event,
+            Signature::CallEventByName4 | Signature::CallEventByVariable
+                => Self::parse_call_common_event,
 
             Signature::ReserveEvent => Self::parse_reserve_common_event,
             Signature::Exit => Self::parse_exit,
@@ -215,20 +215,19 @@ impl Command {
     }
 
     fn parse_show_message(bytes: &[u8], _: u32) -> (usize, u32, Self) {
-        let (bytes_read, command): (usize, ShowMessageCommand) = ShowMessageCommand::parse(bytes);
+        let (bytes_read, command): (usize, ShowTextCommand) = ShowTextCommand::parse(bytes);
 
         (bytes_read, 0, Command::ShowMessage(command))
     }
 
     fn parse_comment(bytes: &[u8], _: u32) -> (usize, u32, Self) {
-        let (bytes_read, command): (usize, CommentCommand) = CommentCommand::parse(bytes);
+        let (bytes_read, command): (usize, ShowTextCommand) = ShowTextCommand::parse(bytes);
 
         (bytes_read, 0, Command::Comment(command))
     }
 
     fn parse_debug_text(bytes: &[u8], _: u32) -> (usize, u32, Self) {
-        let (bytes_read, command): (usize, DebugTextCommand)
-            = DebugTextCommand::parse(bytes);
+        let (bytes_read, command): (usize, ShowTextCommand) = ShowTextCommand::parse(bytes);
 
         (bytes_read, 0, Command::DebugText(command))
     }

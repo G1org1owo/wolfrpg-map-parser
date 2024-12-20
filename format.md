@@ -84,8 +84,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 65 00 00`         |
 | 1 byte                 | padding        | `00`                  |
-| 1 byte                 | ???            | uint8                 |
-| 1 byte                 | ???            | uint8                 |
+| 2 bytes                | ???            |                       |
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
@@ -95,7 +94,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 67 00 00`         |
 | 1 byte                 | padding        | `00`                  |
-| 2 bytes                | ???            | little-endian uint32  |
+| 2 bytes                | ???            |                       |
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
@@ -105,7 +104,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 |------------------------|----------------|-----------------------|
 | 4 bytes                | command_code   | `01 6A 00 00`         |
 | 1 byte                 | padding        | `00`                  |
-| 2 bytes                | ???            | little-endian uint32  |
+| 2 bytes                | ???            |                       |
 | 4 bytes                | message_length | little-endian uint32  |
 | `message_length` bytes | message_length | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
@@ -115,14 +114,14 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 69 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ## Clear debug text Command format
 | Length  | Content      | Value         |
 |---------|--------------|---------------|
 | 4 bytes | command_code | `01 6B 00 00` |
 | 1 byte  | padding      | `00`          |
-| 3 bytes | ???          |               |
+| 3 bytes | Command end  | `00 00 00`    |
 
 ## Show choice Command format
 | Length      | Content          | Value                                                                        |
