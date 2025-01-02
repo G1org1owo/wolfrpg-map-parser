@@ -7,7 +7,6 @@ use serde::Serialize;
 pub struct Case {
     case_type: CaseType,
     case_id: u32,
-    unknown1: [u8; 3],
     commands: Vec<Command>,
 }
 
@@ -24,8 +23,7 @@ impl Case {
         let case_id: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
-        let unknown1: [u8; 3] = bytes[offset..offset+3].try_into().unwrap();
-        offset += 3;
+        offset += 3; // Unknown, most probably padding
 
         let mut command_count: u32 = 1; // Case counts as command
         let (bytes_read, commands_read, commands): (usize, u32, Vec<Command>)
@@ -36,7 +34,6 @@ impl Case {
         (offset, command_count, Self {
             case_type,
             case_id,
-            unknown1,
             commands,
         })
     }
@@ -46,13 +43,38 @@ impl Case {
         let mut offset: usize = 0;
         let mut commands: u32 = 0;
 
-        for _i in 0..case_count {
-            let (bytes_read, commands_read, case): (usize, u32, Case) = Self::parse(&bytes[offset..]);
+        for _ in 0..case_count {
+            let (bytes_read, commands_read, case): (usize, u32, Case)
+                = Self::parse(&bytes[offset..]);
             cases.push(case);
             offset += bytes_read;
             commands += commands_read;
         }
 
         (offset, commands, cases)
+    }
+
+    pub fn case_type(&self) -> &CaseType {
+        &self.case_type
+    }
+
+    pub fn case_type_mut(&mut self) -> &mut CaseType {
+        &mut self.case_type
+    }
+
+    pub fn case_id(&self) -> u32 {
+        self.case_id
+    }
+
+    pub fn case_id_mut(&mut self) -> &mut u32 {
+        &mut self.case_id
+    }
+
+    pub fn commands(&self) -> &Vec<Command> {
+        &self.commands
+    }
+
+    pub fn commands_mut(&mut self) -> &mut Vec<Command> {
+        &mut self.commands
     }
 }

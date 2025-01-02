@@ -45,3 +45,20 @@ pub fn as_string(bytes: &[u8], offset: usize, string_length: usize) -> String {
 
     cow.to_string()
 }
+
+pub fn parse_string_vec(bytes: &[u8], count: usize) -> (usize, Vec<String>) {
+    let mut offset: usize = 0;
+    let mut strings: Vec<String> = Vec::with_capacity(count);
+
+    for _ in 0..count {
+        let length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
+        offset += 4;
+
+        let choice: String = as_string(bytes, offset, length);
+        offset += length;
+
+        strings.push(choice);
+    }
+
+    (offset, strings)
+}

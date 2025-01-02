@@ -130,13 +130,12 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte      | padding          | `00`                                                                         |
 | 1 byte      | selected_choices | high 4 bits for default choice, low 4 bits for choice count                  |
 | 1 byte      | extra_cases      | uint8 bitmap                                                                 |
-| 2 bytes     | ???              |                                                                              |
-| 1 byte      | ???              |                                                                              |
+| 3 bytes     | Command end      |                                                                              |
 | 1 byte      | choice_count     | uint8                                                                        |
 | \<variable> | choices          | [Choice; choice_count]                                                       |
 | 1 byte      | Choices end      | `00`                                                                         |
 | \<variable> | Cases            | [Case; choice_count + extra_cases (+ 1 if selected_choices high bits are 0)] |
-| 8 bytes     | Command end      | `01 F3 00 00 00 00 00 00`                                                    |
+| 8 bytes     | Cases end        | `01 F3 01 00 00 00 00 00`                                                    |
 
 ### Choice format
 | Length              | Content       | Value                 |
@@ -150,9 +149,9 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes     | command_code | `02 91 01 00`, `02 92 01 00` or `02 A5 01 00` |
 | 1 byte      | padding      | `00`                                          |
 | 4 bytes     | case_id      | little-endian uint32                          |
-| 3 bytes     | ???          |                                               |
+| 3 bytes     | Command end  |                                               |
 | \<variable> | commands     | [Command]                                     |
-| 8 bytes     | Exit         |                                               |
+| 8 bytes     | Exit command |                                               |
 
 ## Set variable Command format
 ### Base variant

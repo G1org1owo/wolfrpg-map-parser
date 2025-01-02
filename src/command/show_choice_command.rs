@@ -1,22 +1,17 @@
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u16_le, as_u32_le};
+use crate::byte_utils::{as_u16_le, parse_string_vec};
 use crate::command::common::case::Case;
+use crate::command::show_choice_command::options::Options;
+use serde::Serialize;
 
-#[derive(Serialize)]
-enum Cancel {
-    Choice(u8),
-    Separate,
-    No,
-}
+mod cancel_case;
+mod extra_cases;
+mod options;
+
+const CHOICES_END_SIGNATURE: &[u8] = b"\x01\xf3\x01\x00\x00\x00\x00\x00";
 
 #[derive(Serialize)]
 pub struct ShowChoiceCommand {
-    cancel_case: Cancel,
-    selected_choices: u8, // only take lower half for actual choices
-    extra_cases: u8, // bitmap
-    unknown1: u16,
-    unknown2: u8,
-    choice_count: u8,
+    options: Options,
     choices: Vec<String>,
     cases: Vec<Case>,
 }
@@ -25,70 +20,62 @@ impl ShowChoiceCommand {
     pub fn parse(bytes: &[u8]) -> (usize, u32, Self){
         let mut offset: usize = 0;
 
-        let selected_choices: u8 = bytes[offset];
-        let extra_cases: u8 = bytes[offset+1];
-        let unknown1: u16 = as_u16_le(&bytes[offset+2..offset+4]);
-        let unknown2: u8 = bytes[offset+4];
-        let choice_count: u8 = bytes[offset+5];
-        offset += 6;
+        let options: u16 = as_u16_le(&bytes[offset..offset + 2]);
+        let options: Options = Options::new(options);
+        offset += 2;
 
-        let cancel_case: u8 = (selected_choices >> 4) & 0b00001111;
-        let cancel_case: Cancel = match cancel_case {
-            0 => Cancel::Separate,
-            1 => Cancel::No,
-            _ => Cancel::Choice(cancel_case - 2)
-        };
+        offset += 3; // Unknown, most probably padding
 
-        let mut choices: Vec<String> = vec![];
+        // Should be equal to options.selected_choices
+        let choice_count: usize = bytes[offset] as usize;
+        offset += 1;
 
-        for _i in 0..choice_count {
-            let (bytes_read, choice): (usize, String) = Self::parse_choice(&bytes[offset..]);
-            choices.push(choice);
-            offset += bytes_read;
-        }
+        let (bytes_read, choices): (usize, Vec<String>)
+            = parse_string_vec(&bytes[offset..], choice_count);
+        offset += bytes_read;
+        offset += 1; // Should be 0x00 to indicate end of choices
 
-        offset += 1; // should be 0x00 to indicate end of choices
-
-        let case_count: usize = (choice_count + Self::extra_cases_count(extra_cases, &cancel_case))
-            as usize;
-        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>) = Case::parse_multiple(
-            &bytes[offset..],
-            case_count
-        );
+        let case_count: usize = options.case_count();
+        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>)
+            = Case::parse_multiple(&bytes[offset..], case_count);
         offset += bytes_read;
 
-        let end_command = &bytes[offset..offset+8];
+        let choices_end: &[u8] = &bytes[offset..offset+8];
         offset += 8;
-        commands_read += 1; // This should be some sort of command end signature I guess
+        commands_read += 1; // Signature counts as command
+
+        if choices_end != CHOICES_END_SIGNATURE {
+            panic!("Invalid choices end.");
+        }
 
         (offset, commands_read, Self {
-            cancel_case,
-            selected_choices,
-            extra_cases,
-            unknown1,
-            unknown2,
-            choice_count,
+            options,
             choices,
             cases,
         })
     }
 
-    fn parse_choice(bytes: &[u8]) -> (usize, String) {
-        let length: usize = as_u32_le(&bytes[..4]) as usize;
-        let choice: String = as_string(bytes, 4, length);
-
-        (length + 4, choice)
+    pub fn options(&self) -> &Options {
+        &self.options
     }
 
-    fn extra_cases_count(extra_cases: u8, cancel: &Cancel) -> u8 {
-        let base_cases: u8 = match cancel {
-            Cancel::Separate => 1,
-            _ => 0
-        };
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
 
-        base_cases +
-        (extra_cases >> 0) & 0x1 +
-        (extra_cases >> 1) & 0x1 +
-        (extra_cases >> 2) & 0x1
+    pub fn choices(&self) -> &Vec<String> {
+        &self.choices
+    }
+
+    pub fn choices_mut(&mut self) -> &mut Vec<String> {
+        &mut self.choices
+    }
+
+    pub fn cases(&self) -> &Vec<Case> {
+        &self.cases
+    }
+
+    pub fn cases_mut(&mut self) -> &mut Vec<Case> {
+        &mut self.cases
     }
 }
