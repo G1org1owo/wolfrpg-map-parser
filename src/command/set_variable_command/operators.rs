@@ -15,4 +15,20 @@ impl Operators {
             calculation: Calculation::from_u8(operators >> 4),
         }
     }
+
+    pub fn assignment(&self) -> &Assignment {
+        &self.assignment
+    }
+
+    pub fn assignment_mut(&mut self) -> &mut Assignment {
+        &mut self.assignment
+    }
+
+    pub fn calculation(&self) -> &Calculation {
+        &self.calculation
+    }
+
+    pub fn calculation_mut(&mut self) -> &mut Calculation {
+        &mut self.calculation
+    }
 }

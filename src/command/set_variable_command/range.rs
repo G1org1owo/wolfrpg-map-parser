@@ -29,4 +29,20 @@ impl Range {
             unknown1,
         })
     }
+
+    pub fn range_start(&self) -> u16 {
+        self.range_start
+    }
+
+    pub fn range_start_mut(&mut self) -> &mut u16 {
+        &mut self.range_start
+    }
+
+    pub fn range_end(&self) -> u16 {
+        self.range_end
+    }
+
+    pub fn range_end_mut(&mut self) -> &mut u16 {
+        &mut self.range_end
+    }
 }

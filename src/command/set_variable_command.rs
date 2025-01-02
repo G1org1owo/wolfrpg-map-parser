@@ -36,11 +36,11 @@ impl SetVariableCommand {
 
         let options: u8 = bytes[offset];
         let options: Options = Options::new(options);
+        offset += 1;
 
-        let operators: u8 = bytes[offset + 1];
+        let operators: u8 = bytes[offset];
         let operators: Operators = Operators::new(operators);
-
-        offset += 2;
+        offset += 1;
 
         let (bytes_read, state): (usize, State) = parse_state(bytes);
 
@@ -62,5 +62,53 @@ impl SetVariableCommand {
 
     pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_range)
+    }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn left_side(&self) -> u32 {
+        self.left_side
+    }
+
+    pub fn left_side_mut(&mut self) -> &mut u32 {
+        &mut self.left_side
+    }
+
+    pub fn right_side(&self) -> u32 {
+        self.right_side
+    }
+
+    pub fn right_side_mut(&mut self) -> &mut u32 {
+        &mut self.right_side
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn operators(&self) -> &Operators {
+        &self.operators
+    }
+
+    pub fn operators_mut(&mut self) -> &mut Operators {
+        &mut self.operators
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

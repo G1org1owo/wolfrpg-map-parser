@@ -23,4 +23,60 @@ impl Options {
             use_right_as_reference:     options & 0b01000000 != 0,
         }
     }
+
+    pub fn bind_result(&self) -> bool {
+        self.bind_result
+    }
+
+    pub fn bind_result_mut(&mut self) -> &mut bool {
+        &mut self.bind_result
+    }
+
+    pub fn real_number_calculation(&self) -> bool {
+        self.real_number_calculation
+    }
+
+    pub fn real_number_calculation_mut(&mut self) -> &mut bool {
+        &mut self.real_number_calculation
+    }
+
+    pub fn left_not_variable(&self) -> bool {
+        self.left_not_variable
+    }
+
+    pub fn left_not_variable_mut(&mut self) -> &mut bool {
+        &mut self.left_not_variable
+    }
+
+    pub fn right_not_variable(&self) -> bool {
+        self.right_not_variable
+    }
+
+    pub fn right_not_variable_mut(&mut self) -> &mut bool {
+        &mut self.right_not_variable
+    }
+
+    pub fn use_variable_as_reference(&self) -> bool {
+        self.use_variable_as_reference
+    }
+
+    pub fn use_variable_as_reference_mut(&mut self) -> &mut bool {
+        &mut self.use_variable_as_reference
+    }
+
+    pub fn use_left_as_reference(&self) -> bool {
+        self.use_left_as_reference
+    }
+
+    pub fn use_left_as_reference_mut(&mut self) -> &mut bool {
+        &mut self.use_left_as_reference
+    }
+
+    pub fn use_right_as_reference(&self) -> bool {
+        self.use_right_as_reference
+    }
+
+    pub fn use_right_as_reference_mut(&mut self) -> &mut bool {
+        &mut self.use_right_as_reference
+    }
 }
