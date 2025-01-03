@@ -346,10 +346,10 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte                  | case_count   | uint8 bitmap                                  |
 | 3 bytes                 | padding      | `00 00 00`                                    |
 | 12 bytes * `case_count` | conditions   | [Condition; case_count]                       |
-| 3 bytes                 | ???          |                                               |
+| 3 bytes                 | Command end  | `00 00 00`                                    |
 | \<variable>             | cases        | [Case; case_count]                            |
 | \<variable>             | else_case    | Case? (only if flag is set in case_count)     |
-| 8 bytes                 | Command end  | `01 F3 00 00 00 00 00 00`                     |
+| 8 bytes                 | Cases end    | `01 F3 01 00 00 00 00 00`                     |
 
 ### Condition format
 | Length  | Content  | Value                |

@@ -30,4 +30,28 @@ impl Condition {
             operator
         })
     }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn value(&self) -> u32 {
+        self.value
+    }
+
+    pub fn value_mut(&mut self) -> &mut u32 {
+        &mut self.value
+    }
+
+    pub fn operator(&self) -> &Operator {
+        &self.operator
+    }
+
+    pub fn operator_mut(&mut self) -> &mut Operator {
+        &mut self.operator
+    }
 }

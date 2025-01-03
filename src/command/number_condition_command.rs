@@ -1,5 +1,6 @@
 use serde::Serialize;
 use crate::command::common::case::Case;
+use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::number_condition_command::condition::Condition;
 
 mod condition;
@@ -7,11 +8,8 @@ mod operator;
 
 #[derive(Serialize)]
 pub struct NumberConditionCommand {
-    case_count: u8,
     else_case: bool,
     conditions: Vec<Condition>,
-    unknown1: [u8; 3],
-
     cases: Vec<Case>,
 }
 
@@ -29,23 +27,25 @@ impl NumberConditionCommand {
 
         offset += bytes_read;
 
-        let unknown1: [u8; 3] = bytes[offset..offset+3].try_into().unwrap();
-        offset += 3;
+        offset += 3; // Command end
 
+        let case_count: usize = case_count as usize + else_case as usize;
         let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>)
-            = Self::parse_cases(&bytes[offset..], case_count as usize, else_case);
+            = Case::parse_multiple(&bytes[offset..], case_count);
 
         offset += bytes_read;
 
-        let end_command = &bytes[offset..offset+8];
-        offset += 8; // TODO: Throw error if it's not 0x01f30000 0x00000000
+        let cases_end = &bytes[offset..offset+8];
+        offset += 8;
         commands_read += 1;
 
+        if cases_end != CASES_END_SIGNATURE {
+            panic!("Invalid cases end.");
+        }
+
         (offset, commands_read, Self {
-            case_count,
             else_case,
             conditions,
-            unknown1,
             cases
         })
     }
@@ -68,8 +68,27 @@ impl NumberConditionCommand {
         (offset, conditions)
     }
 
-    fn parse_cases(bytes: &[u8], case_count: usize, else_case: bool) -> (usize, u32, Vec<Case>) {
-        let else_case: usize = if else_case { 1 } else { 0 };
-        Case::parse_multiple(bytes, case_count + else_case)
+    pub fn else_case(&self) -> bool {
+        self.else_case
+    }
+
+    pub fn else_case_mut(&mut self) -> &mut bool {
+        &mut self.else_case
+    }
+
+    pub fn conditions(&self) -> &Vec<Condition> {
+        &self.conditions
+    }
+
+    pub fn conditions_mut(&mut self) -> &mut Vec<Condition> {
+        &mut self.conditions
+    }
+
+    pub fn cases(&self) -> &Vec<Case> {
+        &self.cases
+    }
+
+    pub fn cases_mut(&mut self) -> &mut Vec<Case> {
+        &mut self.cases
     }
 }

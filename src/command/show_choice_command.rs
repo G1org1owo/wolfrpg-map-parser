@@ -1,13 +1,12 @@
 use crate::byte_utils::{as_u16_le, parse_string_vec};
 use crate::command::common::case::Case;
+use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::show_choice_command::options::Options;
 use serde::Serialize;
 
 mod cancel_case;
 mod extra_cases;
 mod options;
-
-const CHOICES_END_SIGNATURE: &[u8] = b"\x01\xf3\x01\x00\x00\x00\x00\x00";
 
 #[derive(Serialize)]
 pub struct ShowChoiceCommand {
@@ -40,12 +39,12 @@ impl ShowChoiceCommand {
             = Case::parse_multiple(&bytes[offset..], case_count);
         offset += bytes_read;
 
-        let choices_end: &[u8] = &bytes[offset..offset+8];
+        let cases_end: &[u8] = &bytes[offset..offset+8];
         offset += 8;
         commands_read += 1; // Signature counts as command
 
-        if choices_end != CHOICES_END_SIGNATURE {
-            panic!("Invalid choices end.");
+        if cases_end != CASES_END_SIGNATURE {
+            panic!("Invalid cases end.");
         }
 
         (offset, commands_read, Self {

@@ -14,4 +14,20 @@ impl Operator {
             not_variable: operator & 0b00010000 != 0,
         }
     }
+
+    pub fn operator(&self) -> &CompareOperator {
+        &self.operator
+    }
+
+    pub fn operator_mut(&mut self) -> &mut CompareOperator {
+        &mut self.operator
+    }
+
+    pub fn not_variable(&self) -> bool {
+        self.not_variable
+    }
+
+    pub fn not_variable_mut(&mut self) -> &mut bool {
+        &mut self.not_variable
+    }
 }
