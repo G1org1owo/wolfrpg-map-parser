@@ -256,20 +256,22 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 
 ## Set string Command
 ### Base Variant
-| Length  | Content        | Value                |
-|---------|----------------|----------------------|
-| 4 bytes | command_code   | `03 7A 00 00`        |
-| 1 byte  | padding        | `00`                 |
-| 4 bytes | variable       | little-endian uint32 |
-| 1 byte  | options        | uint8 bitmap         |
-| 1 byte  | operation      | uint8 bitmap         |
-| 2 bytes | padding        | `00 00`              |
-| 1 byte  | padding        | `00`                 |
-| 1 byte  | string_count   | uint8                |
-| 4 bytes | string_length  | little-endian uint32 |
-| 1 byte  | replace_count  | uint8                |
-| 4 bytes | replace_length | little-endian uint32 |
-| 1 byte  | Command end    | `00`                 |
+| Length                 | Content        | Value                 |
+|------------------------|----------------|-----------------------|
+| 4 bytes                | command_code   | `03 7A 00 00`         |
+| 1 byte                 | padding        | `00`                  |
+| 4 bytes                | variable       | little-endian uint32  |
+| 1 byte                 | options        | uint8 bitmap          |
+| 1 byte                 | operation      | uint8 bitmap          |
+| 2 bytes                | padding        | `00 00`               |
+| 1 byte                 | padding        | `00`                  |
+| 1 byte                 | string_count   | uint8                 |
+| 4 bytes                | string_length  | little-endian uint32  |
+| `string_length` bytes  | string         | NUL-terminated string |
+| 1 byte                 | replace_count  | uint8                 |
+| 4 bytes                | replace_length | little-endian uint32  |
+| `replace_length` bytes | replace        | NUL-terminated string |
+| 1 byte                 | Command end    | `00`                  |
 
 ### Dynamic Variant
 | Length  | Content             | Value                |
@@ -292,7 +294,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes | variable     | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
-| 2 bytes | ???          |                      |
+| 2 bytes | padding      | `00 00`              |
 | 4 bytes | character    | little-endian uint32 |
 | 4 bytes | field        | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
@@ -306,7 +308,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
 | 1 byte  | target       | uint8                |
-| 1 byte  | ???          |                      |
+| 1 byte  | padding      | `00`                 |
 | 4 bytes | position_x   | little-endian uint32 |
 | 4 bytes | position_y   | little-endian uint32 |
 | 3 bytes | Command end  | `00 00 00`           |
@@ -319,7 +321,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes | variable       | little-endian uint32 |
 | 1 byte  | options        | uint8 bitmap         |
 | 1 byte  | assignment     | uint8 bitmap         |
-| 2 bytes | ???            |                      |
+| 2 bytes | padding        | `00 00`              |
 | 4 bytes | picture_number | little-endian uint32 |
 | 4 bytes | field          | little-endian uint32 |
 | 3 bytes | Command end    | `00 00 00`           |
@@ -332,7 +334,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes | variable     | little-endian uint32 |
 | 1 byte  | options      | uint8 bitmap         |
 | 1 byte  | assignment   | uint8 bitmap         |
-| 2 bytes | ???          |                      |
+| 2 bytes | padding      | `00 00`              |
 | 4 bytes | target       | little-endian uint32 |
 | 3 byte  | Command end  | `00 00 00`           |
 

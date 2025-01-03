@@ -4,7 +4,6 @@ use crate::byte_utils::as_u32_le;
 #[derive(Serialize)]
 pub struct Position {
     target: u8,
-    unknown1: u8,
     position_x: u32,
     position_y: u32
 }
@@ -14,8 +13,9 @@ impl Position {
         let mut offset: usize = 0;
 
         let target: u8 = bytes[offset];
-        let unknown1: u8 = bytes[offset+1];
-        offset += 2;
+        offset += 1;
+
+        offset += 1; // Unknown, probably padding
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
@@ -23,13 +23,34 @@ impl Position {
         let position_y: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
-        offset += 3; // Command end signature
-
         (offset, Self {
             target,
-            unknown1,
             position_x,
             position_y,
         })
+    }
+
+    pub fn target(&self) -> u8 {
+        self.target
+    }
+
+    pub fn target_mut(&mut self) -> &mut u8 {
+        &mut self.target
+    }
+
+    pub fn position_x(&self) -> u32 {
+        self.position_x
+    }
+
+    pub fn position_x_mut(&mut self) -> &mut u32 {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> u32 {
+        self.position_y
+    }
+
+    pub fn position_y_mut(&mut self) -> &mut u32 {
+        &mut self.position_y
     }
 }

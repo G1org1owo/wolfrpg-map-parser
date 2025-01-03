@@ -35,14 +35,16 @@ impl SetVariablePlusCommand {
 
         let options: u8 = bytes[offset];
         let options:Options = Options::new(options);
+        offset += 1;
 
-        let assignment: u8 = bytes[offset+1];
+        let assignment: u8 = bytes[offset];
         let assignment: Assignment = Assignment::new(assignment);
-
-        offset += 2;
+        offset += 1;
 
         let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..]);
         offset += bytes_read;
+
+        offset += 3; // Command end signature
 
         (offset, Self {
             variable,
@@ -63,5 +65,37 @@ impl SetVariablePlusCommand {
 
     pub fn parse_other(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_other)
+    }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn assignment(&self) -> &Assignment {
+        &self.assignment
+    }
+
+    pub fn assignment_mut(&mut self) -> &mut Assignment {
+        &mut self.assignment
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

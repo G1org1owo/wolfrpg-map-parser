@@ -15,4 +15,28 @@ impl Options {
             precise_position:           options & 0b00100000 != 0,
         }
     }
+
+    pub fn bind_result(&self) -> bool {
+        self.bind_result
+    }
+
+    pub fn bind_result_mut(&mut self) -> &mut bool {
+        &mut self.bind_result
+    }
+
+    pub fn use_variable_as_reference(&self) -> bool {
+        self.use_variable_as_reference
+    }
+
+    pub fn use_variable_as_reference_mut(&mut self) -> &mut bool {
+        &mut self.use_variable_as_reference
+    }
+
+    pub fn precise_position(&self) -> bool {
+        self.precise_position
+    }
+
+    pub fn precise_position_mut(&mut self) -> &mut bool {
+        &mut self.precise_position
+    }
 }
