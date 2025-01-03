@@ -374,8 +374,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte                                            | conditions_end  | `00`                                                                                                                     |
 | \<variable>                                       | cases           | [Case; case_count]                                                                                                       |
 | \<variable>                                       | else_case       | Case? (only if flag is set in case_count)                                                                                |
-| 4 bytes                                           | ???             | `01 F3 00 00`                                                                                                            |
-| 4 bytes                                           | ???             |                                                                                                                          |
+| 8 bytes                                           | Cases end       | `01 F3 00 01 00 00 00 00`                                                                                                |
 
 ### Condition string Variable format
 | Length  | Content  | Value                |

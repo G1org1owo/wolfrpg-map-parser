@@ -2,16 +2,16 @@ mod operator;
 mod compare_operator;
 mod condition;
 
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_vec, as_u32_le};
+use crate::byte_utils::{as_u32_vec, parse_string_vec};
 use crate::command::common::case::Case;
 use crate::command::common::u32_or_string::U32OrString;
+use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::string_condition_command::condition::Condition;
 use crate::command::string_condition_command::operator::Operator;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct StringConditionCommand {
-    case_count: u8,
     else_case: bool,
     conditions: Vec<Condition>,
     cases: Vec<Case>
@@ -26,8 +26,6 @@ impl StringConditionCommand {
 
         offset += 3; // Padding
 
-        print!("Offset: {:0x}", offset);
-
         let variables: Vec<u32> = as_u32_vec(&bytes[offset..offset + (4 * case_count) as usize]);
         offset += 4 * case_count as usize;
 
@@ -37,29 +35,31 @@ impl StringConditionCommand {
 
         offset += 1; // Padding;
 
-        let condition_count: u8 = bytes[offset];
+        let condition_count: usize = bytes[offset] as usize;
         offset += 1;
 
         let (bytes_read, conditions): (usize, Vec<String>)
-            = Self::parse_conditions(&bytes[offset..], condition_count);
+            = parse_string_vec(&bytes[offset..], condition_count);
         offset += bytes_read;
 
         offset += 1; // Conditions end
 
         let conditions: Vec<Condition> = Self::make_conditions(variables, values, conditions);
 
-        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>) = Self::parse_cases(
-            &bytes[offset..], case_count as usize, else_case
-        );
-
+        let case_count: usize = case_count as usize + else_case as usize;
+        let (bytes_read, mut commands_read, cases): (usize, u32, Vec<Case>)
+            = Case::parse_multiple(&bytes[offset..], case_count);
         offset += bytes_read;
 
-        let end_command = &bytes[offset..offset+8];
-        offset += 8; // TODO: Throw error if it's not 0x01f30000 0x00000000
+        let cases_end: &[u8] = &bytes[offset..offset+8];
+        offset += 8;
         commands_read += 1;
 
+        if cases_end != CASES_END_SIGNATURE {
+            panic!("Invalid cases end.");
+        }
+
         (offset, commands_read, Self {
-            case_count,
             else_case,
             conditions,
             cases
@@ -74,22 +74,6 @@ impl StringConditionCommand {
         ((signature >> 24) - 2 - case_count) as usize
     }
 
-    fn parse_conditions(bytes: &[u8], condition_count: u8) -> (usize, Vec<String>) {
-        let mut offset: usize = 0;
-        let mut strings: Vec<String> = Vec::new();
-
-        for _ in 0..condition_count {
-            let length: usize = as_u32_le(&bytes[offset..offset + 4]) as usize;
-            offset += 4;
-            let string: String = as_string(bytes, offset, length);
-            offset += length;
-
-            strings.push(string);
-        }
-
-        (offset, strings)
-    }
-
     fn make_conditions(variables: Vec<u32>, values: Vec<u32>,
                        conditions: Vec<String>) -> Vec<Condition> {
         let mut ret_conditions: Vec<Condition> = Vec::with_capacity(variables.len());
@@ -99,7 +83,7 @@ impl StringConditionCommand {
             let operator: Operator = Operator::new(operator);
             let variable: u32 = variables[i] & 0x00ffffff;
 
-            let value: U32OrString = if *operator.is_value_variable() {
+            let value: U32OrString = if operator.value_is_variable() {
                 U32OrString::U32(values[i])
             } else {
               U32OrString::String(conditions[i].clone())
@@ -109,10 +93,5 @@ impl StringConditionCommand {
         }
 
         ret_conditions
-    }
-
-    fn parse_cases(bytes: &[u8], case_count: usize, else_case: bool) -> (usize, u32, Vec<Case>) {
-        let else_case: usize = if else_case { 1 } else { 0 };
-        Case::parse_multiple(bytes, case_count + else_case)
     }
 }

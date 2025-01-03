@@ -35,7 +35,7 @@ impl NumberConditionCommand {
 
         offset += bytes_read;
 
-        let cases_end = &bytes[offset..offset+8];
+        let cases_end: &[u8] = &bytes[offset..offset+8];
         offset += 8;
         commands_read += 1;
 
