@@ -1,5 +1,5 @@
+use crate::byte_utils::parse_string;
 use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
 
 #[derive(Serialize)]
 pub struct ShowTextCommand {
@@ -11,11 +11,8 @@ impl ShowTextCommand {
         let mut offset: usize = 0;
         offset += 2; // Unknown, probably padding
 
-        let text_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-        offset += 4;
-
-        let text: String = as_string(bytes, offset, text_length);
-        offset += text_length;
+        let (bytes_read, text): (usize, String) = parse_string(&bytes[offset..]);
+        offset += bytes_read;
 
         offset += 1; // command end byte, should be 0x00
 

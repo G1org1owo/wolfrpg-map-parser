@@ -1,6 +1,6 @@
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_be, as_u32_le};
+use crate::byte_utils::{as_u32_be, as_u32_le, parse_string};
 use crate::page::Page;
+use serde::Serialize;
 
 const EVENT_SIGNATURE: u32 = 0x6f393000;
 
@@ -30,11 +30,8 @@ impl Event {
         let id: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
-        let name_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-        offset += 4;
-
-        let name: String = as_string(bytes, offset, name_length);
-        offset+=name_length;
+        let (bytes_read, name): (usize, String) = parse_string(&bytes[offset..]);
+        offset += bytes_read;
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;

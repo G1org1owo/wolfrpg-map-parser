@@ -4,8 +4,7 @@ mod condition;
 mod move_route;
 mod options;
 
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
+use crate::byte_utils::{as_u32_le, parse_string};
 use crate::command::Command;
 use crate::common::r#move::Move;
 use crate::page::blend_type::BlendType;
@@ -13,6 +12,7 @@ use crate::page::condition::Condition;
 use crate::page::event_trigger::EventTrigger;
 use crate::page::move_route::MoveRoute;
 use crate::page::options::Options;
+use serde::Serialize;
 
 const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 
@@ -50,11 +50,8 @@ impl Page {
             panic!("Invalid page signature");
         }
 
-        let icon_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-        offset += 4;
-
-        let icon: String = as_string(bytes, offset, icon_length);
-        offset += icon_length;
+        let (bytes_read, icon): (usize, String) = parse_string(&bytes[offset..]);
+        offset += bytes_read;
 
         let icon_row: u8 = bytes[offset];
         let icon_column: u8 = bytes[offset+1];
