@@ -193,9 +193,9 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes                | field          | little-endian uint32  |
 | 1 byte                 | assignment     | uint8 bitmap          |
 | 1 byte                 | options        | uint8 bitmap          |
-| 2 bytes                | ???            |                       |
+| 2 bytes                | padding        | `00 00`               |
 | 4 bytes                | value          | little-endian uint32  |
-| 1 byte                 | ???            |                       |
+| 1 byte                 | padding        | `00`                  |
 | 1 byte                 | string_count   | uint8                 |
 | 4 bytes                | value_length   | little-endian uint32  |
 | `value_length` bytes   | value_string   | NUL-terminated string |
@@ -217,8 +217,8 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes                | field          | little-endian uint32  |
 | 1 byte                 | assignment     | uint8 bitmap          |
 | 1 byte                 | options        | uint8 bitmap          |
-| 2 bytes                | ???            |                       |
-| 1 byte                 | ???            |                       |
+| 2 bytes                | padding        | `00 00`               |
+| 1 byte                 | padding        | `00`                  |
 | 1 byte                 | string_count   | uint8                 |
 | 4 bytes                | value_length   | little-endian uint32  |
 | `value_length` bytes   | value          | NUL-terminated string |
@@ -240,9 +240,9 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes                 | field           | little-endian uint32  |
 | 1 byte                  | assignment      | uint8 bitmap          |
 | 1 byte                  | options         | uint8 bitmap          |
-| 2 bytes                 | ???             |                       |
+| 2 bytes                 | padding         | `00 00`               |
 | 4 bytes                 | entry_count     | little-endian uint32  |
-| 1 byte                  | ???             |                       |
+| 1 byte                  | padding         | `00`                  |
 | 1 byte                  | string_count    | uint8                 |
 | 4 bytes                 | filename_length | little-endian uint32  |
 | `filename_length` bytes | filename        | NUL-terminated string |

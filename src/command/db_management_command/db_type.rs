@@ -1,20 +1,20 @@
 use serde::Serialize;
 
 #[derive(Serialize)]
-pub enum DB {
+pub enum DBType {
     VarDB  = 0b00000000,
     SysDB  = 0b00000001,
     UserDB = 0b00000010,
     Unknown
 }
 
-impl DB {
+impl DBType {
     pub const fn new(db: u8) -> Self {
         match db {
-            0b00000000 => DB::VarDB,
-            0b00000001 => DB::SysDB,
-            0b00000010 => DB::UserDB,
-            _ => DB::Unknown
+            0b00000000 => DBType::VarDB,
+            0b00000001 => DBType::SysDB,
+            0b00000010 => DBType::UserDB,
+            _ => DBType::Unknown
         }
     }
 }

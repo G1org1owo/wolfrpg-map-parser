@@ -4,14 +4,30 @@ use crate::command::db_management_command::assignment_operator::AssignmentOperat
 #[derive(Serialize)]
 pub struct Assignment {
     use_variable_as_reference: bool,
-    assignment_operator: AssignmentOperator
+    operator: AssignmentOperator
 }
 
 impl Assignment {
     pub fn new(assignment: u8) -> Self {
         Self {
             use_variable_as_reference: assignment & 0b00000001 != 0,
-            assignment_operator: AssignmentOperator::new(assignment >> 4)
+            operator: AssignmentOperator::new(assignment >> 4)
         }
+    }
+
+    pub fn use_variable_as_reference(&self) -> bool {
+        self.use_variable_as_reference
+    }
+
+    pub fn use_variable_as_reference_mut(&mut self) -> &mut bool {
+        &mut self.use_variable_as_reference
+    }
+
+    pub fn operator(&self) -> &AssignmentOperator {
+        &self.operator
+    }
+
+    pub fn operator_mut(&mut self) -> &mut AssignmentOperator {
+        &mut self.operator
     }
 }
