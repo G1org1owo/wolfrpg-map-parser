@@ -1,9 +1,8 @@
+use crate::byte_utils::parse_string;
 use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
 
 #[derive(Serialize)]
 pub struct Base {
-    unknown2: u8,
     string: String,
     replace: Option<String>
 }
@@ -12,36 +11,44 @@ impl Base {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
-        let unknown2: u8 = bytes[offset];
-        offset += 1;
+        offset += 1; // Unknown, most probably padding
 
         let string_count: u8 = bytes[offset];
         offset += 1;
 
-        let string_length: usize = as_u32_le(&bytes[offset..offset + 4]) as usize;
-        offset += 4;
-        let string: String = as_string(bytes, offset, string_length);
-        offset += string_length;
+        let (bytes_read, string): (usize, String) = parse_string(&bytes[offset..]);
+        offset += bytes_read;
 
-        let replace: Option<String>;
+        let replace: Option<String> = if string_count == 2 {
+            let (bytes_read, replace): (usize, String) = parse_string(&bytes[offset..]);
+            offset += bytes_read;
 
-        if string_count == 2 {
-            let replace_length: usize = as_u32_le(&bytes[offset..offset + 4]) as usize;
-            offset += 4;
-            let replace_string: String = as_string(bytes, offset, replace_length);
-            offset += replace_length;
-
-            replace = Some(replace_string);
+            Some(replace)
         } else {
-            replace = None;
-        }
+            None
+        };
 
         offset += 1; // Command end signature
 
         (offset, Self {
-            unknown2,
             string,
             replace
         })
+    }
+
+    pub fn string(&self) -> &str {
+        &self.string
+    }
+
+    pub fn string_mut(&mut self) -> &mut String {
+        &mut self.string
+    }
+
+    pub fn replace(&self) -> &Option<String> {
+        &self.replace
+    }
+
+    pub fn replace_mut(&mut self) -> &mut Option<String> {
+        &mut self.replace
     }
 }

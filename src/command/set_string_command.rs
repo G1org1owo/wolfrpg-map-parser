@@ -8,19 +8,18 @@ mod dynamic;
 mod input;
 mod state;
 
-use serde::Serialize;
-use state::State;
-use crate::byte_utils::{as_u16_le, as_u32_le};
+use crate::byte_utils::as_u32_le;
 use crate::command::set_string_command::content_type::ContentType;
 use crate::command::set_string_command::operation::Operation;
 use crate::command::set_string_command::options::Options;
+use crate::command::set_string_command::state::State;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct SetStringCommand {
     variable: u32,
     options: Options,
     operation: Operation,
-    unknown1: u16,
     state: State
 }
 
@@ -33,13 +32,13 @@ impl SetStringCommand {
 
         let options: u8 = bytes[offset];
         let options: Options = Options::new(options);
+        offset += 1;
 
-        let operation: u8 = bytes[offset+1];
+        let operation: u8 = bytes[offset];
         let operation: Operation = Operation::new(operation);
-        offset += 2;
+        offset += 1;
 
-        let unknown1: u16 = as_u16_le(&bytes[offset..offset + 2]);
-        offset += 2;
+        offset += 2; // Unknown, most probably padding
 
         let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..]);
         offset += bytes_read;
@@ -48,7 +47,6 @@ impl SetStringCommand {
             variable,
             options,
             operation,
-            unknown1,
             state
         })
     }
@@ -62,5 +60,37 @@ impl SetStringCommand {
             ContentType::UserInput => Self::parse(bytes, State::parse_input),
             _ => Self::parse(bytes, State::parse_dynamic),
         }
+    }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn operation(&self) -> &Operation {
+        &self.operation
+    }
+
+    pub fn operation_mut(&mut self) -> &mut Operation {
+        &mut self.operation
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

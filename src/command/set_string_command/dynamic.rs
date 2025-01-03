@@ -19,4 +19,12 @@ impl Dynamic {
             source
         })
     }
+
+    pub fn source(&self) -> u32 {
+        self.source
+    }
+
+    pub fn source_mut(&mut self) -> &mut u32 {
+        &mut self.source
+    }
 }

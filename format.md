@@ -263,8 +263,8 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes | variable       | little-endian uint32 |
 | 1 byte  | options        | uint8 bitmap         |
 | 1 byte  | operation      | uint8 bitmap         |
-| 2 bytes | ???            |                      |
-| 1 byte  | ???            |                      |
+| 2 bytes | padding        | `00 00`              |
+| 1 byte  | padding        | `00`                 |
 | 1 byte  | string_count   | uint8                |
 | 4 bytes | string_length  | little-endian uint32 |
 | 1 byte  | replace_count  | uint8                |
@@ -279,7 +279,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes | variable            | little-endian uint32 |
 | 1 byte  | options             | uint8 bitmap         |
 | 1 byte  | operation           | uint8 bitmap         |
-| 2 bytes | ???                 |                      |
+| 2 bytes | padding             | `00 00`              |
 | 4 bytes | source/input_length | little-endian uint32 |
 | 3 bytes | Command end         | `00 00 00`           |
 

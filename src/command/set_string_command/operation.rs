@@ -16,4 +16,28 @@ impl Operation {
             input_cancel: operation  & 0b00100000 != 0,
         }
     }
+
+    pub fn operation(&self) -> &StringOperation {
+        &self.operation
+    }
+
+    pub fn operation_mut(&mut self) -> &mut StringOperation {
+        &mut self.operation
+    }
+
+    pub fn input_cancel(&self) -> bool {
+        self.input_cancel
+    }
+
+    pub fn input_cancel_mut(&mut self) -> &mut bool {
+        &mut self.input_cancel
+    }
+
+    pub fn input_replace(&self) -> bool {
+        self.input_replace
+    }
+
+    pub fn input_replace_mut(&mut self) -> &mut bool {
+        &mut self.input_replace
+    }
 }
