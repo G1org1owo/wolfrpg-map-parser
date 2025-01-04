@@ -1,10 +1,20 @@
-use serde::Serialize;
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct ColorsFields {
     colors: Colors
+}
+
+impl ColorsFields {
+    pub fn colors(&self) -> &Colors {
+        &self.colors
+    }
+
+    pub fn colors_mut(&mut self) -> &mut Colors {
+        &mut self.colors
+    }
 }
 
 impl ParsableFields<ColorsFields> for ColorsFields {

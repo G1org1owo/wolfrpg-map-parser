@@ -20,45 +20,52 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_base(bytes: &[u8], options: &Options) -> (usize, Self) {
-        let (bytes_read, state): (usize, Base) = Base::parse(bytes, options);
+    pub fn parse_base(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, Base)
+            = Base::parse(bytes, options);
 
-        (bytes_read, Self::Base(state))
+        (bytes_read, filename_variable, Self::Base(state))
     }
 
-    pub fn parse_colors(bytes: &[u8], options: &Options) -> (usize, Self) {
-        let (bytes_read, state): (usize, Colors) = Colors::parse(bytes, options);
+    pub fn parse_colors(bytes: &[u8], _: &Options) -> (usize, Option<u32>, Self) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, Colors)
+            = Colors::parse(bytes);
 
-        (bytes_read, Self::Colors(state))
+        (bytes_read, filename_variable, Self::Colors(state))
     }
 
-    pub fn parse_delay(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, Delay) = Delay::parse(bytes, options);
+    pub fn parse_delay(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, Delay)
+            = Delay::parse(bytes);
 
-        (bytes_read, Self::Delay(state))
+        (bytes_read, filename_variable, Self::Delay(state))
     }
 
-    pub fn parse_range(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, Range) = Range::parse(bytes, options);
+    pub fn parse_range(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, Range)
+            = Range::parse(bytes);
 
-        (bytes_read, Self::Range(state))
+        (bytes_read, filename_variable, Self::Range(state))
     }
 
-    pub fn parse_color_values(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, ColorValues) = ColorValues::parse(bytes, options);
+    pub fn parse_color_values(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, ColorValues)
+            = ColorValues::parse(bytes);
 
-        (bytes_read, Self::ColorValues(state))
+        (bytes_read, filename_variable, Self::ColorValues(state))
     }
 
-    pub fn parse_zoom(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, _) = Zoom::parse(bytes, options);
+    pub fn parse_zoom(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, Zoom)
+            = Zoom::parse(bytes);
 
-        (bytes_read, Self::Zoom(state))
+        (bytes_read, filename_variable, Self::Zoom(state))
     }
 
-    pub fn parse_free_transform(bytes: &[u8], options: &Options) -> (usize, State) {
-        let (bytes_read, state): (usize, FreeTransform) = FreeTransform::parse(bytes, options);
+    pub fn parse_free_transform(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, FreeTransform)
+            = FreeTransform::parse(bytes);
 
-        (bytes_read, Self::FreeTransform(state))
+        (bytes_read, filename_variable, Self::FreeTransform(state))
     }
 }

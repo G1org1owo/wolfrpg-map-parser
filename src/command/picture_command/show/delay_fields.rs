@@ -1,12 +1,31 @@
 use crate::byte_utils::as_u32_le;
+use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::colors_fields::ColorsFields;
-use serde::Serialize;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct DelayFields {
     colors_state: ColorsFields,
     delay: u32
+}
+
+impl DelayFields {
+    pub fn colors(&self) -> &Colors {
+        self.colors_state.colors()
+    }
+
+    pub fn colors_mut(&mut self) -> &mut Colors {
+        self.colors_state.colors_mut()
+    }
+
+    pub fn delay(&self) -> u32 {
+        self.delay
+    }
+
+    pub fn delay_mut(&mut self) -> &mut u32 {
+        &mut self.delay
+    }
 }
 
 impl ParsableFields<DelayFields> for DelayFields {

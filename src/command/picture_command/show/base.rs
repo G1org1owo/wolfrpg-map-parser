@@ -1,20 +1,16 @@
 use crate::byte_utils::as_u32_le;
-use crate::command::common::u32_or_string::U32OrString;
+use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::options::Options;
-use crate::command::picture_command::show::parser::{make_filename_and_string, parse_filename_variable, parse_string_value};
 use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Base {
     position_x: u32,
-    position_y: u32,
-    unknown1: u8,
-    filename: Option<U32OrString>,
-    string: Option<String>
+    position_y: u32
 }
 
 impl Base {
-    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
+    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
         let mut offset: usize = 0;
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);
@@ -27,25 +23,46 @@ impl Base {
         offset += 4; // angle
 
         let (bytes_read, filename_variable): (usize, Option<u32>)
-            = parse_filename_variable(&bytes[offset..], options);
+            = Self::parse_filename_variable(&bytes[offset..], options);
         offset += bytes_read;
 
-        let unknown1: u8 = bytes[offset];
-        offset += 1;
+        offset += 1; // Padding
 
-        let (bytes_read, string_value): (usize, Option<String>)
-            = parse_string_value(&bytes[offset..]);
-        offset += bytes_read;
-
-        let (filename, string): (Option<U32OrString>, Option<String>)
-            = make_filename_and_string(string_value, filename_variable, options);
-
-        (offset, Base{
+        (offset, filename_variable, Base{
             position_x,
             position_y,
-            unknown1,
-            filename,
-            string
         })
+    }
+
+    fn parse_filename_variable(bytes: &[u8], options: &Options) -> (usize, Option<u32>) {
+        let mut offset: usize = 0;
+        let filename_variable: Option<u32> = match *options.display_type() {
+            DisplayType::LoadFileByStringVar | DisplayType::WindowByStringVar => {
+                let filename_variable: u32 = as_u32_le(&bytes[offset..offset+4]);
+                offset += 4;
+
+                Some(filename_variable)
+            }
+
+            _ => None
+        };
+
+        (offset, filename_variable)
+    }
+
+    pub fn position_x(&self) -> u32 {
+        self.position_x
+    }
+
+    pub fn position_x_mut(&mut self) -> &mut u32 {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> u32 {
+        self.position_y
+    }
+
+    pub fn position_y_mut(&mut self) -> &mut u32 {
+        &mut self.position_y
     }
 }

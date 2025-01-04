@@ -1,37 +1,49 @@
-use crate::command::common::u32_or_string::U32OrString;
-use crate::command::picture_command::options::Options;
+use crate::command::picture_command::colors::Colors as PictureColors;
 use crate::command::picture_command::show::colors_fields::ColorsFields;
-use crate::command::picture_command::show::parsable_state::ParsableState;
+use crate::command::picture_command::show::parser::parse_fields;
 use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Colors {
     position_x: u32,
     position_y: u32,
-    unknown1: [u8; 3],
-    fields: ColorsFields,
-    unknown2: u8,
-    filename: Option<U32OrString>,
-    string: Option<String>,
+    fields: ColorsFields
 }
 
 impl Colors {
-    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
-        let (offset, (position_x, position_y, unknown1, fields, unknown2, filename, string))
-            : (usize, (u32, u32, [u8; 3], ColorsFields, u8, Option<U32OrString>,
-                       Option<String>))
-            = Self::parse_fields(bytes, options);
+    pub fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
+        let (offset, (position_x, position_y, filename_variable, fields))
+            : (usize, (u32, u32, Option<u32>, ColorsFields))
+            = parse_fields(bytes);
 
-        (offset, Self {
+        (offset, filename_variable, Self {
             position_x,
             position_y,
-            unknown1,
-            fields,
-            unknown2,
-            filename,
-            string
+            fields
         })
     }
-}
 
-impl ParsableState<ColorsFields> for Colors {}
+    pub fn position_x(&self) -> u32 {
+        self.position_x
+    }
+
+    pub fn position_x_mut(&mut self) -> &mut u32 {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> u32 {
+        self.position_y
+    }
+
+    pub fn position_y_mut(&mut self) -> &mut u32 {
+        &mut self.position_y
+    }
+
+    pub fn colors(&self) -> &PictureColors {
+        self.fields.colors()
+    }
+
+    pub fn colors_mut(&mut self) -> &mut PictureColors {
+        self.fields.colors_mut()
+    }
+}

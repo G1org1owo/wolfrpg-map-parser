@@ -1,6 +1,8 @@
-use serde::Serialize;
-use crate::byte_utils::as_u32_le;
+use crate::byte_utils::{as_u32_le, parse_string};
+use crate::command::common::u32_or_string::U32OrString;
+use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::options::Options;
+use serde::Serialize;
 use state::State;
 
 mod state;
@@ -19,7 +21,6 @@ mod range;
 mod colors_fields;
 mod colors;
 mod parsable_fields;
-mod parsable_state;
 
 #[derive(Serialize)]
 pub struct Show {
@@ -32,11 +33,13 @@ pub struct Show {
     opacity: u32,
     zoom: u32,
     angle: u32,
-    state: State
+    state: State,
+    filename: Option<U32OrString>,
+    string: Option<String>,
 }
 
 impl Show {
-    fn parse(bytes: &[u8], parse_state: fn(&[u8], &Options) -> (usize, State)) -> (usize, Self) {
+    fn parse(bytes: &[u8], parse_state: fn(&[u8], &Options) -> (usize, Option<u32>, State)) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let options: u32 = as_u32_le(&bytes[offset..offset+4]);
@@ -64,8 +67,16 @@ impl Show {
         let zoom: u32 = as_u32_le(&bytes[offset+8..offset+12]);
         let angle: u32 = as_u32_le(&bytes[offset+12..offset+16]);
 
-        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..], &options);
+        let (bytes_read, filename_variable, state): (usize, Option<u32>, State)
+            = parse_state(&bytes[offset..], &options);
         offset += bytes_read;
+
+        let (bytes_read, string_value): (usize, Option<String>)
+            = Self::parse_string_value(&bytes[offset..]);
+        offset += bytes_read;
+
+        let (filename, string): (Option<U32OrString>, Option<String>)
+            = Self::make_filename_and_string(string_value, filename_variable, &options);
 
         offset += 1; // Command end signature
 
@@ -79,8 +90,45 @@ impl Show {
             opacity,
             zoom,
             angle,
-            state
+            state,
+            filename,
+            string
         })
+    }
+    fn parse_string_value(bytes: &[u8]) -> (usize, Option<String>) {
+        let mut offset: usize = 0;
+
+        let is_filename_string: bool = bytes[offset] != 0;
+        offset += 1;
+
+        let string_value: Option<String> = if is_filename_string {
+            let (bytes_read, string): (usize, String) = parse_string(&bytes[offset..]);
+            offset += bytes_read;
+
+            Some(string)
+        } else {
+            None
+        };
+
+        (offset, string_value)
+    }
+
+    fn make_filename_and_string(string_value: Option<String>, filename_variable: Option<u32>,
+                                    options: &Options) -> (Option<U32OrString>, Option<String>) {
+        let (filename, string): (Option<String>, Option<String>) = match *options.display_type() {
+            DisplayType::ShowStringAsPicture => (None, string_value),
+            _ => (string_value, None)
+        };
+
+        let filename: Option<U32OrString> = match filename {
+            Some(filename) => Some(U32OrString::String(filename)),
+            None => match filename_variable {
+                Some(filename_variable) => Some(U32OrString::U32(filename_variable)),
+                None => None
+            }
+        };
+
+        (filename, string)
     }
 
     pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
