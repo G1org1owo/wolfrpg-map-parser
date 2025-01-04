@@ -42,4 +42,20 @@ impl AutomaticInput {
     pub fn parse_keyboard(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_keyboard)
     }
+
+    pub fn input_type(&self) -> &InputType {
+        &self.input_type
+    }
+
+    pub fn input_type_mut(&mut self) -> &mut InputType {
+        &mut self.input_type
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
+    }
 }

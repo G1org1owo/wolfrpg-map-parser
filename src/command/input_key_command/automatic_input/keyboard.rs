@@ -3,7 +3,6 @@ use crate::byte_utils::as_u32_le;
 
 #[derive(Serialize)]
 pub struct Keyboard {
-    options: [u8; 3],
     key_code: u32
 }
 
@@ -11,8 +10,7 @@ impl Keyboard {
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
-        let options: [u8; 3] = bytes[offset..offset + 3].try_into().unwrap();
-        offset += 3;
+        offset += 3; // padding
 
         offset += 1; // input_type
 
@@ -20,8 +18,14 @@ impl Keyboard {
         offset += 4;
 
         (offset, Self {
-            options,
             key_code
         })
+    }
+    pub fn key_code(&self) -> u32 {
+        self.key_code
+    }
+
+    pub fn key_code_mut(&mut self) -> &mut u32 {
+        &mut self.key_code
     }
 }

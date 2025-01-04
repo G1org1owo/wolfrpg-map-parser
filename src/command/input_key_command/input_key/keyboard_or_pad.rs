@@ -1,11 +1,10 @@
-use serde::Serialize;
-use crate::byte_utils::{as_u16_le, as_u32_le};
+use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::input_key::key_options::KeyOptions;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct KeyboardOrPad {
     options: KeyOptions,
-    unknown1: u16,
     key_code: u32
 }
 
@@ -19,16 +18,30 @@ impl KeyboardOrPad {
 
         offset += 1; // input_type
 
-        let unknown1: u16 = as_u16_le(&bytes[offset..offset + 2]);
-        offset += 2;
+        offset += 2; // Padding
 
         let key_code: u32 = as_u32_le(&bytes[offset..offset + 4]);
         offset += 4;
 
         (offset, Self {
             options,
-            unknown1,
             key_code
         })
+    }
+
+    pub fn options(&self) -> &KeyOptions {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut KeyOptions {
+        &mut self.options
+    }
+
+    pub fn key_code(&self) -> u32 {
+        self.key_code
+    }
+
+    pub fn key_code_mut(&mut self) -> &mut u32 {
+        &mut self.key_code
     }
 }

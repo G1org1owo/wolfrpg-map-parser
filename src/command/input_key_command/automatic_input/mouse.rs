@@ -53,4 +53,36 @@ impl Mouse {
             unknown1
         })
     }
+
+    pub fn options(&self) -> &MouseOptions {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut MouseOptions {
+        &mut self.options
+    }
+
+    pub fn position_x(&self) -> Option<u32> {
+        self.position_x
+    }
+
+    pub fn position_x_mut(&mut self) -> &mut Option<u32> {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> Option<u32> {
+        self.position_y
+    }
+
+    pub fn position_y_mut(&mut self) -> &mut Option<u32> {
+        &mut self.position_y
+    }
+
+    pub fn wheel_delta(&self) -> Option<u32> {
+        self.wheel_delta
+    }
+
+    pub fn wheel_delta_mut(&mut self) -> &mut Option<u32> {
+        &mut self.wheel_delta
+    }
 }

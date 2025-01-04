@@ -397,7 +397,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes     | variable     | little-endian uint32                                       |
 | 1 byte      | options      | uint8 bitmap                                               |
 | 1 byte      | input_type   | uint8                                                      |
-| 2 bytes     | ???          |                                                            |
+| 2 bytes     | padding      | `00 00`                                                    |
 | \<variable> | key_code     | little-endian uint32, only if `input_type` is `01` or `02` |
 | 3 bytes     | Command end  | `00 00 00`                                                 |
 
@@ -407,7 +407,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 4 bytes  | command_code | `02 7D 00 00`, `03 7D 00 00` or `04 7D 00 00`                                            |
 | 1 byte   | padding      | `00`                                                                                     |
 | 1 byte   | options      | uint8 bitmap                                                                             |
-| 2 bytes  | ???          |                                                                                          |
+| 2 bytes  | padding      | `00 00`                                                                                  |
 | 1 byte   | input_type   | uint8                                                                                    |
 | 4 bytes? | key_code     | little-endian uint32, only if `input_type` is `10`                                       |
 | 4 bytes? | position_x   | little-endian uint32, only if `input_type` is `20` and `options` matches mask `00001000` |
@@ -423,7 +423,7 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | 1 byte      | padding        | `00`                                                                    |
 | 1 byte      | inputs         | uint8 bitmap                                                            |
 | 1 byte      | enabled_inputs | uint8 bitmap                                                            |
-| 1 byte      | ???            |                                                                         |
+| 1 byte      | padding        | `00`                                                                    |
 | 1 byte      | input_type     | uint8 bitmap                                                            |
 | \<variable> | key_code       | little-endian uint32, only if `input_type` is `00` and `inputs` is `00` |
 | 3 bytes     | Command end    | `00 00 00`                                                              |

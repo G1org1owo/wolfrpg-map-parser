@@ -5,8 +5,7 @@ use serde::Serialize;
 #[derive(Serialize)]
 pub struct Basic {
     inputs: BasicInputs,
-    enabled_inputs: EnabledInputs,
-    unknown1: u8,
+    enabled_inputs: EnabledInputs
 }
 
 impl Basic {
@@ -21,15 +20,29 @@ impl Basic {
         let enabled_inputs: EnabledInputs = EnabledInputs::new(enabled_inputs);
         offset += 1;
 
-        let unknown1: u8 = bytes[offset];
-        offset += 1;
+        offset += 1; // padding
 
         offset += 1; // input_type
 
         (offset, Self {
             inputs,
-            enabled_inputs,
-            unknown1
+            enabled_inputs
         })
+    }
+
+    pub fn inputs(&self) -> &BasicInputs {
+        &self.inputs
+    }
+
+    pub fn inputs_mut(&mut self) -> &mut BasicInputs {
+        &mut self.inputs
+    }
+
+    pub fn enabled_inputs(&self) -> &EnabledInputs {
+        &self.enabled_inputs
+    }
+
+    pub fn enabled_inputs_mut(&mut self) -> &mut EnabledInputs {
+        &mut self.enabled_inputs
     }
 }

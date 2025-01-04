@@ -56,4 +56,36 @@ impl InputKey {
     pub fn parse_keyboard_or_pad(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_keyboard_or_pad)
     }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn input_type(&self) -> &InputType {
+        &self.input_type
+    }
+
+    pub fn input_type_mut(&mut self) -> &mut InputType {
+        &mut self.input_type
+    }
+
+    pub fn specific_key(&self) -> bool {
+        self.specific_key
+    }
+
+    pub fn specific_key_mut(&mut self) -> &mut bool {
+        &mut self.specific_key
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
+    }
 }

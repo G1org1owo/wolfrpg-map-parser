@@ -23,4 +23,60 @@ impl BasicOptions {
             up:             options & 0b10000000 != 0,
         }
     }
+
+    pub fn input_ok(&self) -> bool {
+        self.input_ok
+    }
+
+    pub fn input_ok_mut(&mut self) -> &mut bool {
+        &mut self.input_ok
+    }
+
+    pub fn input_cancel(&self) -> bool {
+        self.input_cancel
+    }
+
+    pub fn input_cancel_mut(&mut self) -> &mut bool {
+        &mut self.input_cancel
+    }
+
+    pub fn input_subkey(&self) -> bool {
+        self.input_subkey
+    }
+
+    pub fn input_subkey_mut(&mut self) -> &mut bool {
+        &mut self.input_subkey
+    }
+
+    pub fn down(&self) -> bool {
+        self.down
+    }
+
+    pub fn down_mut(&mut self) -> &mut bool {
+        &mut self.down
+    }
+
+    pub fn left(&self) -> bool {
+        self.left
+    }
+
+    pub fn left_mut(&mut self) -> &mut bool {
+        &mut self.left
+    }
+
+    pub fn right(&self) -> bool {
+        self.right
+    }
+
+    pub fn right_mut(&mut self) -> &mut bool {
+        &mut self.right
+    }
+
+    pub fn up(&self) -> bool {
+        self.up
+    }
+
+    pub fn up_mut(&mut self) -> &mut bool {
+        &mut self.up
+    }
 }

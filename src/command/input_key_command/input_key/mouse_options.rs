@@ -20,4 +20,44 @@ impl MouseOptions {
             wait_for_input: options & 0b10000000 != 0
         }
     }
+
+    pub fn target(&self) -> &MouseTarget {
+        &self.target
+    }
+
+    pub fn target_mut(&mut self) -> &mut MouseTarget {
+        &mut self.target
+    }
+
+    pub fn left_click(&self) -> bool {
+        self.left_click
+    }
+
+    pub fn left_click_mut(&mut self) -> &mut bool {
+        &mut self.left_click
+    }
+
+    pub fn right_click(&self) -> bool {
+        self.right_click
+    }
+
+    pub fn right_click_mut(&mut self) -> &mut bool {
+        &mut self.right_click
+    }
+
+    pub fn middle_click(&self) -> bool {
+        self.middle_click
+    }
+
+    pub fn middle_click_mut(&mut self) -> &mut bool {
+        &mut self.middle_click
+    }
+
+    pub fn wait_for_input(&self) -> bool {
+        self.wait_for_input
+    }
+
+    pub fn wait_for_input_mut(&mut self) -> &mut bool {
+        &mut self.wait_for_input
+    }
 }

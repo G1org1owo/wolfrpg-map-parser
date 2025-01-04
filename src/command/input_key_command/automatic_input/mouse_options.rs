@@ -23,12 +23,24 @@ impl MouseOptions {
         self.left_click
     }
 
+    pub fn left_click_mut(&mut self) -> &mut bool {
+        &mut self.left_click
+    }
+
     pub fn right_click(&self) -> bool {
         self.right_click
     }
 
+    pub fn right_click_mut(&mut self) -> &mut bool {
+        &mut self.right_click
+    }
+
     pub fn middle_click(&self) -> bool {
         self.middle_click
+    }
+
+    pub fn middle_click_mut(&mut self) -> &mut bool {
+        &mut self.middle_click
     }
 
     pub fn mouse_type(&self) -> &MouseType {

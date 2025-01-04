@@ -20,4 +20,44 @@ impl BasicOptions {
             wait_for_input: options & 0b10000000 != 0,
         }
     }
+
+    pub fn direction_keys(&self) -> &DirectionKeys {
+        &self.direction_keys
+    }
+
+    pub fn direction_keys_mut(&mut self) -> &mut DirectionKeys {
+        &mut self.direction_keys
+    }
+
+    pub fn input_ok(&self) -> bool {
+        self.input_ok
+    }
+
+    pub fn input_ok_mut(&mut self) -> &mut bool {
+        &mut self.input_ok
+    }
+
+    pub fn input_cancel(&self) -> bool {
+        self.input_cancel
+    }
+
+    pub fn input_cancel_mut(&mut self) -> &mut bool {
+        &mut self.input_cancel
+    }
+
+    pub fn input_subkey(&self) -> bool {
+        self.input_subkey
+    }
+
+    pub fn input_subkey_mut(&mut self) -> &mut bool {
+        &mut self.input_subkey
+    }
+
+    pub fn wait_for_input(&self) -> bool {
+        self.wait_for_input
+    }
+
+    pub fn wait_for_input_mut(&mut self) -> &mut bool {
+        &mut self.wait_for_input
+    }
 }

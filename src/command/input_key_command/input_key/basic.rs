@@ -1,11 +1,9 @@
-use crate::byte_utils::as_u16_le;
 use crate::command::input_key_command::input_key::basic_options::BasicOptions;
 use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Basic {
-    options: BasicOptions,
-    unknown1: u16
+    options: BasicOptions
 }
 
 impl Basic {
@@ -18,12 +16,18 @@ impl Basic {
 
         offset += 1; // input_type
 
-        let unknown1: u16 = as_u16_le(&bytes[offset..offset + 2]);
-        offset += 2;
+        offset += 2; // Padding
 
         (offset, Self {
-            options,
-            unknown1
+            options
         })
+    }
+
+    pub fn options(&self) -> &BasicOptions {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut BasicOptions {
+        &mut self.options
     }
 }

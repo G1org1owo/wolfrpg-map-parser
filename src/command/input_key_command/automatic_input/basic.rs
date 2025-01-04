@@ -22,4 +22,12 @@ impl Basic {
             options
         })
     }
+
+    pub fn options(&self) -> &BasicOptions {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut BasicOptions {
+        &mut self.options
+    }
 }
