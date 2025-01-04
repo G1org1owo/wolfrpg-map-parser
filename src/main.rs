@@ -1,9 +1,9 @@
-mod map;
-mod event;
-mod command;
+pub mod map;
+pub mod event;
+pub mod command;
 mod byte_utils;
-mod common;
-mod page;
+pub mod common;
+pub mod page;
 
 use std::{env, fs};
 use serde_json;

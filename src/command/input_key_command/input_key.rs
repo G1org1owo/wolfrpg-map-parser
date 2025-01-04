@@ -3,16 +3,16 @@ use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::input_key::input_type::InputType;
 use crate::command::input_key_command::input_key::state::State;
 
-mod state;
-mod basic;
-mod basic_options;
-mod direction_keys;
-mod input_type;
-mod keyboard_or_pad;
-mod key_options;
-mod mouse_target;
-mod mouse_options;
-mod mouse;
+pub mod state;
+pub mod basic;
+pub mod basic_options;
+pub mod direction_keys;
+pub mod input_type;
+pub mod keyboard_or_pad;
+pub mod key_options;
+pub mod mouse_target;
+pub mod mouse_options;
+pub mod mouse;
 
 #[derive(Serialize)]
 pub struct InputKey {

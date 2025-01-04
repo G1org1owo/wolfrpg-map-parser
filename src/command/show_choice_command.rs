@@ -4,9 +4,9 @@ use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::show_choice_command::options::Options;
 use serde::Serialize;
 
-mod cancel_case;
-mod extra_cases;
-mod options;
+pub mod cancel_case;
+pub mod extra_cases;
+pub mod options;
 
 #[derive(Serialize)]
 pub struct ShowChoiceCommand {

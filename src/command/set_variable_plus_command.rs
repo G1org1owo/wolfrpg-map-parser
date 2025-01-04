@@ -5,18 +5,18 @@ use crate::command::set_variable_plus_command::assignment::Assignment;
 use crate::command::set_variable_plus_command::options::Options;
 use crate::command::set_variable_plus_command::variable_type::VariableType;
 
-mod state;
-mod character;
-mod options;
-mod variable_type;
-mod assignment_operator;
-mod assignment;
-mod position;
-mod picture;
-mod picture_field;
-mod other;
-mod target;
-mod character_field;
+pub mod state;
+pub mod character;
+pub mod options;
+pub mod variable_type;
+pub mod assignment_operator;
+pub mod assignment;
+pub mod position;
+pub mod picture;
+pub mod picture_field;
+pub mod other;
+pub mod target;
+pub mod character_field;
 
 #[derive(Serialize)]
 pub struct SetVariablePlusCommand {

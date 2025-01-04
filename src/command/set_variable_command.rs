@@ -3,13 +3,13 @@ use state::State;
 use crate::byte_utils::as_u32_le;
 use crate::command::set_variable_command::operators::Operators;
 use crate::command::set_variable_command::options::Options;
-mod base;
-mod assignment;
-mod calculation;
-mod options;
-mod operators;
-mod range;
-mod state;
+pub mod base;
+pub mod assignment;
+pub mod calculation;
+pub mod options;
+pub mod operators;
+pub mod range;
+pub mod state;
 
 #[derive(Serialize)]
 pub struct SetVariableCommand {

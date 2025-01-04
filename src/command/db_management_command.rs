@@ -5,15 +5,15 @@ use crate::command::db_management_command::options::Options;
 use crate::command::db_management_command::state::State;
 use serde::Serialize;
 
-mod base;
-mod options;
-mod db_operation_type;
-mod db_type;
-mod assignment;
-mod assignment_operator;
-mod string;
-mod csv;
-mod state;
+pub mod base;
+pub mod options;
+pub mod db_operation_type;
+pub mod db_type;
+pub mod assignment;
+pub mod assignment_operator;
+pub mod string;
+pub mod csv;
+pub mod state;
 
 #[derive(Serialize)]
 pub struct DBManagementCommand {

@@ -3,8 +3,8 @@ use crate::command::common::case::Case;
 use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::number_condition_command::condition::Condition;
 
-mod condition;
-mod operator;
+pub mod condition;
+pub mod operator;
 
 #[derive(Serialize)]
 pub struct NumberConditionCommand {

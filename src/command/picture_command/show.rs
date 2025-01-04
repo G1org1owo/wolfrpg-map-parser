@@ -5,21 +5,21 @@ use crate::command::picture_command::options::Options;
 use serde::Serialize;
 use state::State;
 
-mod state;
-mod base;
-mod free_transform;
-mod delay;
+pub mod state;
+pub mod base;
+pub mod free_transform;
+pub mod delay;
 mod parser;
-mod zoom;
-mod color_values;
+pub mod zoom;
+pub mod color_values;
 mod range_fields;
 mod color_values_fields;
 mod zoom_fields;
 mod free_transform_fields;
 mod delay_fields;
-mod range;
+pub mod range;
 mod colors_fields;
-mod colors;
+pub mod colors;
 mod parsable_fields;
 
 #[derive(Serialize)]

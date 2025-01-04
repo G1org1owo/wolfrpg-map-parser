@@ -2,13 +2,13 @@ use serde::Serialize;
 use crate::command::picture_command::erase::Erase;
 use crate::command::picture_command::show::Show;
 
-mod show;
-mod options;
-mod display_type;
-mod blending_method;
-mod anchor;
-mod zoom;
-mod colors;
+pub mod show;
+pub mod options;
+pub mod display_type;
+pub mod blending_method;
+pub mod anchor;
+pub mod zoom;
+pub mod colors;
 mod erase;
 
 #[derive(Serialize)]

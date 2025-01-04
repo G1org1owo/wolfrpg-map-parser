@@ -20,25 +20,25 @@ use crate::command::sound_command::SoundCommand;
 use crate::command::string_condition_command::StringConditionCommand;
 use crate::command::transfer_command::TransferCommand;
 
-mod show_choice_command;
-mod show_text_command;
-mod set_variable_command;
-mod db_management_command;
-mod common;
-mod set_string_command;
-mod set_variable_plus_command;
-mod number_condition_command;
-mod string_condition_command;
-mod input_key_command;
-mod picture_command;
-mod effect_command;
-mod sound_command;
-mod save_load_command;
-mod party_graphics_command;
-mod chip_management_command;
-mod transfer_command;
-mod event_control_command;
-mod common_event;
+pub mod show_choice_command;
+pub mod show_text_command;
+pub mod set_variable_command;
+pub mod db_management_command;
+pub mod common;
+pub mod set_string_command;
+pub mod set_variable_plus_command;
+pub mod number_condition_command;
+pub mod string_condition_command;
+pub mod input_key_command;
+pub mod picture_command;
+pub mod effect_command;
+pub mod sound_command;
+pub mod save_load_command;
+pub mod party_graphics_command;
+pub mod chip_management_command;
+pub mod transfer_command;
+pub mod event_control_command;
+pub mod common_event;
 mod signature;
 
 #[derive(Serialize)]
@@ -179,7 +179,7 @@ impl Command {
 
             Signature::ReserveEvent => Self::parse_reserve_common_event,
             Signature::Exit => Self::parse_exit,
-            _ => |bytes: &[u8], signature: u32| {
+            _ => |_: &[u8], signature: u32| {
                 panic!("Unknown command code {:08x}", signature)
             }
         };

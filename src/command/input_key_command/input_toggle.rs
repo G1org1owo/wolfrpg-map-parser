@@ -2,13 +2,13 @@ use serde::Serialize;
 use crate::command::input_key_command::input_toggle::input_type::InputType;
 use crate::command::input_key_command::input_toggle::state::State;
 
-mod input_type;
-mod state;
-mod basic;
-mod basic_inputs;
-mod enabled_inputs;
-mod device;
-mod device_inputs;
+pub mod input_type;
+pub mod state;
+pub mod basic;
+pub mod basic_inputs;
+pub mod enabled_inputs;
+pub mod device;
+pub mod device_inputs;
 
 #[derive(Serialize)]
 pub struct InputToggle {

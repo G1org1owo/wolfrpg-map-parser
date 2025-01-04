@@ -2,14 +2,14 @@ use serde::Serialize;
 use crate::command::input_key_command::automatic_input::input_type::InputType;
 use crate::command::input_key_command::automatic_input::state::State;
 
-mod basic;
-mod state;
-mod basic_options;
-mod input_type;
-mod keyboard;
-mod mouse;
-mod mouse_options;
-mod mouse_type;
+pub mod basic;
+pub mod state;
+pub mod basic_options;
+pub mod input_type;
+pub mod keyboard;
+pub mod mouse;
+pub mod mouse_options;
+pub mod mouse_type;
 
 #[derive(Serialize)]
 pub struct AutomaticInput {

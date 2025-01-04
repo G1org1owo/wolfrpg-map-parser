@@ -3,9 +3,9 @@ use crate::command::input_key_command::automatic_input::AutomaticInput;
 use crate::command::input_key_command::input_key::InputKey;
 use crate::command::input_key_command::input_toggle::InputToggle;
 
-mod input_key;
-mod automatic_input;
-mod input_toggle;
+pub mod input_key;
+pub mod automatic_input;
+pub mod input_toggle;
 
 #[derive(Serialize)]
 pub enum InputKeyCommand {
