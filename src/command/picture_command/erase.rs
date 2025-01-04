@@ -1,8 +1,8 @@
-mod state;
-mod delay_reset;
-mod base;
-mod delay;
-mod range;
+pub mod state;
+pub mod delay_reset;
+pub mod base;
+pub mod delay;
+pub mod range;
 
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
@@ -28,7 +28,7 @@ impl Erase {
         let picture: u32 = as_u32_le(&bytes[offset..offset + 4]);
         offset += 4;
 
-        let (bytes_read, state) = parse_state(&bytes[offset..], &options);
+        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..], &options);
         offset += bytes_read;
 
         offset += 3; // Command end signature
@@ -66,5 +66,29 @@ impl Erase {
 
     pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, |bytes, _| State::parse_range(bytes))
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn picture(&self) -> u32 {
+        self.picture
+    }
+
+    pub fn picture_mut(&mut self) -> &mut u32 {
+        &mut self.picture
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

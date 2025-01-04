@@ -29,4 +29,28 @@ impl Range {
             range_count
         })
     }
+
+    pub fn process_time(&self) -> u32 {
+        self.delay_fields.process_time()
+    }
+
+    pub fn process_time_mut(&mut self) -> &mut u32 {
+        self.delay_fields.process_time_mut()
+    }
+
+    pub fn delay(&self) -> u32 {
+        self.delay_fields.delay()
+    }
+
+    pub fn delay_mut(&mut self) -> &mut u32 {
+        self.delay_fields.delay_mut()
+    }
+
+    pub fn range_count(&self) -> u32 {
+        self.range_count
+    }
+
+    pub fn range_count_mut(&mut self) -> &mut u32 {
+        &mut self.range_count
+    }
 }

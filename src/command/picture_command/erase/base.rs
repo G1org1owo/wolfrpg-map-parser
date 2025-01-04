@@ -17,4 +17,12 @@ impl Base {
             process_time
         })
     }
+
+    pub fn process_time(&self) -> u32 {
+        self.process_time
+    }
+
+    pub fn process_time_mut(&mut self) -> &mut u32 {
+        &mut self.process_time
+    }
 }

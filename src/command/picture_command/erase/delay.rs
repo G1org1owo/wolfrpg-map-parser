@@ -24,4 +24,20 @@ impl Delay {
             delay
         })
     }
+
+    pub fn process_time(&self) -> u32 {
+        self.base_fields.process_time()
+    }
+
+    pub fn process_time_mut(&mut self) -> &mut u32 {
+        self.base_fields.process_time_mut()
+    }
+
+    pub fn delay(&self) -> u32 {
+        self.delay
+    }
+
+    pub fn delay_mut(&mut self) -> &mut u32 {
+        &mut self.delay
+    }
 }

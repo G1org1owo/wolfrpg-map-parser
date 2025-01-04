@@ -9,7 +9,7 @@ pub mod blending_method;
 pub mod anchor;
 pub mod zoom;
 pub mod colors;
-mod erase;
+pub mod erase;
 
 #[derive(Serialize)]
 pub enum PictureCommand {

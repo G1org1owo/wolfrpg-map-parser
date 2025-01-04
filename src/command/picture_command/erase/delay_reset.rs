@@ -23,4 +23,12 @@ impl DelayReset {
             range_count
         })
     }
+
+    pub fn range_count(&self) -> Option<u32> {
+        self.range_count
+    }
+
+    pub fn range_count_mut(&mut self) -> &mut Option<u32> {
+        &mut self.range_count
+    }
 }
