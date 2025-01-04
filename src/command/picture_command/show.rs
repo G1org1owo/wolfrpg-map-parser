@@ -158,4 +158,100 @@ impl Show {
     pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_free_transform)
     }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn picture(&self) -> u32 {
+        self.picture
+    }
+
+    pub fn picture_mut(&mut self) -> &mut u32 {
+        &mut self.picture
+    }
+
+    pub fn process_time(&self) -> u32 {
+        self.process_time
+    }
+
+    pub fn process_time_mut(&mut self) -> &mut u32 {
+        &mut self.process_time
+    }
+
+    pub fn division_width(&self) -> u32 {
+        self.division_width
+    }
+
+    pub fn division_width_mut(&mut self) -> &mut u32 {
+        &mut self.division_width
+    }
+
+    pub fn division_height(&self) -> u32 {
+        self.division_height
+    }
+
+    pub fn division_height_mut(&mut self) -> &mut u32 {
+        &mut self.division_height
+    }
+
+    pub fn pattern(&self) -> u32 {
+        self.pattern
+    }
+
+    pub fn pattern_mut(&mut self) -> &mut u32 {
+        &mut self.pattern
+    }
+
+    pub fn opacity(&self) -> u32 {
+        self.opacity
+    }
+
+    pub fn opacity_mut(&mut self) -> &mut u32 {
+        &mut self.opacity
+    }
+
+    pub fn zoom(&self) -> u32 {
+        self.zoom
+    }
+
+    pub fn zoom_mut(&mut self) -> &mut u32 {
+        &mut self.zoom
+    }
+
+    pub fn angle(&self) -> u32 {
+        self.angle
+    }
+
+    pub fn angle_mut(&mut self) -> &mut u32 {
+        &mut self.angle
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
+    }
+
+    pub fn filename(&self) -> &Option<U32OrString> {
+        &self.filename
+    }
+
+    pub fn filename_mut(&mut self) -> &mut Option<U32OrString> {
+        &mut self.filename
+    }
+
+    pub fn string(&self) -> &Option<String> {
+        &self.string
+    }
+
+    pub fn string_mut(&mut self) -> &mut Option<String> {
+        &mut self.string
+    }
 }
