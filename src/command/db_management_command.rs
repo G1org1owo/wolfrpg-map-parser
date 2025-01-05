@@ -88,7 +88,7 @@ impl DBManagementCommand {
     }
 
     fn get_u32_or_string(value: u32, string: String) -> U32OrString {
-        if string.len() != 0 {
+        if !string.is_empty() {
             U32OrString::String(string)
         } else {
             U32OrString::U32(value)

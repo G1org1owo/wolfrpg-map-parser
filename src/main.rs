@@ -6,7 +6,6 @@ pub mod common;
 pub mod page;
 
 use std::{env, fs};
-use serde_json;
 use crate::map::Map;
 
 fn main() {

@@ -201,10 +201,7 @@ impl Command {
             let (bytes_read, commands_read, command): (usize, u32, Command)
                 = Command::parse(&bytes[offset..]);
 
-            exit = match command {
-                Command::Exit() => true,
-                _ => false
-            };
+            exit = matches!(command, Command::Exit());
 
             offset += bytes_read;
             command_count += commands_read;

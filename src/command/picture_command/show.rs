@@ -38,8 +38,10 @@ pub struct Show {
     string: Option<String>,
 }
 
+type StateParser = fn(&[u8], &Options) -> (usize, Option<u32>, State);
+
 impl Show {
-    fn parse(bytes: &[u8], parse_state: fn(&[u8], &Options) -> (usize, Option<u32>, State)) -> (usize, Self) {
+    fn parse(bytes: &[u8], parse_state: StateParser) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let options: u32 = as_u32_le(&bytes[offset..offset+4]);
@@ -122,10 +124,7 @@ impl Show {
 
         let filename: Option<U32OrString> = match filename {
             Some(filename) => Some(U32OrString::String(filename)),
-            None => match filename_variable {
-                Some(filename_variable) => Some(U32OrString::U32(filename_variable)),
-                None => None
-            }
+            None => filename_variable.map(U32OrString::U32)
         };
 
         (filename, string)
