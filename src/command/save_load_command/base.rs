@@ -26,4 +26,20 @@ impl Base {
             save_number
         })
     }
+
+    pub fn operation(&self) -> &Operation {
+        &self.operation
+    }
+    
+    pub fn operation_mut(&mut self) -> &mut Operation {
+        &mut self.operation
+    }
+
+    pub fn save_number(&self) -> u32 {
+        self.save_number
+    }
+    
+    pub fn save_number_mut(&mut self) -> &mut u32 {
+        &mut self.save_number
+    }
 }

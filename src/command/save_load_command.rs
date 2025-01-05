@@ -3,11 +3,11 @@ use crate::command::save_load_command::base::Base;
 use crate::command::save_load_command::load_variable::LoadVariable;
 use crate::command::save_load_command::save_variable::SaveVariable;
 
-mod base;
-mod operation;
-mod save_variable;
+pub mod base;
+pub mod operation;
+pub mod save_variable;
 mod parser;
-mod load_variable;
+pub mod load_variable;
 
 #[derive(Serialize)]
 pub enum SaveLoadCommand {
