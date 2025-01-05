@@ -4,10 +4,10 @@ use crate::command::effect_command::change_color::ChangeColor;
 use crate::command::effect_command::map_shake::MapShake;
 use crate::command::effect_command::scroll_screen::ScrollScreen;
 
-mod base;
-mod map_shake;
-mod scroll_screen;
-mod change_color;
+pub mod base;
+pub mod map_shake;
+pub mod scroll_screen;
+pub mod change_color;
 
 #[derive(Serialize)]
 pub enum EffectCommand {

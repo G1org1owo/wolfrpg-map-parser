@@ -2,9 +2,9 @@ use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::effect_command::scroll_screen::options::Options;
 
-mod options;
-mod scroll_operation;
-mod scroll_speed;
+pub mod options;
+pub mod scroll_operation;
+pub mod scroll_speed;
 
 #[derive(Serialize)]
 pub struct ScrollScreen {
@@ -34,5 +34,29 @@ impl ScrollScreen {
             x,
             y
         })
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn x(&self) -> u32 {
+        self.x
+    }
+    
+    pub fn x_mut(&mut self) -> &mut u32 {
+        &mut self.x
+    }
+
+    pub fn y(&self) -> u32 {
+        self.y
+    }
+    
+    pub fn y_mut(&mut self) -> &mut u32 {
+        &mut self.y
     }
 }

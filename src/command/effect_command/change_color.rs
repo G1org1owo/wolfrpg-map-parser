@@ -39,4 +39,44 @@ impl ChangeColor {
             duration
         })
     }
+
+    pub fn red(&self) -> u8 {
+        self.red
+    }
+    
+    pub fn red_mut(&mut self) -> &mut u8 {
+        &mut self.red
+    }
+
+    pub fn green(&self) -> u8 {
+        self.green
+    }
+    
+    pub fn green_mut(&mut self) -> &mut u8 {
+        &mut self.green
+    }
+
+    pub fn blue(&self) -> u8 {
+        self.blue
+    }
+    
+    pub fn blue_mut(&mut self) -> &mut u8 {
+        &mut self.blue
+    }
+
+    pub fn flash(&self) -> bool {
+        self.flash
+    }
+    
+    pub fn flash_mut(&mut self) -> &mut bool {
+        &mut self.flash
+    }
+
+    pub fn duration(&self) -> u32 {
+        self.duration
+    }
+    
+    pub fn duration_mut(&mut self) -> &mut u32 {
+        &mut self.duration
+    }
 }

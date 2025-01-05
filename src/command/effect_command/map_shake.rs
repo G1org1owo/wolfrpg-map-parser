@@ -2,7 +2,7 @@ use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use shake_type::ShakeType;
 
-mod shake_type;
+pub mod shake_type;
 
 #[derive(Serialize)]
 pub struct MapShake {
@@ -36,5 +36,37 @@ impl MapShake {
             shake_type,
             duration
         })
+    }
+
+    pub fn power(&self) -> u8 {
+        self.power
+    }
+    
+    pub fn power_mut(&mut self) -> &mut u8 {
+        &mut self.power
+    }
+
+    pub fn speed(&self) -> u8 {
+        self.speed
+    }
+    
+    pub fn speed_mut(&mut self) -> &mut u8 {
+        &mut self.speed
+    }
+
+    pub fn shake_type(&self) -> &ShakeType {
+        &self.shake_type
+    }
+    
+    pub fn shake_type_mut(&mut self) -> &mut ShakeType {
+        &mut self.shake_type
+    }
+
+    pub fn duration(&self) -> u32 {
+        self.duration
+    }
+    
+    pub fn duration_mut(&mut self) -> &mut u32 {
+        &mut self.duration
     }
 }

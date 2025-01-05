@@ -28,4 +28,20 @@ impl Options {
             effect_type
         }
     }
+
+    pub fn target(&self) -> &EffectTarget {
+        &self.target
+    }
+    
+    pub fn target_mut(&mut self) -> &mut EffectTarget {
+        &mut self.target
+    }
+
+    pub fn effect_type(&self) -> &EffectType {
+        &self.effect_type
+    }
+    
+    pub fn effect_type_mut(&mut self) -> &mut EffectType {
+        &mut self.effect_type
+    }
 }

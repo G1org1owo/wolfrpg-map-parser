@@ -19,4 +19,36 @@ impl Options {
             pixel_units:     (options >> 8) & 0b00000010 != 0,
         }
     }
+
+    pub fn scroll_operation(&self) -> &ScrollOperation {
+        &self.scroll_operation
+    }
+    
+    pub fn scroll_operation_mut(&mut self) -> &mut ScrollOperation {
+        &mut self.scroll_operation
+    }
+
+    pub fn scroll_speed(&self) -> &ScrollSpeed {
+        &self.scroll_speed
+    }
+    
+    pub fn scroll_speed_mut(&mut self) -> &mut ScrollSpeed {
+        &mut self.scroll_speed
+    }
+
+    pub fn wait_until_done(&self) -> bool {
+        self.wait_until_done
+    }
+    
+    pub fn wait_until_done_mut(&mut self) -> &mut bool {
+        &mut self.wait_until_done
+    }
+
+    pub fn pixel_units(&self) -> bool {
+        self.pixel_units
+    }
+    
+    pub fn pixel_units_mut(&mut self) -> &mut bool {
+        &mut self.pixel_units
+    }
 }

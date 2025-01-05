@@ -1,9 +1,9 @@
-mod options;
-mod effect_type;
-mod effect_target;
-mod character_effect_type;
-mod map_effect_type;
-mod picture_effect_type;
+pub mod options;
+pub mod effect_type;
+pub mod effect_target;
+pub mod character_effect_type;
+pub mod map_effect_type;
+pub mod picture_effect_type;
 
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
@@ -57,5 +57,61 @@ impl Base {
             value2,
             value3
         })
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn duration(&self) -> u32 {
+        self.duration
+    }
+    
+    pub fn duration_mut(&mut self) -> &mut u32 {
+        &mut self.duration
+    }
+
+    pub fn target(&self) -> u32 {
+        self.target
+    }
+    
+    pub fn target_mut(&mut self) -> &mut u32 {
+        &mut self.target
+    }
+
+    pub fn range(&self) -> u32 {
+        self.range
+    }
+    
+    pub fn range_mut(&mut self) -> &mut u32 {
+        &mut self.range
+    }
+
+    pub fn value1(&self) -> u32 {
+        self.value1
+    }
+    
+    pub fn value1_mut(&mut self) -> &mut u32 {
+        &mut self.value1
+    }
+
+    pub fn value2(&self) -> u32 {
+        self.value2
+    }
+    
+    pub fn value2_mut(&mut self) -> &mut u32 {
+        &mut self.value2
+    }
+
+    pub fn value3(&self) -> u32 {
+        self.value3
+    }
+    
+    pub fn value3_mut(&mut self) -> &mut u32 {
+        &mut self.value3
     }
 }
