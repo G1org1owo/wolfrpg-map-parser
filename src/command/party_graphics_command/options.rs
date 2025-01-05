@@ -6,7 +6,7 @@ use crate::command::party_graphics_command::special_operation::SpecialOperation;
 pub struct Options {
     operation: Operation,
     special_operation: SpecialOperation,
-    is_graphics_variable: bool
+    graphics_is_variable: bool
 }
 
 impl Options {
@@ -14,7 +14,7 @@ impl Options {
         Self {
             operation: Operation::new((options & 0x0f) as u8),
             special_operation: SpecialOperation::new(((options >> 4) & 0x0f) as u8),
-            is_graphics_variable: (options >> 8) & 0b00000001 != 0
+            graphics_is_variable: (options >> 8) & 0b00000001 != 0
         }
     }
 
@@ -22,11 +22,23 @@ impl Options {
         &self.operation
     }
 
+    pub fn operation_mut(&mut self) -> &mut Operation {
+        &mut self.operation
+    }
+
     pub fn special_operation(&self) -> &SpecialOperation {
         &self.special_operation
     }
 
-    pub fn is_graphics_variable(&self) -> bool {
-        self.is_graphics_variable
+    pub fn special_operation_mut(&mut self) -> &mut SpecialOperation {
+        &mut self.special_operation
+    }
+
+    pub fn graphics_is_variable(&self) -> bool {
+        self.graphics_is_variable
+    }
+
+    pub fn graphics_is_variable_mut(&mut self) -> &mut bool {
+        &mut self.graphics_is_variable
     }
 }

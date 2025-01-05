@@ -1,6 +1,6 @@
-mod options;
-mod operation;
-mod special_operation;
+pub mod options;
+pub mod operation;
+pub mod special_operation;
 
 use crate::byte_utils::{as_u32_le, parse_string};
 use crate::command::common::u32_or_string::U32OrString;
@@ -34,7 +34,7 @@ impl PartyGraphicsCommand {
             _ => None
         };
 
-        let graphics_variable: Option<u32> = if options.is_graphics_variable() {
+        let graphics_variable: Option<u32> = if options.graphics_is_variable() {
             let graphics_variable: u32 = as_u32_le(&bytes[offset..offset + 4]);
             offset += 4;
 
@@ -65,5 +65,29 @@ impl PartyGraphicsCommand {
             member,
             graphics
         })
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn member(&self) -> Option<u32> {
+        self.member
+    }
+    
+    pub fn member_mut(&mut self) -> &mut Option<u32> {
+        &mut self.member
+    }
+
+    pub fn graphics(&self) -> &Option<U32OrString> {
+        &self.graphics
+    }
+    
+    pub fn graphics_mut(&mut self) -> &mut Option<U32OrString> {
+        &mut self.graphics
     }
 }
