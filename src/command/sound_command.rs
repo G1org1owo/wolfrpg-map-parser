@@ -4,13 +4,13 @@ use crate::command::sound_command::options::Options;
 use crate::command::sound_command::sound_type::SoundType;
 use crate::command::sound_command::state::State;
 
-mod options;
-mod process_type;
-mod operation;
-mod sound_type;
-mod state;
-mod filename;
-mod variable;
+pub mod options;
+pub mod process_type;
+pub mod operation;
+pub mod sound_type;
+pub mod state;
+pub mod filename;
+pub mod variable;
 
 #[derive(Serialize)]
 pub struct SoundCommand {
@@ -59,5 +59,37 @@ impl SoundCommand {
 
     pub fn parse_free_all(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_free_all)
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn systemdb_entry(&self) -> u16 {
+        self.systemdb_entry
+    }
+    
+    pub fn systemdb_entry_mut(&mut self) -> &mut u16 {
+        &mut self.systemdb_entry
+    }
+
+    pub fn sound_type(&self) -> &SoundType {
+        &self.sound_type
+    }
+    
+    pub fn sound_type_mut(&mut self) -> &mut SoundType {
+        &mut self.sound_type
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+    
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

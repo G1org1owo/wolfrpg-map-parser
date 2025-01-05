@@ -19,8 +19,16 @@ impl Options {
     pub fn process_type(&self) -> &ProcessType {
         &self.process_type
     }
+    
+    pub fn process_type_mut(&mut self) -> &mut ProcessType {
+        &mut self.process_type
+    }
 
     pub fn operation(&self) -> &Operation {
         &self.operation
+    }
+    
+    pub fn operation_mut(&mut self) -> &mut Operation {
+        &mut self.operation
     }
 }

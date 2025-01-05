@@ -38,4 +38,36 @@ impl Variable {
             start_time
         })
     }
+
+    pub fn delay_playback(&self) -> Option<u32> {
+        self.delay_playback
+    }
+    
+    pub fn delay_playback_mut(&mut self) -> &mut Option<u32> {
+        &mut self.delay_playback
+    }
+
+    pub fn fade_time(&self) -> Option<u32> {
+        self.fade_time
+    }
+    
+    pub fn fade_time_mut(&mut self) -> &mut Option<u32> {
+        &mut self.fade_time
+    }
+
+    pub fn variable(&self) -> u32 {
+        self.variable
+    }
+    
+    pub fn variable_mut(&mut self) -> &mut u32 {
+        &mut self.variable
+    }
+
+    pub fn start_time(&self) -> u32 {
+        self.start_time
+    }
+    
+    pub fn start_time_mut(&mut self) -> &mut u32 {
+        &mut self.start_time
+    }
 }
