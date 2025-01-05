@@ -2,11 +2,12 @@ mod options;
 mod operation;
 mod special_operation;
 
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
+use crate::byte_utils::{as_u32_le, parse_string};
 use crate::command::common::u32_or_string::U32OrString;
 use crate::command::party_graphics_command::operation::Operation;
 use crate::command::party_graphics_command::options::Options;
+use crate::byte_utils::parse_optional_string;
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct PartyGraphicsCommand {
@@ -47,16 +48,8 @@ impl PartyGraphicsCommand {
         let is_graphics_string: bool = bytes[offset] != 0;
         offset += 1;
 
-        let graphics_string: Option<String> = if is_graphics_string {
-            let graphics_length: usize = as_u32_le(&bytes[offset..offset + 4]) as usize;
-            offset += 4;
-            let graphics_string: String = as_string(bytes, offset, graphics_length);
-            offset += graphics_length;
-
-            Some(graphics_string)
-        } else {
-            None
-        };
+        let graphics_string: Option<String> 
+            = parse_optional_string!(bytes, offset, is_graphics_string);
 
         let graphics: Option<U32OrString> = match (graphics_variable, graphics_string) {
             (Some(variable), None) => Some(U32OrString::U32(variable)),

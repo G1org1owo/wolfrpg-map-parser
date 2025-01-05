@@ -2,6 +2,7 @@ use crate::byte_utils::{as_u32_le, parse_string};
 use crate::command::common::u32_or_string::U32OrString;
 use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::options::Options;
+use crate::byte_utils::parse_optional_string;
 use serde::Serialize;
 use state::State;
 
@@ -103,14 +104,8 @@ impl Show {
         let is_filename_string: bool = bytes[offset] != 0;
         offset += 1;
 
-        let string_value: Option<String> = if is_filename_string {
-            let (bytes_read, string): (usize, String) = parse_string(&bytes[offset..]);
-            offset += bytes_read;
-
-            Some(string)
-        } else {
-            None
-        };
+        let string_value: Option<String>
+            = parse_optional_string!(bytes, offset, is_filename_string);
 
         (offset, string_value)
     }

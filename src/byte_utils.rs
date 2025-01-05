@@ -70,3 +70,19 @@ pub fn parse_string_vec(bytes: &[u8], count: usize) -> (usize, Vec<String>) {
 
     (offset, strings)
 }
+
+macro_rules! parse_optional_string {
+    ( $bytes:expr, $offset:expr, $is_string:expr ) => {
+        if $is_string {
+            let (bytes_read, string): (usize, String)
+                = parse_string(&$bytes[$offset..]);
+            $offset += bytes_read;
+
+            Some(string)
+        } else {
+            None
+        }
+    };
+}
+
+pub(crate) use parse_optional_string;
