@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum MoveType {
     MoveDown            = 0x0000,
     MoveLeft            = 0x0001,

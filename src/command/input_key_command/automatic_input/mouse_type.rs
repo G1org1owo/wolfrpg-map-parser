@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum MouseType {
     Click       = 0x00,
     Position    = 0x01,

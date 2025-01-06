@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ExtraCases {
     left_key: bool,
     right_key: bool,

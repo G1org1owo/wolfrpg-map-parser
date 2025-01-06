@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ArgumentCount {
     number_arguments: u8,
     string_arguments: u8

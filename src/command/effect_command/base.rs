@@ -5,11 +5,12 @@ pub mod character_effect_type;
 pub mod map_effect_type;
 pub mod picture_effect_type;
 
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::effect_command::base::options::Options;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Base {
     options: Options,
     duration: u32,

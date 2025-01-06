@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::save_load_command::base::Base;
 use crate::command::save_load_command::load_variable::LoadVariable;
@@ -9,7 +10,7 @@ pub mod save_variable;
 mod parser;
 pub mod load_variable;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum SaveLoadCommand {
     Base(Base),
     LoadVariable(LoadVariable),

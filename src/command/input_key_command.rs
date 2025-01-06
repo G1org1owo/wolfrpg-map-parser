@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::input_key_command::automatic_input::AutomaticInput;
 use crate::command::input_key_command::input_key::InputKey;
@@ -7,7 +8,7 @@ pub mod input_key;
 pub mod automatic_input;
 pub mod input_toggle;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum InputKeyCommand {
     InputKey(InputKey),
     AutomaticInput(AutomaticInput),

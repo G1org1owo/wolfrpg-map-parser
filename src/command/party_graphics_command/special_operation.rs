@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum SpecialOperation {
     PushCharactersToFront   = 0x00,
     EraseAllCharacters      = 0x01,

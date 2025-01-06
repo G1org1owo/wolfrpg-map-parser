@@ -3,6 +3,7 @@ use crate::command::common::u32_or_string::U32OrString;
 use crate::command::db_management_command::assignment::Assignment;
 use crate::command::db_management_command::options::Options;
 use crate::command::db_management_command::state::State;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
 pub mod base;
@@ -15,7 +16,7 @@ pub mod string;
 pub mod csv;
 pub mod state;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct DBManagementCommand {
     db_type: U32OrString, // name for table?
     data: U32OrString,    // name for tuple?

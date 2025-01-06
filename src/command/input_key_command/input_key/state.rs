@@ -1,10 +1,11 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::input_key_command::input_key::basic::Basic;
 use crate::command::input_key_command::input_key::input_type::InputType;
 use crate::command::input_key_command::input_key::keyboard_or_pad::KeyboardOrPad;
 use crate::command::input_key_command::input_key::mouse::Mouse;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     Basic(Basic),
     KeyboardOrPad(KeyboardOrPad),

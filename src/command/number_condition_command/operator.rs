@@ -1,7 +1,8 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::common::compare_operator::CompareOperator;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Operator {
     operator: CompareOperator,
     not_variable: bool,

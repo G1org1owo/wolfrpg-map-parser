@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::picture_command::erase::Erase;
 use crate::command::picture_command::show::Show;
@@ -11,7 +12,7 @@ pub mod zoom;
 pub mod colors;
 pub mod erase;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum PictureCommand {
     Show(Show),
     Erase(Erase),

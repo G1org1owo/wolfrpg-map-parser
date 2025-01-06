@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::picture_command::show::base::Base;
 use crate::command::picture_command::options::Options;
@@ -8,7 +9,7 @@ use crate::command::picture_command::show::delay::Delay;
 use crate::command::picture_command::show::range::Range;
 use crate::command::picture_command::show::zoom::Zoom;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     Base(Base),
     Colors(Colors),

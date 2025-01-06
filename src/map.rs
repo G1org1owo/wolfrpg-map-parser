@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::{as_u32_vec, as_u32_le};
 use crate::event::Event;
@@ -5,7 +6,7 @@ use crate::event::Event;
 const MAP_SIGNATURE: &[u8]
     = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x57\x4F\x4C\x46\x4D\x00\x00\x00\x00\x00";
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Map {
     tileset: u32,
     width: u32,

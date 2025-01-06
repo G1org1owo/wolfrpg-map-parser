@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum Target {
     CurrentMapId            = 0x00000000,
     PlayingBGM              = 0x00000001,

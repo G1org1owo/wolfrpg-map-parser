@@ -2,9 +2,10 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::color_values_fields::ColorValuesFields;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ZoomFields {
     color_values_state: ColorValuesFields,
     zoom_height: u32

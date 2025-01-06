@@ -2,9 +2,10 @@ use crate::byte_utils::{as_u32_le, parse_string};
 use crate::command::sound_command::operation::Operation;
 use crate::command::sound_command::options::Options;
 use crate::command::sound_command::variable::Variable;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Filename {
     variable_state: Variable,
     volume: u32,

@@ -2,9 +2,10 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::delay_fields::DelayFields;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct RangeFields {
     delay_state: DelayFields,
     range_count: u32

@@ -1,7 +1,8 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::save_load_command::parser::parse_variable_fields;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct SaveVariable {
     source_variable: u32,
     save_number: u32,

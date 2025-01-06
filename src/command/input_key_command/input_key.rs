@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::input_key::input_type::InputType;
@@ -14,7 +15,7 @@ pub mod mouse_target;
 pub mod mouse_options;
 pub mod mouse;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct InputKey {
     variable: u32,
     input_type: InputType,

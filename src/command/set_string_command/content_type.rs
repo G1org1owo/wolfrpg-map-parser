@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum ContentType {
     StringLiteral   = 0b00000000,
     StringVariable  = 0b00000001,

@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u16_le;
 use crate::command::sound_command::options::Options;
@@ -12,7 +13,7 @@ pub mod state;
 pub mod filename;
 pub mod variable;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct SoundCommand {
     options: Options,
     systemdb_entry: u16,

@@ -1,9 +1,10 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::Command;
 
 use crate::command::common::LOOP_END_SIGNATURE;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Loop {
     commands: Vec<Command>,
 }

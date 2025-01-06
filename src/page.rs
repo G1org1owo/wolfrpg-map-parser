@@ -12,11 +12,12 @@ use crate::page::condition::Condition;
 use crate::page::event_trigger::EventTrigger;
 use crate::page::move_route::MoveRoute;
 use crate::page::options::Options;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
 const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Page {
     icon: String,
     icon_row: u8,

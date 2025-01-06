@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::event_control_command::erase_event::EraseEvent;
 use crate::command::event_control_command::label::Label;
@@ -17,7 +18,7 @@ pub mod label;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum EventControlCommand {
     Loop(Loop),
     BreakLoop,

@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::set_string_command::content_type::ContentType;
 use crate::command::set_string_command::variable_type::VariableType;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Options {
     content_type: ContentType,
     variable_type: VariableType,

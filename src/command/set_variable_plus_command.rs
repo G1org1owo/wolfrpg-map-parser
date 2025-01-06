@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use state::State;
 use crate::byte_utils::as_u32_le;
@@ -18,7 +19,7 @@ pub mod other;
 pub mod target;
 pub mod character_field;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct SetVariablePlusCommand {
     variable: u32,
     options: Options,

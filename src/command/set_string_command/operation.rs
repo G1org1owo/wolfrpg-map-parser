@@ -1,7 +1,8 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::set_string_command::string_operation::StringOperation;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Operation {
     operation: StringOperation,
     input_cancel: bool,

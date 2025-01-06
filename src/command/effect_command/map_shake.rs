@@ -1,10 +1,11 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use shake_type::ShakeType;
 
 pub mod shake_type;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct MapShake {
     power: u8,
     speed: u8,

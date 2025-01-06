@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::effect_command::base::Base;
 use crate::command::effect_command::change_color::ChangeColor;
@@ -9,7 +10,7 @@ pub mod map_shake;
 pub mod scroll_screen;
 pub mod change_color;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum EffectCommand {
     Base(Base),
     MapShake(MapShake),

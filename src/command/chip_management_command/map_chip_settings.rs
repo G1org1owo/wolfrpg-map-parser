@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::chip_management_command::options::Options;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct MapChipSettings {
     chip: u32,
     options: Options

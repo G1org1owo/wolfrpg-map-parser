@@ -2,13 +2,14 @@ use crate::byte_utils::{as_u16_le, parse_string_vec};
 use crate::command::common::case::Case;
 use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::show_choice_command::options::Options;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
 pub mod cancel_case;
 pub mod extra_cases;
 pub mod options;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ShowChoiceCommand {
     options: Options,
     choices: Vec<String>,

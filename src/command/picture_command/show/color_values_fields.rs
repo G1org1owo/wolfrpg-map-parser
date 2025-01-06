@@ -2,9 +2,10 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
 use crate::command::picture_command::show::range_fields::RangeFields;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ColorValuesFields {
     range_state: RangeFields,
     color_values: [u32; 3]

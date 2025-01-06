@@ -1,8 +1,9 @@
 use crate::command::set_variable_command::base::Base;
 use crate::command::set_variable_command::range::Range;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     Base(Base),
     Range(Range)

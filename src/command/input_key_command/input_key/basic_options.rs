@@ -1,7 +1,8 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::input_key_command::input_key::direction_keys::DirectionKeys;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct BasicOptions {
     direction_keys: DirectionKeys,
     input_ok: bool,

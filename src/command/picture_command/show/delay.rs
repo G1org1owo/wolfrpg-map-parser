@@ -1,9 +1,10 @@
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::delay_fields::DelayFields;
 use crate::command::picture_command::show::parser::parse_fields;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Delay {
     position_x: u32,
     position_y: u32,

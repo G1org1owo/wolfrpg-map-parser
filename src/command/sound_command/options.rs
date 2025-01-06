@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::sound_command::operation::Operation;
 use crate::command::sound_command::process_type::ProcessType;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Options {
     process_type: ProcessType,
     operation: Operation

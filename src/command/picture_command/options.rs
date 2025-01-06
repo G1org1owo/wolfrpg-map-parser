@@ -1,10 +1,11 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::picture_command::anchor::Anchor;
 use crate::command::picture_command::blending_method::BlendingMethod;
 use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::zoom::Zoom;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Options {
     display_type: DisplayType,
     blending_method: BlendingMethod,

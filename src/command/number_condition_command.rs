@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::common::case::Case;
 use crate::command::common::CASES_END_SIGNATURE;
@@ -6,7 +7,7 @@ use crate::command::number_condition_command::condition::Condition;
 pub mod condition;
 pub mod operator;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct NumberConditionCommand {
     else_case: bool,
     conditions: Vec<Condition>,

@@ -8,9 +8,10 @@ use crate::command::common::u32_or_string::U32OrString;
 use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::string_condition_command::condition::Condition;
 use crate::command::string_condition_command::operator::Operator;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct StringConditionCommand {
     else_case: bool,
     conditions: Vec<Condition>,

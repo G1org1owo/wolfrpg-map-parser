@@ -1,7 +1,8 @@
 use crate::command::input_key_command::input_key::basic_options::BasicOptions;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Basic {
     options: BasicOptions
 }

@@ -1,8 +1,9 @@
 use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ColorsFields {
     colors: Colors
 }

@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::show_choice_command::cancel_case::CancelCase;
 use crate::command::show_choice_command::extra_cases::ExtraCases;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Options {
     cancel_case: CancelCase,
     selected_choices: u8,

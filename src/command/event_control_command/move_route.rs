@@ -1,11 +1,12 @@
 pub mod options;
 
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::common::r#move::Move;
 use crate::command::event_control_command::move_route::options::Options;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct MoveRoute {
     target: u32,
     unknown1: u32,

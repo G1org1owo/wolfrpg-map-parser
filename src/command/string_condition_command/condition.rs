@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::common::u32_or_string::U32OrString;
 use crate::command::string_condition_command::operator::Operator;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Condition {
     variable: u32,
     operator: Operator,

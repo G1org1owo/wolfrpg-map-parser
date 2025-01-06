@@ -1,9 +1,10 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::automatic_input::mouse_options::MouseOptions;
 use crate::command::input_key_command::automatic_input::mouse_type::MouseType;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Mouse {
     options: MouseOptions,
     position_x: Option<u32>,

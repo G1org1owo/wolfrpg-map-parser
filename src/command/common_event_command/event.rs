@@ -2,11 +2,12 @@ use crate::byte_utils::{as_u32_le, as_u32_vec, parse_string_vec};
 use crate::command::common::u32_or_string::U32OrString;
 use crate::command::common_event_command::argument_count::ArgumentCount;
 use crate::command::common_event_command::options::Options;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use std::cmp::max;
 use std::collections::VecDeque;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Event {
     target: u32,
     argument_count: ArgumentCount,
@@ -108,7 +109,7 @@ impl Event {
     pub fn target(&self) -> u32 {
         self.target
     }
-    
+
     pub fn target_mut(&mut self) -> &mut u32 {
         &mut self.target
     }
@@ -116,7 +117,7 @@ impl Event {
     pub fn argument_count(&self) -> &ArgumentCount {
         &self.argument_count
     }
-    
+
     pub fn argument_count_mut(&mut self) -> &mut ArgumentCount {
         &mut self.argument_count
     }
@@ -124,7 +125,7 @@ impl Event {
     pub fn options(&self) -> &Options {
         &self.options
     }
-    
+
     pub fn options_mut(&mut self) -> &mut Options {
         &mut self.options
     }
@@ -132,7 +133,7 @@ impl Event {
     pub fn number_arguments(&self) -> &Vec<u32> {
         &self.number_arguments
     }
-    
+
     pub fn number_arguments_mut(&mut self) -> &mut Vec<u32> {
         &mut self.number_arguments
     }
@@ -140,7 +141,7 @@ impl Event {
     pub fn string_arguments(&self) -> &Vec<U32OrString> {
         &self.string_arguments
     }
-    
+
     pub fn string_arguments_mut(&mut self) -> &mut Vec<U32OrString> {
         &mut self.string_arguments
     }
@@ -148,7 +149,7 @@ impl Event {
     pub fn return_variable(&self) -> Option<u32> {
         self.return_variable
     }
-    
+
     pub fn return_variable_mut(&mut self) -> &mut Option<u32> {
         &mut self.return_variable
     }
@@ -156,7 +157,7 @@ impl Event {
     pub fn event_name(&self) -> &Option<String> {
         &self.event_name
     }
-    
+
     pub fn event_name_mut(&mut self) -> &mut Option<String> {
         &mut self.event_name
     }

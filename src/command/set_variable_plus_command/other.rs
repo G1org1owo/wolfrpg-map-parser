@@ -1,8 +1,9 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::set_variable_plus_command::target::Target;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Other {
     target: Target
 }

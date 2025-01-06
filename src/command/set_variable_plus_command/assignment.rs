@@ -1,8 +1,9 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::set_variable_plus_command::assignment_operator::AssignmentOperator;
 use crate::command::set_variable_plus_command::variable_type::VariableType;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Assignment {
     operator: AssignmentOperator,
     variable_type: VariableType

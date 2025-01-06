@@ -1,6 +1,7 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum Target {
     SavedPosition,   // 0xefd8ffff,
     Hero,            // 0xffffffff,

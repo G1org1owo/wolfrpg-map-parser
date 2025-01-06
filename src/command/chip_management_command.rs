@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::chip_management_command::map_chip_settings::MapChipSettings;
 use crate::command::chip_management_command::overwrite_map_chips::OverwriteMapChips;
@@ -8,7 +9,7 @@ pub mod options;
 pub mod switch_chipset;
 pub mod overwrite_map_chips;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum ChipManagementCommand {
     MapChipSettings(MapChipSettings),
     SwitchChipset(SwitchChipset),

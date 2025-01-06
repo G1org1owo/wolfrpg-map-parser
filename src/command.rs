@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
@@ -41,7 +42,7 @@ pub mod event_control_command;
 pub mod common_event_command;
 mod signature;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum Command {
     ShowMessage(ShowTextCommand),
     Comment(ShowTextCommand),

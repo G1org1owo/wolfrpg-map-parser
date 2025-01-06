@@ -1,10 +1,11 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::picture_command::erase::base::Base;
 use crate::command::picture_command::erase::delay::Delay;
 use crate::command::picture_command::erase::delay_reset::DelayReset;
 use crate::command::picture_command::erase::range::Range;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     DelayReset(DelayReset),
     Base(Base),

@@ -1,7 +1,8 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::db_management_command::assignment_operator::AssignmentOperator;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Assignment {
     use_variable_as_reference: bool,
     operator: AssignmentOperator

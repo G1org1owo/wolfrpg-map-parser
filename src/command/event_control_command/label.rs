@@ -1,7 +1,8 @@
 use crate::byte_utils::parse_string;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Label {
     label: String
 }

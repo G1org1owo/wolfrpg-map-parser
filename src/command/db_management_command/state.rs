@@ -1,9 +1,10 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::db_management_command::base::Base;
 use crate::command::db_management_command::csv::CSV;
 use crate::command::db_management_command::string;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     Base(Base),
     String(string::String),

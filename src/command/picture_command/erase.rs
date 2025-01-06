@@ -4,13 +4,14 @@ pub mod base;
 pub mod delay;
 pub mod range;
 
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::erase::state::State;
 use crate::command::picture_command::options::Options;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Erase {
     options: Options,
     picture: u32,

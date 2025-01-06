@@ -1,10 +1,11 @@
 use crate::byte_utils::{as_u32_be, as_u32_le, parse_string};
 use crate::page::Page;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
 const EVENT_SIGNATURE: u32 = 0x6f393000;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Event {
     id: u32,
     name: String,

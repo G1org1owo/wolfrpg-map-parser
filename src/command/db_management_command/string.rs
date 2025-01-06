@@ -1,8 +1,9 @@
 use crate::byte_utils::parse_string;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use std::string::String as StdString;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct String {
     value: StdString,
 }

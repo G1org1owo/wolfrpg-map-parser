@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::effect_command::base::character_effect_type::CharacterEffectType;
 use crate::command::effect_command::base::effect_target::EffectTarget;
@@ -5,7 +6,7 @@ use crate::command::effect_command::base::effect_type::EffectType;
 use crate::command::effect_command::base::map_effect_type::MapEffectType;
 use crate::command::effect_command::base::picture_effect_type::PictureEffectType;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Options {
     target: EffectTarget,
     effect_type: EffectType

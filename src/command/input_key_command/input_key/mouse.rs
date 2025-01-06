@@ -1,7 +1,8 @@
 use crate::command::input_key_command::input_key::mouse_options::MouseOptions;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Mouse {
     options: MouseOptions
 }

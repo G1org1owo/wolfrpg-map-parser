@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use move_type::MoveType;
 use crate::byte_utils::as_u16_le;
@@ -6,7 +7,7 @@ use crate::common::r#move::state::State;
 pub mod move_type;
 pub mod state;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Move {
     move_type: MoveType,
     state: State

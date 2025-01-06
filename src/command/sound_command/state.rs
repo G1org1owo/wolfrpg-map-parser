@@ -1,10 +1,11 @@
+#[cfg(feature = "serde")]
 use serde::Serialize;
 use crate::command::sound_command::filename::Filename;
 use crate::command::sound_command::options::Options;
 use crate::command::sound_command::sound_type::SoundType;
 use crate::command::sound_command::variable::Variable;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum State {
     Filename(Filename),
     Variable(Variable),

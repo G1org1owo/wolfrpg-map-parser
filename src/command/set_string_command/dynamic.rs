@@ -1,7 +1,8 @@
 use crate::byte_utils::as_u32_le;
+#[cfg(feature = "serde")]
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct Dynamic {
     source: u32
 }
