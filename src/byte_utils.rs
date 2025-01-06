@@ -1,6 +1,7 @@
 use std::borrow::Cow;
 use encoding_rs::{Encoding, SHIFT_JIS};
 
+#[allow(clippy::identity_op)]
 pub fn as_u32_le(bytes: &[u8]) -> u32 {
     ((bytes[0] as u32) <<  0) |
     ((bytes[1] as u32) <<  8) |
@@ -8,6 +9,7 @@ pub fn as_u32_le(bytes: &[u8]) -> u32 {
     ((bytes[3] as u32) << 24)
 }
 
+#[allow(clippy::identity_op)]
 pub fn as_u32_be(bytes: &[u8]) -> u32 {
     ((bytes[0] as u32) << 24) |
     ((bytes[1] as u32) << 16) |
@@ -15,11 +17,14 @@ pub fn as_u32_be(bytes: &[u8]) -> u32 {
     ((bytes[3] as u32) <<  0)
 }
 
+#[allow(clippy::identity_op)]
 pub fn as_u16_le(bytes: &[u8]) -> u16 {
     ((bytes[0] as u16) << 0) |
     ((bytes[1] as u16) << 8)
 }
 
+#[allow(unused)]
+#[allow(clippy::identity_op)]
 pub fn as_u16_be(bytes: &[u8]) -> u16 {
     ((bytes[0] as u16) << 8) |
     ((bytes[1] as u16) << 0)
