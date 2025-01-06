@@ -14,4 +14,20 @@ impl Options {
             transition: Transition::new(((options >> 4) & 0x0f) as u8),
         }
     }
+
+    pub fn precise_coordinates(&self) -> bool {
+        self.precise_coordinates
+    }
+    
+    pub fn precise_coordinates_mut(&mut self) -> &mut bool {
+        &mut self.precise_coordinates
+    }
+
+    pub fn transition(&self) -> &Transition {
+        &self.transition
+    }
+    
+    pub fn transition_mut(&mut self) -> &mut Transition {
+        &mut self.transition
+    }
 }

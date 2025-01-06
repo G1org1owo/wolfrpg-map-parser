@@ -3,9 +3,9 @@ use crate::byte_utils::as_u32_le;
 use crate::command::transfer_command::options::Options;
 use crate::command::transfer_command::target::Target;
 
-mod target;
-mod options;
-mod transition;
+pub mod target;
+pub mod options;
+pub mod transition;
 
 #[derive(Serialize)]
 pub struct TransferCommand {
@@ -65,5 +65,53 @@ impl TransferCommand {
             destination_map,
             options
         })
+    }
+
+    pub fn target(&self) -> &Target {
+        &self.target
+    }
+    
+    pub fn target_mut(&mut self) -> &mut Target {
+        &mut self.target
+    }
+
+    pub fn db_variable(&self) -> Option<u32> {
+        self.db_variable
+    }
+    
+    pub fn db_variable_mut(&mut self) -> &mut Option<u32> {
+        &mut self.db_variable
+    }
+
+    pub fn destination_x(&self) -> u32 {
+        self.destination_x
+    }
+    
+    pub fn destination_x_mut(&mut self) -> &mut u32 {
+        &mut self.destination_x
+    }
+
+    pub fn destination_y(&self) -> u32 {
+        self.destination_y
+    }
+    
+    pub fn destination_y_mut(&mut self) -> &mut u32 {
+        &mut self.destination_y
+    }
+
+    pub fn destination_map(&self) -> Option<u32> {
+        self.destination_map
+    }
+    
+    pub fn destination_map_mut(&mut self) -> &mut Option<u32> {
+        &mut self.destination_map
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
     }
 }
