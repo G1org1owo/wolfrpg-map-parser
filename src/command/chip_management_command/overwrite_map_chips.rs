@@ -44,4 +44,52 @@ impl OverwriteMapChips{
             chip
         })
     }
+
+    pub fn layer(&self) -> u32 {
+        self.layer
+    }
+    
+    pub fn layer_mut(&mut self) -> &mut u32 {
+        &mut self.layer
+    }
+
+    pub fn position_x(&self) -> u32 {
+        self.position_x
+    }
+    
+    pub fn position_x_mut(&mut self) -> &mut u32 {
+        &mut self.position_x
+    }
+
+    pub fn position_y(&self) -> u32 {
+        self.position_y
+    }
+    
+    pub fn position_y_mut(&mut self) -> &mut u32 {
+        &mut self.position_y
+    }
+
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+    
+    pub fn width_mut(&mut self) -> &mut u32 {
+        &mut self.width
+    }
+
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+    
+    pub fn height_mut(&mut self) -> &mut u32 {
+        &mut self.height
+    }
+
+    pub fn chip(&self) -> u32 {
+        self.chip
+    }
+    
+    pub fn chip_mut(&mut self) -> &mut u32 {
+        &mut self.chip
+    }
 }

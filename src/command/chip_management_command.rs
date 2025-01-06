@@ -3,10 +3,10 @@ use crate::command::chip_management_command::map_chip_settings::MapChipSettings;
 use crate::command::chip_management_command::overwrite_map_chips::OverwriteMapChips;
 use crate::command::chip_management_command::switch_chipset::SwitchChipset;
 
-mod map_chip_settings;
-mod options;
-mod switch_chipset;
-mod overwrite_map_chips;
+pub mod map_chip_settings;
+pub mod options;
+pub mod switch_chipset;
+pub mod overwrite_map_chips;
 
 #[derive(Serialize)]
 pub enum ChipManagementCommand {

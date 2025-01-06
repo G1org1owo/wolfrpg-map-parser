@@ -26,4 +26,20 @@ impl MapChipSettings {
             options
         })
     }
+
+    pub fn chip(&self) -> u32 {
+        self.chip
+    }
+    
+    pub fn chip_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
 }

@@ -19,4 +19,12 @@ impl SwitchChipset {
             chipset
         })
     }
+
+    pub fn chipset(&self) -> u32 {
+        self.chipset
+    }
+    
+    pub fn chipset_mut(&mut self) -> &mut u32 {
+        &mut self.chipset
+    }
 }
