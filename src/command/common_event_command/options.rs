@@ -26,7 +26,7 @@ impl Options {
             2 => self.is_arg2_string,
             3 => self.is_arg3_string,
             4 => self.is_arg4_string,
-            _ => unreachable!()
+            _ => panic!("Invalid argument: arg must be an integer between 1 and 4, {arg} provided")
         }
     }
 
@@ -36,7 +36,7 @@ impl Options {
             2 => self.is_arg2_string = value,
             3 => self.is_arg3_string = value,
             4 => self.is_arg4_string = value,
-            _ => unreachable!()
+            _ => panic!("Invalid argument: arg must be an integer between 1 and 4, {arg} provided")
         }
     }
 

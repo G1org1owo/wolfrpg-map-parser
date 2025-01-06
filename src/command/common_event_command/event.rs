@@ -1,10 +1,10 @@
+use crate::byte_utils::{as_u32_le, as_u32_vec, parse_string_vec};
+use crate::command::common::u32_or_string::U32OrString;
+use crate::command::common_event_command::argument_count::ArgumentCount;
+use crate::command::common_event_command::options::Options;
+use serde::Serialize;
 use std::cmp::max;
 use std::collections::VecDeque;
-use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le, as_u32_vec};
-use crate::command::common::u32_or_string::U32OrString;
-use crate::command::common_event::argument_count::ArgumentCount;
-use crate::command::common_event::options::Options;
 
 #[derive(Serialize)]
 pub struct Event {
@@ -55,7 +55,7 @@ impl Event {
         offset += 1;
 
         let (bytes_read, strings): (usize, Vec<String>)
-            = Self::parse_strings(&bytes[offset..], string_count as usize);
+            = parse_string_vec(&bytes[offset..], string_count as usize);
         offset += bytes_read;
 
         let (event_name, string_arguments): (Option<String>, Vec<U32OrString>)
@@ -77,21 +77,6 @@ impl Event {
 
     fn parse_u32_vec(bytes: &[u8], offset: usize, count: usize) -> (usize, Vec<u32>) {
         (count*4, as_u32_vec(&bytes[offset..offset + count*4]))
-    }
-
-    fn parse_strings(bytes: &[u8], count: usize) -> (usize, Vec<String>) {
-        let mut offset: usize = 0;
-        let mut strings: Vec<String> = Vec::with_capacity(count);
-
-        for _ in 0..count {
-            let string_length: usize = as_u32_le(&bytes[offset..offset+4]) as usize;
-            offset += 4;
-
-            strings.push(as_string(bytes, offset, string_length));
-            offset += string_length;
-        }
-
-        (offset, strings)
     }
 
     fn convert_strings(variables: Vec<u32>, strings: Vec<String>, count: usize, options: &Options)
@@ -118,5 +103,61 @@ impl Event {
         }
 
         (event_name, string_arguments)
+    }
+
+    pub fn target(&self) -> u32 {
+        self.target
+    }
+    
+    pub fn target_mut(&mut self) -> &mut u32 {
+        &mut self.target
+    }
+
+    pub fn argument_count(&self) -> &ArgumentCount {
+        &self.argument_count
+    }
+    
+    pub fn argument_count_mut(&mut self) -> &mut ArgumentCount {
+        &mut self.argument_count
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn number_arguments(&self) -> &Vec<u32> {
+        &self.number_arguments
+    }
+    
+    pub fn number_arguments_mut(&mut self) -> &mut Vec<u32> {
+        &mut self.number_arguments
+    }
+
+    pub fn string_arguments(&self) -> &Vec<U32OrString> {
+        &self.string_arguments
+    }
+    
+    pub fn string_arguments_mut(&mut self) -> &mut Vec<U32OrString> {
+        &mut self.string_arguments
+    }
+
+    pub fn return_variable(&self) -> Option<u32> {
+        self.return_variable
+    }
+    
+    pub fn return_variable_mut(&mut self) -> &mut Option<u32> {
+        &mut self.return_variable
+    }
+
+    pub fn event_name(&self) -> &Option<String> {
+        &self.event_name
+    }
+    
+    pub fn event_name_mut(&mut self) -> &mut Option<String> {
+        &mut self.event_name
     }
 }

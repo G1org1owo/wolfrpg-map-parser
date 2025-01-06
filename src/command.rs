@@ -3,7 +3,7 @@ use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
 use show_text_command::ShowTextCommand;
 use crate::command::chip_management_command::ChipManagementCommand;
-use crate::command::common_event::CommonEvent;
+use crate::command::common_event_command::CommonEventCommand;
 use crate::command::db_management_command::DBManagementCommand;
 use crate::command::effect_command::EffectCommand;
 use crate::command::event_control_command::EventControlCommand;
@@ -38,7 +38,7 @@ pub mod party_graphics_command;
 pub mod chip_management_command;
 pub mod transfer_command;
 pub mod event_control_command;
-pub mod common_event;
+pub mod common_event_command;
 mod signature;
 
 #[derive(Serialize)]
@@ -64,7 +64,7 @@ pub enum Command {
     ChipManagement(ChipManagementCommand),
     Transfer(TransferCommand),
     EventControl(EventControlCommand),
-    CommonEvent(CommonEvent),
+    CommonEvent(CommonEventCommand),
     Exit(),
 }
 
@@ -678,15 +678,15 @@ impl Command {
     }
 
     fn parse_call_common_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
-        let (bytes_read, command): (usize, CommonEvent)
-            = CommonEvent::parse_call_event(bytes);
+        let (bytes_read, command): (usize, CommonEventCommand)
+            = CommonEventCommand::parse_call_event(bytes);
 
         (bytes_read, 0, Command::CommonEvent(command))
     }
 
     fn parse_reserve_common_event(bytes: &[u8], _: u32) -> (usize, u32, Self) {
-        let (bytes_read, command): (usize, CommonEvent)
-            = CommonEvent::parse_reserve_event(bytes);
+        let (bytes_read, command): (usize, CommonEventCommand)
+            = CommonEventCommand::parse_reserve_event(bytes);
 
         (bytes_read, 0, Command::CommonEvent(command))
     }
