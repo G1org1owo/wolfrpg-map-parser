@@ -3,6 +3,7 @@ use crate::byte_utils::as_u32_le;
 use serde::Serialize;
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
+#[allow(unused)]
 pub struct Base {
     unknown1: u32,
 }

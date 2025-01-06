@@ -95,4 +95,28 @@ impl StringConditionCommand {
 
         ret_conditions
     }
+
+    pub fn else_case(&self) -> bool {
+        self.else_case
+    }
+    
+    pub fn else_case_mut(&mut self) -> &mut bool {
+        &mut self.else_case
+    }
+
+    pub fn conditions(&self) -> &Vec<Condition> {
+        &self.conditions
+    }
+    
+    pub fn conditions_mut(&mut self) -> &mut Vec<Condition> {
+        &mut self.conditions
+    }
+
+    pub fn cases(&self) -> &Vec<Case> {
+        &self.cases
+    }
+    
+    pub fn cases_mut(&mut self) -> &mut Vec<Case> {
+        &mut self.cases
+    }
 }

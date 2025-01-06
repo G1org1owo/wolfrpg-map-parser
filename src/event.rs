@@ -6,6 +6,7 @@ use serde::Serialize;
 const EVENT_SIGNATURE: u32 = 0x6f393000;
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
+#[allow(unused)]
 pub struct Event {
     id: u32,
     name: String,

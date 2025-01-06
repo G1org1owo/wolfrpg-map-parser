@@ -18,6 +18,7 @@ use serde::Serialize;
 const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
+#[allow(unused)]
 pub struct Page {
     icon: String,
     icon_row: u8,

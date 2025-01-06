@@ -95,4 +95,52 @@ impl DBManagementCommand {
             U32OrString::U32(value)
         }
     }
+
+    pub fn db_type(&self) -> &U32OrString {
+        &self.db_type
+    }
+    
+    pub fn db_type_mut(&mut self) -> &mut U32OrString {
+        &mut self.db_type
+    }
+
+    pub fn data(&self) -> &U32OrString {
+        &self.data
+    }
+    
+    pub fn data_mut(&mut self) -> &mut U32OrString {
+        &mut self.data
+    }
+
+    pub fn field(&self) -> &U32OrString {
+        &self.field
+    }
+    
+    pub fn field_mut(&mut self) -> &mut U32OrString {
+        &mut self.field
+    }
+
+    pub fn assignment(&self) -> &Assignment {
+        &self.assignment
+    }
+    
+    pub fn assignment_mut(&mut self) -> &mut Assignment {
+        &mut self.assignment
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+    
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
+    }
 }

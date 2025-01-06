@@ -4,6 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::erase::delay::Delay;
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
+#[allow(unused)]
 pub struct Range {
     delay_fields: Delay,
     unknown1: u32,
