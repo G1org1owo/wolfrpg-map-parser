@@ -204,7 +204,7 @@ impl State {
         let mut offset: usize = 0;
 
         let graphic: u32 = as_u32_le(&bytes[offset..offset + 4]);
-        offset = offset + 4;
+        offset += 4;
 
         (offset, Self::SetGraphic {
             graphic,
