@@ -7,13 +7,13 @@ use crate::command::event_control_command::move_route::MoveRoute;
 use crate::command::event_control_command::set_transition::SetTransition;
 use crate::command::event_control_command::wait::Wait;
 
-mod loop_command;
-mod set_transition;
-mod move_route;
-mod erase_event;
-mod wait;
-mod loop_count;
-mod label;
+pub mod loop_command;
+pub mod set_transition;
+pub mod move_route;
+pub mod erase_event;
+pub mod wait;
+pub mod loop_count;
+pub mod label;
 
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 

@@ -1,4 +1,4 @@
-mod options;
+pub mod options;
 
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
@@ -48,5 +48,36 @@ impl MoveRoute {
             moves
         })
     }
-}
 
+    pub fn target(&self) -> u32 {
+        self.target
+    }
+    
+    pub fn target_mut(&mut self) -> &mut u32 {
+        &mut self.target
+    }
+
+    pub fn options(&self) -> &Options {
+        &self.options
+    }
+    
+    pub fn options_mut(&mut self) -> &mut Options {
+        &mut self.options
+    }
+
+    pub fn move_count(&self) -> u32 {
+        self.move_count
+    }
+    
+    pub fn move_count_mut(&mut self) -> &mut u32 {
+        &mut self.move_count
+    }
+
+    pub fn moves(&self) -> &Vec<Move> {
+        &self.moves
+    }
+    
+    pub fn moves_mut(&mut self) -> &mut Vec<Move> {
+        &mut self.moves
+    }
+}

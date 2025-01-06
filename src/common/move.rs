@@ -3,8 +3,8 @@ use move_type::MoveType;
 use crate::byte_utils::as_u16_le;
 use crate::common::r#move::state::State;
 
-mod move_type;
-mod state;
+pub mod move_type;
+pub mod state;
 
 #[derive(Serialize)]
 pub struct Move {
@@ -42,5 +42,21 @@ impl Move {
         }
 
         (offset, moves)
+    }
+
+    pub fn move_type(&self) -> &MoveType {
+        &self.move_type
+    }
+    
+    pub fn move_type_mut(&mut self) -> &mut MoveType {
+        &mut self.move_type
+    }
+
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+    
+    pub fn state_mut(&mut self) -> &mut State {
+        &mut self.state
     }
 }

@@ -29,4 +29,28 @@ impl SetTransition {
             wait_until_done
         })
     }
+
+    pub fn transition_number(&self) -> u32 {
+        self.transition_number
+    }
+    
+    pub fn transition_number_mut(&mut self) -> &mut u32 {
+        &mut self.transition_number
+    }
+
+    pub fn fade_frames(&self) -> u16 {
+        self.fade_frames
+    }
+    
+    pub fn fade_frames_mut(&mut self) -> &mut u16 {
+        &mut self.fade_frames
+    }
+
+    pub fn wait_until_done(&self) -> bool {
+        self.wait_until_done
+    }
+    
+    pub fn wait_until_done_mut(&mut self) -> &mut bool {
+        &mut self.wait_until_done
+    }
 }

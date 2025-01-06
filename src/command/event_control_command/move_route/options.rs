@@ -15,4 +15,28 @@ impl Options {
             wait_until_done:        options & 0b00000100 != 0,
         }
     }
+
+    pub fn repeat_actions(&self) -> bool {
+        self.repeat_actions
+    }
+    
+    pub fn repeat_actions_mut(&mut self) -> &mut bool {
+        &mut self.repeat_actions
+    }
+
+    pub fn skip_impossible_moves(&self) -> bool {
+        self.skip_impossible_moves
+    }
+    
+    pub fn skip_impossible_moves_mut(&mut self) -> &mut bool {
+        &mut self.skip_impossible_moves
+    }
+
+    pub fn wait_until_done(&self) -> bool {
+        self.wait_until_done
+    }
+    
+    pub fn wait_until_done_mut(&mut self) -> &mut bool {
+        &mut self.wait_until_done
+    }
 }

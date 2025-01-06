@@ -24,4 +24,20 @@ impl EraseEvent {
             fade_frames
         })
     }
+
+    pub fn event(&self) -> u32 {
+        self.event
+    }
+    
+    pub fn event_mut(&mut self) -> &mut u32 {
+        &mut self.event
+    }
+
+    pub fn fade_frames(&self) -> u32 {
+        self.fade_frames
+    }
+    
+    pub fn fade_frames_mut(&mut self) -> &mut u32 {
+        &mut self.fade_frames
+    }
 }

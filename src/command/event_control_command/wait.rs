@@ -19,4 +19,12 @@ impl Wait {
             frame_count
         })
     }
+
+    pub fn frame_count(&self) -> u32 {
+        self.frame_count
+    }
+    
+    pub fn frame_count_mut(&mut self) -> &mut u32 {
+        &mut self.frame_count
+    }
 }

@@ -1,6 +1,7 @@
 use serde::Serialize;
 use crate::byte_utils::as_u32_le;
 use crate::command::Command;
+use crate::command::common::LOOP_END_SIGNATURE;
 
 #[derive(Serialize)]
 pub struct LoopCount {
@@ -21,13 +22,33 @@ impl LoopCount {
             = Command::parse_multiple(&bytes[offset..]);
         offset += bytes_read;
 
-        let _loop_end_signature: &[u8] = &bytes[offset..offset+8]; //TODO: Should be 01f20100 00000000
+        let loop_end_signature: &[u8] = &bytes[offset..offset+8];
         offset += 8;
         commands_read += 1;
+
+        if loop_end_signature != LOOP_END_SIGNATURE {
+            panic!("Invalid loop end.");
+        }
 
         (offset, commands_read, Self {
             loop_count,
             commands
         })
+    }
+
+    pub fn loop_count(&self) -> u32 {
+        self.loop_count
+    }
+
+    pub fn loop_count_mut(&mut self) -> &mut u32 {
+        &mut self.loop_count
+    }
+
+    pub fn commands(&self) -> &Vec<Command> {
+        &self.commands
+    }
+
+    pub fn commands_mut(&mut self) -> &mut Vec<Command> {
+        &mut self.commands
     }
 }

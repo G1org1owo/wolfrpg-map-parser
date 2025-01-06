@@ -1,5 +1,5 @@
+use crate::byte_utils::parse_string;
 use serde::Serialize;
-use crate::byte_utils::{as_string, as_u32_le};
 
 #[derive(Serialize)]
 pub struct Label {
@@ -11,16 +11,21 @@ impl Label {
         let mut offset: usize = 0;
         offset += 2; // padding + string_count which are always 0x0001
 
-        let label_length: usize = as_u32_le(&bytes[offset..offset + 4]) as usize;
-        offset += 4;
-
-        let label: String = as_string(&bytes, offset, label_length);
-        offset += label_length;
+        let (bytes_read, label): (usize, String) = parse_string(&bytes[offset..]);
+        offset += bytes_read;
 
         offset += 1; // Command end
 
         (offset, Self {
             label
         })
+    }
+
+    pub fn label(&self) -> &str {
+        &self.label
+    }
+    
+    pub fn label_mut(&mut self) -> &mut String {
+        &mut self.label
     }
 }

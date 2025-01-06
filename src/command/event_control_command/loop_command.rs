@@ -1,6 +1,8 @@
 use serde::Serialize;
 use crate::command::Command;
 
+use crate::command::common::LOOP_END_SIGNATURE;
+
 #[derive(Serialize)]
 pub struct Loop {
     commands: Vec<Command>,
@@ -15,12 +17,24 @@ impl Loop {
             = Command::parse_multiple(&bytes[offset..]);
         offset += bytes_read;
 
-        let _loop_end_signature: &[u8] = &bytes[offset..offset+8]; //TODO: Should be 01f20100 00000000
+        let loop_end_signature: &[u8] = &bytes[offset..offset+8];
         offset += 8;
         commands_read += 1;
+
+        if loop_end_signature != LOOP_END_SIGNATURE {
+            panic!("Invalid loop end.");
+        }
 
         (offset, commands_read, Self {
             commands
         })
+    }
+
+    pub fn commands(&self) -> &Vec<Command> {
+        &self.commands
+    }
+
+    pub fn commands_mut(&mut self) -> &mut Vec<Command> {
+        &mut self.commands
     }
 }
