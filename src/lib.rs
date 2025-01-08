@@ -4,3 +4,5 @@ pub mod command;
 mod byte_utils;
 pub mod common;
 pub mod page;
+
+pub use map::Map;

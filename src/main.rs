@@ -1,5 +1,5 @@
 use std::{env, fs};
-use wolfrpg_map_parser::map::Map;
+use wolfrpg_map_parser::Map;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
