@@ -1,9 +1,10 @@
 [package]
 name = "wolfrpg-map-parser"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 license = "MIT"
 description = "Parser for Wolf RPG Editor map files"
+include = ["src/**/*", "LICENSE", "README.md", "!**/benches/*"]
 
 [dependencies]
 encoding_rs = "0.8.35"
