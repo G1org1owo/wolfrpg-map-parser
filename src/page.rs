@@ -17,6 +17,10 @@ use serde::Serialize;
 
 const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 
+/// An event page containing most of the event state.
+/// 
+/// Each event page describes the behaviour of the event, its appearance and the scripts that it 
+/// runs as a collection of [`Command`].
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[allow(unused)]
 pub struct Page {
@@ -42,6 +46,20 @@ pub struct Page {
 }
 
 impl Page {
+    /// Parse raw bytes into a single [`Page`] struct.
+    ///
+    /// Use of this method is highly discouraged unless you know exactly what you are doing.
+    /// Prefer using [`Map::parse`] and then extract what you want from the structure tree.
+    ///
+    /// # Panics
+    /// This function will panic if the given bytes do not represent a valid page structure.
+    ///
+    /// This might be caused by unaligned bytes, corrupt files, incompatible format updates and
+    /// library bugs.
+    /// If you are confident you are doing everything right, feel free to report an issue on [GitHub].
+    ///
+    /// [`Map::parse`]: crate::map::Map::parse
+    /// [GitHub]: https://github.com/G1org1owo/wolfrpg-map-parser/issues
     pub fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
@@ -153,138 +171,181 @@ impl Page {
         (offset, commands)
     }
 
+    /// The filename of the icon sprite sheet used by this page.
     pub fn icon(&self) -> &str {
         &self.icon
     }
 
+    /// Mutable reference accessor for [`Page::icon`].
     pub fn icon_mut(&mut self) -> &mut String {
         &mut self.icon
     }
 
+    /// The row of the selected icon in the selected sprite sheet. 
     pub fn icon_row(&self) -> u8 {
         self.icon_row
     }
 
+    /// Mutable reference accessor for [`Page::icon_row`].
     pub fn icon_row_mut(&mut self) -> &mut u8 {
         &mut self.icon_row
     }
 
+    /// The column of the selected icon in the selected sprite sheet.
     pub fn icon_column(&self) -> u8 {
         self.icon_column
     }
 
+    /// Mutable reference accessor for [`Page::icon_column`].
     pub fn icon_column_mut(&mut self) -> &mut u8 {
         &mut self.icon_column
     }
 
+    /// The opacity the icon should have when rendered.
     pub fn icon_opacity(&self) -> u8 {
         self.icon_opacity
     }
 
+    /// Mutable reference accessor for [`Page::icon_opacity`].
     pub fn icon_opacity_mut(&mut self) -> &mut u8 {
         &mut self.icon_opacity
     }
 
+    /// The blend method used for painting the icon onto the background.
     pub fn icon_blend(&self) -> &BlendType {
         &self.icon_blend
     }
 
+    /// Mutable reference accessor for [`Page::icon_blend`].
     pub fn icon_blend_mut(&mut self) -> &mut BlendType {
         &mut self.icon_blend
     }
 
+    /// The condition by which the event is triggered.
     pub fn event_trigger(&self) -> &EventTrigger {
         &self.event_trigger
     }
 
+    /// Mutable reference accessor for [`Page::event_trigger`].
     pub fn event_trigger_mut(&mut self) -> &mut EventTrigger {
         &mut self.event_trigger
     }
 
+    /// The conditions that must be mut for the script to run.
     pub fn conditions(&self) -> &[Condition; 4] {
         &self.conditions
     }
 
+    /// Mutable reference accessor for [`Page::conditions`].
     pub fn conditions_mut(&mut self) -> &mut [Condition; 4] {
         &mut self.conditions
     }
 
+    /// The speed at which the event's animation advance.
     pub fn animation_speed(&self) -> u8 {
         self.animation_speed
     }
 
+    /// Mutable reference accessor for [`Page::animation_speed`].
     pub fn animation_speed_mut(&mut self) -> &mut u8 {
         &mut self.animation_speed
     }
 
+    /// The speed at which the event moves.
     pub fn move_speed(&self) -> u8 {
         self.move_speed
     }
 
+    /// Mutable reference accessor for [`Page::move_speed`].
     pub fn move_speed_mut(&mut self) -> &mut u8 {
         &mut self.move_speed
     }
 
+    /// The frequency at which the event moves.
     pub fn move_frequency(&self) -> u8 {
         self.move_frequency
     }
 
+    /// Mutable reference accessor for [`Page::move_frequency`].
     pub fn move_frequency_mut(&mut self) -> &mut u8 {
         &mut self.move_frequency
     }
 
+    /// How (and whether) the event should move.
     pub fn move_route(&self) -> &MoveRoute {
         &self.move_route
     }
 
+    /// Mutable reference accessor for [`Page::move_route`].
     pub fn move_route_mut(&mut self) -> &mut MoveRoute {
         &mut self.move_route
     }
 
+    /// A set of options that influence the event rendering and behaviour.
     pub fn options(&self) -> &Options {
         &self.options
     }
 
+    /// Mutable reference accessor for [`Page::options`].
     pub fn options_mut(&mut self) -> &mut Options {
         &mut self.options
     }
 
+    /// The pattern the event follows when moving.
+    /// 
+    /// This field is only valid if [`Page::move_route`] is `MoveRoute::Custom`, otherwise it's
+    /// empty.
     pub fn moves(&self) -> &Vec<Move> {
         &self.moves
     }
 
+    /// Mutable reference accessor for [`Page::moves`].
     pub fn moves_mut(&mut self) -> &mut Vec<Move> {
         &mut self.moves
     }
 
+    /// The event script, in the form of a [`Command`] collection.
     pub fn commands(&self) -> &Vec<Command> {
         &self.commands
     }
 
+    /// Mutable reference accessor for [`Page::commands`].
     pub fn commands_mut(&mut self) -> &mut Vec<Command> {
         &mut self.commands
     }
 
+    /// The graphic to use for the shadow, if shadow graphics are enabled.
     pub fn shadow_graphic(&self) -> u8 {
         self.shadow_graphic
     }
 
+    /// Mutable reference accessor for [`Page::shadow_graphic`].
     pub fn shadow_graphic_mut(&mut self) -> &mut u8 {
         &mut self.shadow_graphic
     }
 
+    /// How much the trigger area is expanded horizontally.
+    /// 
+    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`, 
+    /// `EventTrigger::EventTouch` or `EventTrigger::PlayerTouch`
     pub fn range_extension_x(&self) -> u8 {
         self.range_extension_x
     }
 
+    /// Mutable reference accessor for [`Page::range_extension_x`].
     pub fn range_extension_x_mut(&mut self) -> &mut u8 {
         &mut self.range_extension_x
     }
 
+    /// How much the trigger area is expanded horizontally.
+    ///
+    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`, 
+    /// `EventTrigger::EventTouch` or `EventTrigger::PlayerTouch`
     pub fn range_extension_y(&self) -> u8 {
         self.range_extension_y
     }
 
+    /// Mutable reference accessor for [`Page::range_extension_y`].
     pub fn range_extension_y_mut(&mut self) -> &mut u8 {
         &mut self.range_extension_y
     }

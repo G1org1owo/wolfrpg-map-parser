@@ -42,6 +42,11 @@ pub mod event_control_command;
 pub mod common_event_command;
 mod signature;
 
+/// An event command instruction.
+/// 
+/// A command can be anything from a single instruction to a loop containing other instructions.
+/// Because of the inherently-recursive nature of this enum, it is probably best to create new
+/// traits and implement them for each variant.
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum Command {
     ShowMessage(ShowTextCommand),
@@ -70,6 +75,20 @@ pub enum Command {
 }
 
 impl Command {
+    /// Parse raw bytes into a single [`Command`] struct.
+    ///
+    /// Use of this method is highly discouraged unless you know exactly what you are doing.
+    /// Prefer using [`Map::parse`] and then extract what you want from the structure tree.
+    ///
+    /// # Panics
+    /// This function will panic if the given bytes do not represent a valid command structure.
+    ///
+    /// This might be caused by unaligned bytes, corrupt files, incompatible format updates and
+    /// library bugs.
+    /// If you are confident you are doing everything right, feel free to report an issue on [GitHub].
+    ///
+    /// [`Map::parse`]: crate::map::Map::parse
+    /// [GitHub]: https://github.com/G1org1owo/wolfrpg-map-parser/issues
     pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
         let commands: u32 = 1;
@@ -191,6 +210,20 @@ impl Command {
         (offset + bytes_read, commands + commands_read, command)
     }
 
+    /// Parse raw bytes into a [`Command`] collection.
+    ///
+    /// Use of this method is highly discouraged unless you know exactly what you are doing.
+    /// Prefer using [`Map::parse`] and then extract what you want from the structure tree.
+    ///
+    /// # Panics
+    /// This function will panic if the given bytes do not represent a valid command structure.
+    ///
+    /// This might be caused by unaligned bytes, corrupt files, incompatible format updates and
+    /// library bugs.
+    /// If you are confident you are doing everything right, feel free to report an issue on [GitHub].
+    ///
+    /// [`Map::parse`]: crate::map::Map::parse
+    /// [GitHub]: https://github.com/G1org1owo/wolfrpg-map-parser/issues
     pub fn parse_multiple(bytes: &[u8]) -> (usize, u32, Vec<Command>) {
         let mut offset: usize = 0;
         let mut command_count: u32 = 0;

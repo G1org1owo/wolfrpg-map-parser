@@ -23,7 +23,7 @@ Or you can add the crate and import the needed modules:
 use wolfrpg_map_parser::Map;
 
 fn main() {
-    match fs::read(&args[1]) {
+    match fs::read("filepath.mps") {
         Ok(bytes) => {
             let map: Map = Map::parse(&bytes);
 
