@@ -20,6 +20,7 @@ pub mod target;
 pub mod character_field;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct SetVariablePlusCommand {
     variable: u32,
     options: Options,

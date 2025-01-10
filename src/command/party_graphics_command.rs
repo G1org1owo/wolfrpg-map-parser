@@ -11,6 +11,7 @@ use crate::byte_utils::parse_optional_string;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct PartyGraphicsCommand {
     options: Options,
     member: Option<u32>,

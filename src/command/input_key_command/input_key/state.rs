@@ -6,6 +6,7 @@ use crate::command::input_key_command::input_key::keyboard_or_pad::KeyboardOrPad
 use crate::command::input_key_command::input_key::mouse::Mouse;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum State {
     Basic(Basic),
     KeyboardOrPad(KeyboardOrPad),

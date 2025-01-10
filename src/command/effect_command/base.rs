@@ -11,6 +11,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::effect_command::base::options::Options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Base {
     options: Options,
     duration: u32,

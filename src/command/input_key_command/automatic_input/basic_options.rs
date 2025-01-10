@@ -2,6 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct BasicOptions {
     input_ok: bool,
     input_cancel: bool,

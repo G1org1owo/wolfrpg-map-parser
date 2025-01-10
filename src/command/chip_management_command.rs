@@ -10,6 +10,7 @@ pub mod switch_chipset;
 pub mod overwrite_map_chips;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum ChipManagementCommand {
     MapChipSettings(MapChipSettings),
     SwitchChipset(SwitchChipset),

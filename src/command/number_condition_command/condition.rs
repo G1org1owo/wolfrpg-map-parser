@@ -4,6 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::number_condition_command::operator::Operator;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Condition {
     variable: u32,
     value: u32,

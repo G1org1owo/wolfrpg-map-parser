@@ -2,6 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum MouseTarget {
     Click       = 0x00,
     XPos        = 0x01,

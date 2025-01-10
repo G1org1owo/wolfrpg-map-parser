@@ -5,6 +5,7 @@ use crate::command::picture_command::show::parser::parse_fields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct ColorValues {
     position_x: u32,
     position_y: u32,

@@ -4,6 +4,7 @@ use crate::command::set_variable_plus_command::character_field::CharacterField;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Character {
     character: u32,
     field: CharacterField,

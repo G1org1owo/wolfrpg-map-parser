@@ -19,6 +19,7 @@ pub mod label;
 const COMMAND_END_SIGNATURE_LENGTH: usize = 3;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum EventControlCommand {
     Loop(Loop),
     BreakLoop,

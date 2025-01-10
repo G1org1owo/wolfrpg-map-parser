@@ -7,6 +7,7 @@ use crate::common::r#move::Move;
 use crate::command::event_control_command::move_route::options::Options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 #[allow(unused)]
 pub struct MoveRoute {
     target: u32,

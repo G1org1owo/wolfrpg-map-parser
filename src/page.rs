@@ -22,6 +22,7 @@ const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 /// Each event page describes the behaviour of the event, its appearance and the scripts that it
 /// runs as a collection of [`Command`].
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 #[allow(unused)]
 pub struct Page {
     icon: String,

@@ -4,6 +4,7 @@ use crate::command::set_variable_plus_command::picture_field::PictureField;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Picture {
     picture_number: u32,
     field: PictureField

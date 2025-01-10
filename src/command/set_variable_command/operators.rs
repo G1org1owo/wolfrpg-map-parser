@@ -4,6 +4,7 @@ use crate::command::set_variable_command::assignment::Assignment;
 use crate::command::set_variable_command::calculation::Calculation;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Operators {
     assignment: Assignment,
     calculation: Calculation,

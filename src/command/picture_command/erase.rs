@@ -12,6 +12,7 @@ use crate::command::picture_command::erase::state::State;
 use crate::command::picture_command::options::Options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Erase {
     options: Options,
     picture: u32,

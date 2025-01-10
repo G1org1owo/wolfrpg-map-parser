@@ -2,6 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum DirectionKeys {
     No          = 0x00,
     Dir4        = 0x01,

@@ -3,6 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Wait {
     frame_count: u32
 }

@@ -4,6 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::erase::base::Base;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Delay {
     base_fields: Base,
     delay: u32,

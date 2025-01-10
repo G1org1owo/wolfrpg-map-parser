@@ -6,6 +6,7 @@ use crate::command::picture_command::show::zoom_fields::ZoomFields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct FreeTransformFields {
     zoom_state: ZoomFields,
     top_right_x: u32,

@@ -13,6 +13,7 @@ pub mod colors;
 pub mod erase;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum PictureCommand {
     Show(Show),
     Erase(Erase),

@@ -2,6 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum DBType {
     VarDB  = 0b00000000,
     SysDB  = 0b00000001,

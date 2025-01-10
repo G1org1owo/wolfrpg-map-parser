@@ -7,6 +7,7 @@ pub mod argument_count;
 pub mod options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum CommonEventCommand {
     CallEvent(Event),
     ReserveEvent(Event)

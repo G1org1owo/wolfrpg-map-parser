@@ -5,6 +5,7 @@ use crate::command::input_key_command::automatic_input::mouse_options::MouseOpti
 use crate::command::input_key_command::automatic_input::mouse_type::MouseType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 #[allow(unused)]
 pub struct Mouse {
     options: MouseOptions,

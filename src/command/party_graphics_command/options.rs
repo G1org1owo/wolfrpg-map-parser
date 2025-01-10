@@ -4,6 +4,7 @@ use crate::command::party_graphics_command::operation::Operation;
 use crate::command::party_graphics_command::special_operation::SpecialOperation;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Options {
     operation: Operation,
     special_operation: SpecialOperation,

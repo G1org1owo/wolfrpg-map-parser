@@ -6,6 +6,7 @@ use crate::command::sound_command::variable::Variable;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Filename {
     variable_state: Variable,
     volume: u32,

@@ -6,6 +6,7 @@ use crate::command::sound_command::sound_type::SoundType;
 use crate::command::sound_command::variable::Variable;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum State {
     Filename(Filename),
     Variable(Variable),

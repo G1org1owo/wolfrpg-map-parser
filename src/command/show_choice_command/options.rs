@@ -4,6 +4,7 @@ use crate::command::show_choice_command::cancel_case::CancelCase;
 use crate::command::show_choice_command::extra_cases::ExtraCases;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Options {
     cancel_case: CancelCase,
     selected_choices: u8,

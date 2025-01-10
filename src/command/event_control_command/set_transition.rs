@@ -3,6 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::byte_utils::{as_u16_le, as_u32_le};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct SetTransition {
     transition_number: u32,
     fade_frames: u16,

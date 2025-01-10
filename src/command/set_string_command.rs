@@ -17,6 +17,7 @@ use crate::command::set_string_command::state::State;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct SetStringCommand {
     variable: u32,
     options: Options,

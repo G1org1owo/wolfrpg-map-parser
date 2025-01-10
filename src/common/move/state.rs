@@ -4,6 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::common::r#move::move_type::MoveType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum State {
     ApproachEvent {
         event: u32,

@@ -6,6 +6,7 @@ use shake_type::ShakeType;
 pub mod shake_type;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct MapShake {
     power: u8,
     speed: u8,

@@ -2,6 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum DeviceInputs {
     KeyboardKey     = 0x00,
     AllMouseInput   = 0x01,

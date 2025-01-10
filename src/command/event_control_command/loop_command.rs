@@ -5,6 +5,7 @@ use crate::command::Command;
 use crate::command::common::LOOP_END_SIGNATURE;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Loop {
     commands: Vec<Command>,
 }

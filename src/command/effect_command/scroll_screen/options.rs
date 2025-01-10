@@ -4,6 +4,7 @@ use crate::command::effect_command::scroll_screen::scroll_operation::ScrollOpera
 use crate::command::effect_command::scroll_screen::scroll_speed::ScrollSpeed;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Options {
     scroll_operation: ScrollOperation,
     scroll_speed: ScrollSpeed,

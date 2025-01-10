@@ -4,6 +4,7 @@ use serde::{Serialize, Deserialize};
 use std::string::String as StdString;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct String {
     value: StdString,
 }

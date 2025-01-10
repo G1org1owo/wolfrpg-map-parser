@@ -4,6 +4,7 @@ use crate::command::set_variable_plus_command::assignment_operator::AssignmentOp
 use crate::command::set_variable_plus_command::variable_type::VariableType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct Assignment {
     operator: AssignmentOperator,
     variable_type: VariableType

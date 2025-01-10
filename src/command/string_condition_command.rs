@@ -12,6 +12,7 @@ use crate::command::string_condition_command::operator::Operator;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub struct StringConditionCommand {
     else_case: bool,
     conditions: Vec<Condition>,

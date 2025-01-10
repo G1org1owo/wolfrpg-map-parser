@@ -5,6 +5,7 @@ use crate::command::db_management_command::csv::CSV;
 use crate::command::db_management_command::string;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq)]
 pub enum State {
     Base(Base),
     String(string::String),
