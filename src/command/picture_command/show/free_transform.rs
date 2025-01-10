@@ -12,7 +12,7 @@ pub struct FreeTransform {
 }
 
 impl FreeTransform {
-    pub fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
         let (offset, (top_left_x, top_left_y, filename_variable, fields))
             : (usize, (u32, u32, Option<u32>, FreeTransformFields))
             = parse_fields(bytes);

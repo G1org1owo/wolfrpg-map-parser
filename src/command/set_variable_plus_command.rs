@@ -55,7 +55,7 @@ impl SetVariablePlusCommand {
         })
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         match Assignment::new(bytes[5]).variable_type() {
             VariableType::Character => Self::parse(bytes, State::parse_character),
             VariableType::Position => Self::parse(bytes, State::parse_position),
@@ -64,7 +64,7 @@ impl SetVariablePlusCommand {
         }
     }
 
-    pub fn parse_other(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_other(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_other)
     }
 

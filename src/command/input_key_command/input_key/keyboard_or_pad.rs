@@ -10,7 +10,7 @@ pub struct KeyboardOrPad {
 }
 
 impl KeyboardOrPad {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let options: u8 = bytes[offset];

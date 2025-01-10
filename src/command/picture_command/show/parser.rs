@@ -1,7 +1,7 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
 
-pub fn parse_fields<T: ParsableFields<T>>(bytes: &[u8])
+pub(crate) fn parse_fields<T: ParsableFields<T>>(bytes: &[u8])
                 -> (usize, (u32, u32, Option<u32>, T)) {
     let mut offset: usize = 0;
 

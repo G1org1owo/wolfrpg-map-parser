@@ -11,7 +11,7 @@ pub struct Base {
 }
 
 impl Base {
-    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
         let mut offset: usize = 0;
 
         let position_x: u32 = as_u32_le(&bytes[offset..offset+4]);

@@ -13,7 +13,7 @@ pub struct Variable {
 }
 
 impl Variable {
-    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let value: u32 = as_u32_le(&bytes[offset..offset + 4]);

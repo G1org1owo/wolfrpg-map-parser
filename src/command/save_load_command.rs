@@ -18,19 +18,19 @@ pub enum SaveLoadCommand {
 }
 
 impl SaveLoadCommand {
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, state): (usize, Base) = Base::parse(bytes);
 
         (bytes_read, Self::Base(state))
     }
 
-    pub fn parse_load_variable(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_load_variable(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, state): (usize, LoadVariable) = LoadVariable::parse(bytes);
 
         (bytes_read, Self::LoadVariable(state))
     }
 
-    pub fn parse_save_variable(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_save_variable(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, state): (usize, SaveVariable) = SaveVariable::parse(bytes);
 
         (bytes_read, Self::SaveVariable(state))

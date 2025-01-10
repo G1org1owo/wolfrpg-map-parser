@@ -8,7 +8,7 @@ pub struct Label {
 }
 
 impl Label {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
         offset += 2; // padding + string_count which are always 0x0001
 

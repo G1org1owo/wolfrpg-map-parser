@@ -12,7 +12,7 @@ pub struct Zoom {
 }
 
 impl Zoom {
-    pub fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
         let (offset, (position_x, position_y, filename_variable, fields))
             : (usize, (u32, u32, Option<u32>, ZoomFields))
             = parse_fields(bytes);

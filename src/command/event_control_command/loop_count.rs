@@ -11,7 +11,7 @@ pub struct LoopCount {
 }
 
 impl LoopCount {
-    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
 
         let loop_count: u32 = as_u32_le(&bytes[offset..offset+4]);

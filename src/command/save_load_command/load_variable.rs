@@ -11,7 +11,7 @@ pub struct LoadVariable {
 }
 
 impl LoadVariable {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let (mut offset, (target_variable, save_number, source_variable, source_is_pointer))
             : (usize, (u32, u32, u32, bool)) = parse_variable_fields(bytes);
 

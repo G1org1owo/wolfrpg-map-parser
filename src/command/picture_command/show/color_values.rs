@@ -12,7 +12,7 @@ pub struct ColorValues {
 }
 
 impl ColorValues {
-    pub fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Option<u32>, Self) {
          let (offset, (position_x, position_y, filename_variable, fields))
             : (usize, (u32, u32, Option<u32>, ColorValuesFields))
             = parse_fields(bytes);

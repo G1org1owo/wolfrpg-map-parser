@@ -50,11 +50,11 @@ impl InputKey {
         (InputType::new(input & 0x0f), input & 0b00010000 != 0)
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
     }
 
-    pub fn parse_keyboard_or_pad(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_keyboard_or_pad(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_keyboard_or_pad)
     }
 

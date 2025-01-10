@@ -11,7 +11,7 @@ pub struct SaveVariable {
 }
 
 impl SaveVariable {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let (mut offset, (source_variable, save_number, target_variable, source_is_pointer))
             : (usize, (u32, u32, u32, bool)) = parse_variable_fields(bytes);
 

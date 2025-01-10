@@ -9,7 +9,7 @@ pub struct Base {
 }
 
 impl Base {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset = 0;
 
         let unknown1: u32 = as_u32_le(&bytes[offset..offset + 4]);

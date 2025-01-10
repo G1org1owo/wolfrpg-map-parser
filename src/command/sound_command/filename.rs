@@ -15,7 +15,7 @@ pub struct Filename {
 }
 
 impl Filename {
-    pub fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8], options: &Options) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let (bytes_read, variable_state): (usize, Variable) = Variable::parse(bytes, options);

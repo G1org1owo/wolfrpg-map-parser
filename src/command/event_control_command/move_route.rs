@@ -18,7 +18,7 @@ pub struct MoveRoute {
 }
 
 impl MoveRoute {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let target: u32 = as_u32_le(&bytes[offset..offset+4]);

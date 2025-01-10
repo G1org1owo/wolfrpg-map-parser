@@ -12,7 +12,7 @@ pub struct Case {
 }
 
 impl Case {
-    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
 
         let case_type: u32 = as_u32_be(&bytes[offset..offset+4]);
@@ -39,7 +39,7 @@ impl Case {
         })
     }
 
-    pub fn parse_multiple(bytes: &[u8], case_count: usize) -> (usize, u32, Vec<Case>) {
+    pub(crate) fn parse_multiple(bytes: &[u8], case_count: usize) -> (usize, u32, Vec<Case>) {
         let mut cases: Vec<Case> = Vec::with_capacity(case_count);
         let mut offset: usize = 0;
         let mut commands: u32 = 0;

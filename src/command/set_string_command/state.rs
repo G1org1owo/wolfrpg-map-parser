@@ -12,19 +12,19 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Base) = Base::parse(bytes);
 
         (bytes_read, Self::Base(command))
     }
 
-    pub fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Dynamic) = Dynamic::parse(bytes);
 
         (bytes_read, Self::Dynamic(command))
     }
 
-    pub fn parse_input(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_input(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Input) = Input::parse(bytes);
 
         (bytes_read, Self::Input(command))

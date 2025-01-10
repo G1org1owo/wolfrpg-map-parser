@@ -8,7 +8,7 @@ pub struct DelayReset {
 }
 
 impl DelayReset {
-    pub fn parse(bytes: &[u8], range: bool) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8], range: bool) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let range_count: Option<u32> = if range {

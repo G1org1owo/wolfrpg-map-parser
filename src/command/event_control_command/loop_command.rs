@@ -10,7 +10,7 @@ pub struct Loop {
 }
 
 impl Loop {
-    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
         offset += 3; // Command end signature
 

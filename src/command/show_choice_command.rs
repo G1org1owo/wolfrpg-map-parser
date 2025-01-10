@@ -17,7 +17,7 @@ pub struct ShowChoiceCommand {
 }
 
 impl ShowChoiceCommand {
-    pub fn parse(bytes: &[u8]) -> (usize, u32, Self){
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, u32, Self){
         let mut offset: usize = 0;
 
         let options: u16 = as_u16_le(&bytes[offset..offset + 2]);

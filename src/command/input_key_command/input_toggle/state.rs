@@ -11,7 +11,7 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse(bytes: &[u8], input_type: &InputType) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8], input_type: &InputType) -> (usize, Self) {
         match *input_type {
             InputType::Basic => {
                 let (bytes_read, state): (usize, Basic) = Basic::parse(bytes);

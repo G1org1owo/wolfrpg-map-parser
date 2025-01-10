@@ -8,7 +8,7 @@ pub struct ShowTextCommand {
 }
 
 impl ShowTextCommand {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
         offset += 2; // Unknown, probably padding
 

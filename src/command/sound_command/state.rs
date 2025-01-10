@@ -13,19 +13,19 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_filename(bytes: &[u8], options: &Options, _: &SoundType) -> (usize, Self) {
+    pub(crate) fn parse_filename(bytes: &[u8], options: &Options, _: &SoundType) -> (usize, Self) {
         let (bytes_read, state): (usize, Filename) = Filename::parse(bytes, options);
 
         (bytes_read, Self::Filename(state))
     }
 
-    pub fn parse_variable(bytes: &[u8], options: &Options, _: &SoundType) -> (usize, Self) {
+    pub(crate) fn parse_variable(bytes: &[u8], options: &Options, _: &SoundType) -> (usize, Self) {
         let (bytes_read, state): (usize, Variable) = Variable::parse(bytes, options);
 
         (bytes_read, Self::Variable(state))
     }
 
-    pub fn parse_free_all(_: &[u8], _: &Options, sound_type: &SoundType) -> (usize, State) {
+    pub(crate) fn parse_free_all(_: &[u8], _: &Options, sound_type: &SoundType) -> (usize, State) {
         match *sound_type {
             SoundType::Variable => (10, State::FreeAll),
             _ => (2, State::FreeAll),

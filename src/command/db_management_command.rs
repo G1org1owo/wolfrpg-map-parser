@@ -76,15 +76,15 @@ impl DBManagementCommand {
         })
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
     }
 
-    pub fn parse_string(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_string(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_string)
     }
 
-    pub fn parse_csv(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_csv(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_csv)
     }
 

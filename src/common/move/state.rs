@@ -52,7 +52,7 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse(bytes: &[u8], move_type: &MoveType) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8], move_type: &MoveType) -> (usize, Self) {
         match *move_type {
             MoveType::ApproachEvent => {
                 Self::parse_approach_event(bytes)

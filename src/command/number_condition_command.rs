@@ -15,7 +15,7 @@ pub struct NumberConditionCommand {
 }
 
 impl NumberConditionCommand {
-    pub fn parse(bytes: &[u8]) -> (usize, u32, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, u32, Self) {
         let mut offset: usize = 0;
 
         let (case_count, else_case): (u8, bool) = Self::parse_case_count(bytes[offset]);

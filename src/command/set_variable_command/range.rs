@@ -11,7 +11,7 @@ pub struct Range {
 }
 
 impl Range {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset = 0;
 
         let range_start: u16 = as_u16_le(&bytes[offset..offset + 2]);

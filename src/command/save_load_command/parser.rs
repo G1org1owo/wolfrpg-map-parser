@@ -1,6 +1,6 @@
 use crate::byte_utils::as_u32_le;
 
-pub fn parse_variable_fields(bytes: &[u8]) -> (usize, (u32, u32, u32, bool)) {
+pub(crate) fn parse_variable_fields(bytes: &[u8]) -> (usize, (u32, u32, u32, bool)) {
     let mut offset: usize = 0;
 
     let variable1: u32 = as_u32_le(&bytes[offset..offset + 4]);

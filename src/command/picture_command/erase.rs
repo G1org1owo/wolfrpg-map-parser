@@ -41,7 +41,7 @@ impl Erase {
         })
     }
 
-    pub fn parse_delay_reset(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_delay_reset(bytes: &[u8]) -> (usize, Self) {
         let parse_state = |bytes: &[u8], _: &Options| -> (usize, State) {
             State::parse_delay_reset(bytes, false)
         };
@@ -49,7 +49,7 @@ impl Erase {
         Self::parse(bytes, parse_state)
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let parse_state = |bytes: &[u8], options: &Options| -> (usize, State) {
             match *options.display_type() {
                 DisplayType::DelayReset => State::parse_delay_reset(bytes, true),
@@ -61,11 +61,11 @@ impl Erase {
         Self::parse(bytes, parse_state)
     }
 
-    pub fn parse_delay(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_delay(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, |bytes: &[u8], _| State::parse_delay(bytes))
     }
 
-    pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_range(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, |bytes, _| State::parse_range(bytes))
     }
 

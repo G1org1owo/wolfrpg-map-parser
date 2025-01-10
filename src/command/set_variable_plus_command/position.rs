@@ -10,7 +10,7 @@ pub struct Position {
 }
 
 impl Position {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let target: u8 = bytes[offset];

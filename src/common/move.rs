@@ -14,7 +14,7 @@ pub struct Move {
 }
 
 impl Move {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let move_type: u16 = as_u16_le(&bytes[offset..offset + 2]);
@@ -32,7 +32,7 @@ impl Move {
         })
     }
 
-    pub fn parse_multiple(bytes: &[u8], move_count: u32) -> (usize, Vec<Move>) {
+    pub(crate) fn parse_multiple(bytes: &[u8], move_count: u32) -> (usize, Vec<Move>) {
         let mut offset: usize = 0;
         let mut moves: Vec<Move> = Vec::with_capacity(move_count as usize);
 

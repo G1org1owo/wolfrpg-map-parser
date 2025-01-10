@@ -18,7 +18,7 @@ pub struct InputToggle {
 }
 
 impl InputToggle {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let input_type: u8 = bytes[offset+3];

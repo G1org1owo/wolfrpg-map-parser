@@ -14,25 +14,25 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_delay_reset(bytes: &[u8], range: bool) -> (usize, Self) {
+    pub(crate) fn parse_delay_reset(bytes: &[u8], range: bool) -> (usize, Self) {
         let (bytes_read, state): (usize, DelayReset) = DelayReset::parse(bytes, range);
 
         (bytes_read, Self::DelayReset(state))
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, base): (usize, Base) = Base::parse(bytes);
 
         (bytes_read, Self::Base(base))
     }
 
-    pub fn parse_delay(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_delay(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, delay): (usize, Delay) = Delay::parse(bytes);
 
         (bytes_read, Self::Delay(delay))
     }
 
-    pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_range(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, range): (usize, Range) = Range::parse(bytes);
 
         (bytes_read, Self::Range(range))

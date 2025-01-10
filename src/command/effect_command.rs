@@ -19,25 +19,25 @@ pub enum EffectCommand {
 }
 
 impl EffectCommand {
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Base) = Base::parse(bytes);
 
         (bytes_read, Self::Base(command))
     }
 
-    pub fn parse_map_shake(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_map_shake(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, MapShake) = MapShake::parse(bytes);
 
         (bytes_read, Self::MapShake(command))
     }
 
-    pub fn parse_scroll_screen(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_scroll_screen(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, ScrollScreen) = ScrollScreen::parse(bytes);
 
         (bytes_read, Self::ScrollScreen(command))
     }
 
-    pub fn parse_change_color(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_change_color(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, ChangeColor) = ChangeColor::parse(bytes);
 
         (bytes_read, Self::ChangeColor(command))

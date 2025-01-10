@@ -52,11 +52,11 @@ impl SetStringCommand {
         })
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
     }
 
-    pub fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_dynamic(bytes: &[u8]) -> (usize, Self) {
         match Options::new(bytes[4]).content_type() {
             ContentType::UserInput => Self::parse(bytes, State::parse_input),
             _ => Self::parse(bytes, State::parse_dynamic),

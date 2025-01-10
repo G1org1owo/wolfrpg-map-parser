@@ -21,49 +21,49 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_base(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse_base(bytes: &[u8], options: &Options) -> (usize, Option<u32>, Self) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, Base)
             = Base::parse(bytes, options);
 
         (bytes_read, filename_variable, Self::Base(state))
     }
 
-    pub fn parse_colors(bytes: &[u8], _: &Options) -> (usize, Option<u32>, Self) {
+    pub(crate) fn parse_colors(bytes: &[u8], _: &Options) -> (usize, Option<u32>, Self) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, Colors)
             = Colors::parse(bytes);
 
         (bytes_read, filename_variable, Self::Colors(state))
     }
 
-    pub fn parse_delay(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+    pub(crate) fn parse_delay(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, Delay)
             = Delay::parse(bytes);
 
         (bytes_read, filename_variable, Self::Delay(state))
     }
 
-    pub fn parse_range(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+    pub(crate) fn parse_range(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, Range)
             = Range::parse(bytes);
 
         (bytes_read, filename_variable, Self::Range(state))
     }
 
-    pub fn parse_color_values(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+    pub(crate) fn parse_color_values(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, ColorValues)
             = ColorValues::parse(bytes);
 
         (bytes_read, filename_variable, Self::ColorValues(state))
     }
 
-    pub fn parse_zoom(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+    pub(crate) fn parse_zoom(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, Zoom)
             = Zoom::parse(bytes);
 
         (bytes_read, filename_variable, Self::Zoom(state))
     }
 
-    pub fn parse_free_transform(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
+    pub(crate) fn parse_free_transform(bytes: &[u8], _: &Options) -> (usize, Option<u32>, State) {
         let (bytes_read, filename_variable, state): (usize, Option<u32>, FreeTransform)
             = FreeTransform::parse(bytes);
 

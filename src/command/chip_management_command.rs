@@ -17,19 +17,19 @@ pub enum ChipManagementCommand {
 }
 
 impl ChipManagementCommand {
-    pub fn parse_map_chip_settings(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_map_chip_settings(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, MapChipSettings) = MapChipSettings::parse(bytes);
 
         (bytes_read, Self::MapChipSettings(command))
     }
 
-    pub fn parse_switch_chipset(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_switch_chipset(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, SwitchChipset) = SwitchChipset::parse(bytes);
 
         (bytes_read, Self::SwitchChipset(command))
     }
 
-    pub fn parse_overwrite_map_chips(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_overwrite_map_chips(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, OverwriteMapChips) = OverwriteMapChips::parse(bytes);
 
         (bytes_read, Self::OverwriteMapChips(command))

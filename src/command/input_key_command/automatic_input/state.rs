@@ -13,7 +13,7 @@ pub enum State {
 }
 
 impl State {
-    pub fn parse_base(bytes: &[u8], input_type: &InputType) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8], input_type: &InputType) -> (usize, Self) {
         match *input_type {
             InputType::Basic => {
                 let (bytes_read, state): (usize, Basic) = Basic::parse(bytes);
@@ -31,7 +31,7 @@ impl State {
         }
     }
 
-    pub fn parse_keyboard(bytes: &[u8], _: &InputType) -> (usize, Self) {
+    pub(crate) fn parse_keyboard(bytes: &[u8], _: &InputType) -> (usize, Self) {
         let (bytes_read, keyboard): (usize, Keyboard) = Keyboard::parse(bytes);
 
         (bytes_read, Self::Keyboard(keyboard))

@@ -9,7 +9,7 @@ pub struct EraseEvent {
 }
 
 impl EraseEvent {
-    pub fn parse(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse(bytes: &[u8]) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let event: u32 = as_u32_le(&bytes[offset..offset + 4]);

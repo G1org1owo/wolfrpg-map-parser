@@ -50,15 +50,15 @@ impl SoundCommand {
         })
     }
 
-    pub fn parse_filename(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_filename(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_filename)
     }
 
-    pub fn parse_variable(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_variable(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_variable)
     }
 
-    pub fn parse_free_all(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_free_all(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_free_all)
     }
 

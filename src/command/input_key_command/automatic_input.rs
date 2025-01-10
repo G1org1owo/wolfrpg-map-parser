@@ -36,11 +36,11 @@ impl AutomaticInput {
         })
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
     }
 
-    pub fn parse_keyboard(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_keyboard(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_keyboard)
     }
 

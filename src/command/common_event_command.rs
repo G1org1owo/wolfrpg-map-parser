@@ -13,13 +13,13 @@ pub enum CommonEventCommand {
 }
 
 impl CommonEventCommand {
-    pub fn parse_call_event(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_call_event(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Event) = Event::parse(bytes);
 
         (bytes_read, Self::CallEvent(command))
     }
 
-    pub fn parse_reserve_event(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_reserve_event(bytes: &[u8]) -> (usize, Self) {
         let (bytes_read, command): (usize, Event) = Event::parse(bytes);
 
         (bytes_read, Self::ReserveEvent(command))

@@ -126,31 +126,31 @@ impl Show {
         (filename, string)
     }
 
-    pub fn parse_base(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_base)
     }
 
-    pub fn parse_colors(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_colors(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_colors)
     }
 
-    pub fn parse_delay(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_delay(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_delay)
     }
 
-    pub fn parse_range(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_range(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_range)
     }
 
-    pub fn parse_color_values(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_color_values(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_color_values)
     }
 
-    pub fn parse_zoom(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_zoom(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_zoom)
     }
 
-    pub fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
+    pub(crate) fn parse_free_transform(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_free_transform)
     }
 
