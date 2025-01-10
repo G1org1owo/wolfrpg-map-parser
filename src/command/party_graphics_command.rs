@@ -8,9 +8,9 @@ use crate::command::party_graphics_command::operation::Operation;
 use crate::command::party_graphics_command::options::Options;
 use crate::byte_utils::parse_optional_string;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct PartyGraphicsCommand {
     options: Options,
     member: Option<u32>,

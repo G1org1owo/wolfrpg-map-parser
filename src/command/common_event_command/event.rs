@@ -3,11 +3,11 @@ use crate::command::common::u32_or_string::U32OrString;
 use crate::command::common_event_command::argument_count::ArgumentCount;
 use crate::command::common_event_command::options::Options;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use std::cmp::max;
 use std::collections::VecDeque;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Event {
     target: u32,
     argument_count: ArgumentCount,

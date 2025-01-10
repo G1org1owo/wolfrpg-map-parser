@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::input_key_command::automatic_input::input_type::InputType;
 use crate::command::input_key_command::automatic_input::state::State;
 
@@ -12,7 +12,7 @@ pub mod mouse;
 pub mod mouse_options;
 pub mod mouse_type;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct AutomaticInput {
     input_type: InputType,
     state: State,

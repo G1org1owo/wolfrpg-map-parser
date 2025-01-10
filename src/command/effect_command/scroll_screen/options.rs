@@ -1,9 +1,9 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::effect_command::scroll_screen::scroll_operation::ScrollOperation;
 use crate::command::effect_command::scroll_screen::scroll_speed::ScrollSpeed;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Options {
     scroll_operation: ScrollOperation,
     scroll_speed: ScrollSpeed,

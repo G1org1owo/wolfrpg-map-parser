@@ -1,11 +1,11 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::set_variable_plus_command::character::Character;
 use crate::command::set_variable_plus_command::other::Other;
 use crate::command::set_variable_plus_command::picture::Picture;
 use crate::command::set_variable_plus_command::position::Position;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum State {
     Character(Character),
     Position(Position),

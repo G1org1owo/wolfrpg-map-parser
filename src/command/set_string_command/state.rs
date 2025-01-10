@@ -1,10 +1,10 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::set_string_command::base::Base;
 use crate::command::set_string_command::dynamic::Dynamic;
 use crate::command::set_string_command::input::Input;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum State {
     Base(Base),
     Dynamic(Dynamic),

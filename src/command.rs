@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_be;
 use show_choice_command::ShowChoiceCommand;
 use show_text_command::ShowTextCommand;
@@ -47,7 +47,7 @@ mod signature;
 /// A command can be anything from a single instruction to a loop containing other instructions.
 /// Because of the inherently-recursive nature of this enum, it is probably best to create new
 /// traits and implement them for each variant.
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum Command {
     ShowMessage(ShowTextCommand),
     Comment(ShowTextCommand),

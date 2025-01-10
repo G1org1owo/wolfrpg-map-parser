@@ -3,9 +3,9 @@ use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
 use crate::command::picture_command::show::zoom_fields::ZoomFields;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct FreeTransformFields {
     zoom_state: ZoomFields,
     top_right_x: u32,

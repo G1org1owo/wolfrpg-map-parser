@@ -1,12 +1,12 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::common_event_command::event::Event;
 
 pub mod event;
 pub mod argument_count;
 pub mod options;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum CommonEventCommand {
     CallEvent(Event),
     ReserveEvent(Event)

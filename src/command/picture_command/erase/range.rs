@@ -1,9 +1,9 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::erase::delay::Delay;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[allow(unused)]
 pub struct Range {
     delay_fields: Delay,

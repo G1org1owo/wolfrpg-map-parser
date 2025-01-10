@@ -2,9 +2,9 @@ use crate::byte_utils::as_u32_le;
 use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::options::Options;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Base {
     position_x: u32,
     position_y: u32

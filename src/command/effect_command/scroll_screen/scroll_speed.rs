@@ -1,7 +1,7 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum ScrollSpeed {
     OneEight    = 0x00,
     OneFourth   = 0x01,

@@ -13,15 +13,15 @@ use crate::page::event_trigger::EventTrigger;
 use crate::page::move_route::MoveRoute;
 use crate::page::options::Options;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 const PAGE_SIGNATURE: &[u8] = b"\x79\xff\xff\xff\xff";
 
 /// An event page containing most of the event state.
-/// 
-/// Each event page describes the behaviour of the event, its appearance and the scripts that it 
+///
+/// Each event page describes the behaviour of the event, its appearance and the scripts that it
 /// runs as a collection of [`Command`].
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[allow(unused)]
 pub struct Page {
     icon: String,
@@ -181,7 +181,7 @@ impl Page {
         &mut self.icon
     }
 
-    /// The row of the selected icon in the selected sprite sheet. 
+    /// The row of the selected icon in the selected sprite sheet.
     pub fn icon_row(&self) -> u8 {
         self.icon_row
     }
@@ -292,7 +292,7 @@ impl Page {
     }
 
     /// The pattern the event follows when moving.
-    /// 
+    ///
     /// This field is only valid if [`Page::move_route`] is `MoveRoute::Custom`, otherwise it's
     /// empty.
     pub fn moves(&self) -> &Vec<Move> {
@@ -325,8 +325,8 @@ impl Page {
     }
 
     /// How much the trigger area is expanded horizontally.
-    /// 
-    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`, 
+    ///
+    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`,
     /// `EventTrigger::EventTouch` or `EventTrigger::PlayerTouch`
     pub fn range_extension_x(&self) -> u8 {
         self.range_extension_x
@@ -339,7 +339,7 @@ impl Page {
 
     /// How much the trigger area is expanded horizontally.
     ///
-    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`, 
+    /// This field is only valid if [`Page::event_trigger`] is `EventTrigger::ConfirmKey`,
     /// `EventTrigger::EventTouch` or `EventTrigger::PlayerTouch`
     pub fn range_extension_y(&self) -> u8 {
         self.range_extension_y

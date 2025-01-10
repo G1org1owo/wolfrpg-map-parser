@@ -1,9 +1,9 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 use crate::common::r#move::move_type::MoveType;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum State {
     ApproachEvent {
         event: u32,

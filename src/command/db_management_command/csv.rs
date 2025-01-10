@@ -1,8 +1,8 @@
 use crate::byte_utils::{as_u32_le, parse_string};
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct CSV {
     entry_count: u32,
     filename: String

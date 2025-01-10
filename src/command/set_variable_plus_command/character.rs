@@ -1,9 +1,9 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::set_variable_plus_command::character_field::CharacterField;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Character {
     character: u32,
     field: CharacterField,

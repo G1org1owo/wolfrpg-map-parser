@@ -2,9 +2,9 @@ use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::free_transform_fields::FreeTransformFields;
 use crate::command::picture_command::show::parser::parse_fields;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct FreeTransform {
     top_left_x: u32,
     top_left_y: u32,

@@ -2,9 +2,9 @@ use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::parser::parse_fields;
 use crate::command::picture_command::show::zoom_fields::ZoomFields;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Zoom {
     position_x: u32,
     position_y: u32,

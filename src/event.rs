@@ -1,7 +1,7 @@
 use crate::byte_utils::{as_u32_be, as_u32_le, parse_string};
 use crate::page::Page;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 const EVENT_SIGNATURE: u32 = 0x6f393000;
 
@@ -10,7 +10,7 @@ const EVENT_SIGNATURE: u32 = 0x6f393000;
 /// An event is any NPC or item that can interact with the player or can be interacted with.
 /// This struct contains detailed information about the position of the event and one or more pages
 /// containing extra details on how to render the event, plus the scripts related to this event. 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[allow(unused)]
 pub struct Event {
     id: u32,

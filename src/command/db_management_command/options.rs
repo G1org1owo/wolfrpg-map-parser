@@ -1,9 +1,9 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::db_management_command::db_type::DBType;
 use crate::command::db_management_command::db_operation_type::DBOperationType;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Options {
     db_type: DBType,
     db_operation_type: DBOperationType

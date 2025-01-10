@@ -1,9 +1,9 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::input_key::key_options::KeyOptions;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct KeyboardOrPad {
     options: KeyOptions,
     key_code: u32

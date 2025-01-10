@@ -1,9 +1,9 @@
 use crate::command::input_key_command::input_toggle::basic_inputs::BasicInputs;
 use crate::command::input_key_command::input_toggle::enabled_inputs::EnabledInputs;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Basic {
     inputs: BasicInputs,
     enabled_inputs: EnabledInputs

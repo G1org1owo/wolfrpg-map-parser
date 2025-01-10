@@ -1,9 +1,9 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::party_graphics_command::operation::Operation;
 use crate::command::party_graphics_command::special_operation::SpecialOperation;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Options {
     operation: Operation,
     special_operation: SpecialOperation,

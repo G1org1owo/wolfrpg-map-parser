@@ -1,9 +1,9 @@
 use crate::byte_utils::as_u32_le;
 use crate::command::set_variable_plus_command::picture_field::PictureField;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Picture {
     picture_number: u32,
     field: PictureField

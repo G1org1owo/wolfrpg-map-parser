@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::command::input_key_command::input_toggle::input_type::InputType;
 use crate::command::input_key_command::input_toggle::state::State;
 
@@ -11,7 +11,7 @@ pub mod enabled_inputs;
 pub mod device;
 pub mod device_inputs;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct InputToggle {
     input_type: InputType,
     state: State

@@ -3,13 +3,13 @@ use crate::command::common::case::Case;
 use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::show_choice_command::options::Options;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 pub mod cancel_case;
 pub mod extra_cases;
 pub mod options;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ShowChoiceCommand {
     options: Options,
     choices: Vec<String>,

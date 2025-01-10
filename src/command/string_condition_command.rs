@@ -9,9 +9,9 @@ use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::string_condition_command::condition::Condition;
 use crate::command::string_condition_command::operator::Operator;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct StringConditionCommand {
     else_case: bool,
     conditions: Vec<Condition>,

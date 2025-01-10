@@ -1,10 +1,10 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 use crate::command::sound_command::operation::Operation;
 use crate::command::sound_command::options::Options;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Variable {
     delay_playback: Option<u32>,
     fade_time: Option<u32>,

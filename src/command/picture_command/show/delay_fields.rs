@@ -3,9 +3,9 @@ use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::colors_fields::ColorsFields;
 use crate::command::picture_command::show::parsable_fields::ParsableFields;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct DelayFields {
     colors_state: ColorsFields,
     delay: u32

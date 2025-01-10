@@ -1,8 +1,8 @@
 use crate::byte_utils::{as_u16_le, as_u32_le};
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[allow(unused)]
 pub struct Range {
     range_start: u16,

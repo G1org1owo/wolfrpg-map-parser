@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::{as_u32_vec, as_u32_le};
 use crate::event::Event;
 
@@ -7,15 +7,15 @@ const MAP_SIGNATURE: &[u8]
     = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x57\x4F\x4C\x46\x4D\x00\x00\x00\x00\x00";
 
 /// A Wolf RPG Editor map (.mps) file.
-/// 
+///
 /// Contains all information needed for rendering a level, from the single tiles to the events
 /// set to happen.
-/// 
+///
 /// # Examples
 /// ```
 /// use wolfrpg_map_parser::Map;
 /// use std::fs;
-/// 
+///
 /// match fs::read("filepath.mps") {
 ///     Ok(bytes) => {
 ///         let map: Map = Map::parse(&bytes);
@@ -26,7 +26,7 @@ const MAP_SIGNATURE: &[u8]
 ///     }
 /// }
 /// ```
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Map {
     tileset: u32,
     width: u32,
@@ -39,23 +39,23 @@ pub struct Map {
 
 impl Map {
     /// Parse raw bytes into a [`Map`] struct.
-    /// 
+    ///
     /// This is the main driver that should be used when loading a .mps file. Using other methods is
     /// highly discouraged, unless you know what you are doing and need that extra bit of speed.
     ///
     /// # Panics
     /// This function will panic if the given bytes do not represent a valid map structure.
-    /// 
+    ///
     /// This might be caused by corrupt files, incompatible format updates and library bugs.
     /// In each of these cases, feel free to report an issue on [GitHub].
-    /// 
+    ///
     /// [GitHub]: https://github.com/G1org1owo/wolfrpg-map-parser/issues
-    /// 
+    ///
     /// # Examples
     /// ```
     /// use wolfrpg_map_parser::Map;
     /// use std::fs;
-    /// 
+    ///
     /// match fs::read("filepath.mps") {
     ///     Ok(bytes) => {
     ///         let map: Map = Map::parse(&bytes);
@@ -162,7 +162,7 @@ impl Map {
     }
 
     /// The bottom-most layer of tiles.
-    /// 
+    ///
     /// Each layer is painted above the lower ones.
     pub fn layer1(&self) -> &Vec<u32> {
         &self.layer1
@@ -198,16 +198,16 @@ impl Map {
     }
 
     /// A collection of all the events set on this map.
-    /// 
+    ///
     /// Events are painted above each other based on the following priority:
     /// 1. If [`Page::options::above_hero`] is `true`, then the event has the highest priority.
     /// 2. If [`Page::options::above_hero`] is `false` and [`Page::options::slip_through`] is `false`,
     ///     then the event has the second-highest priority.
     /// 3. if [`Page::options::above_hero`] is `false` and [`Page::options::slip_through`] is `true`,
     ///     then the event has the lowest-priority.
-    /// 
+    ///
     /// When events have the same priority, they are displayed in order of [`Event::id`].
-    /// 
+    ///
     /// [`Page::options::above_hero`]: (event::page::options::Options::above_hero)
     /// [`Page::options::slip_through`]: (event::page::options::Options::slip_through)
     pub fn events(&self) -> &Vec<Event> {

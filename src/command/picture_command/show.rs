@@ -4,7 +4,7 @@ use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::options::Options;
 use crate::byte_utils::parse_optional_string;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use state::State;
 
 pub mod state;
@@ -24,7 +24,7 @@ mod colors_fields;
 pub mod colors;
 mod parsable_fields;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Show {
     options: Options,
     picture: u32,

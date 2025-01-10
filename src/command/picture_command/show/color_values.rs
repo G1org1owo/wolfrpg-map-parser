@@ -2,9 +2,9 @@ use crate::command::picture_command::colors::Colors;
 use crate::command::picture_command::show::color_values_fields::ColorValuesFields;
 use crate::command::picture_command::show::parser::parse_fields;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ColorValues {
     position_x: u32,
     position_y: u32,

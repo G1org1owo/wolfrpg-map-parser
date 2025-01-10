@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 use crate::command::transfer_command::options::Options;
 use crate::command::transfer_command::target::Target;
@@ -8,7 +8,7 @@ pub mod target;
 pub mod options;
 pub mod transition;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct TransferCommand {
     target: Target,
     db_variable: Option<u32>,

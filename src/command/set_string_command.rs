@@ -14,9 +14,9 @@ use crate::command::set_string_command::operation::Operation;
 use crate::command::set_string_command::options::Options;
 use crate::command::set_string_command::state::State;
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SetStringCommand {
     variable: u32,
     options: Options,

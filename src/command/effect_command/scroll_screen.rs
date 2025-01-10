@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
 use crate::command::effect_command::scroll_screen::options::Options;
 
@@ -7,7 +7,7 @@ pub mod options;
 pub mod scroll_operation;
 pub mod scroll_speed;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ScrollScreen {
     options: Options,
     x: u32,

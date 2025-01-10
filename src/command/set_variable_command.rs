@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use state::State;
 use crate::byte_utils::as_u32_le;
 use crate::command::set_variable_command::operators::Operators;
@@ -12,7 +12,7 @@ pub mod operators;
 pub mod range;
 pub mod state;
 
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SetVariableCommand {
     variable: u32,
     left_side: u32,
