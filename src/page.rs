@@ -74,7 +74,7 @@ impl Page {
         let (bytes_read, icon): (usize, String) = parse_string(&bytes[offset..]);
         offset += bytes_read;
 
-        let icon_row: u8 = bytes[offset];
+        let icon_row: u8 = (bytes[offset] >> 1) - 1;
         let icon_column: u8 = bytes[offset+1];
         let icon_opacity: u8 = bytes[offset+2];
         let icon_blend: BlendType = BlendType::new(bytes[offset+3]);
