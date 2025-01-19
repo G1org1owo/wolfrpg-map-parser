@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-01-19
+
+### Added
+
+- New module to parse WolfRPG Editor databases and tilesets, `crate::db_parser`
+- Documentation for `crate::db_parser`
+
+### Changed
+
+- `U32OrString` has been moved to `crate::common::u32_or_string::U32OrString`
+
+### Fixed
+
+- Case end not being detected properly on different nesting levels
+
 ## [0.3.3] - 2025-01-17
 
 ### Fixed

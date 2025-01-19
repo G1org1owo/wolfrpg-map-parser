@@ -45,7 +45,7 @@ impl ShowChoiceCommand {
         offset += 8;
         commands_read += 1; // Signature counts as command
 
-        if cases_end != CASES_END_SIGNATURE {
+        if &cases_end[..4] != CASES_END_SIGNATURE {
             panic!("Invalid cases end.");
         }
 

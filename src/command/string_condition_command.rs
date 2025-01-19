@@ -57,7 +57,7 @@ impl StringConditionCommand {
         offset += 8;
         commands_read += 1;
 
-        if cases_end != CASES_END_SIGNATURE {
+        if &cases_end[..4] != CASES_END_SIGNATURE {
             panic!("Invalid cases end.");
         }
 
