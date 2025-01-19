@@ -9,5 +9,9 @@ pub mod command;
 mod byte_utils;
 pub mod common;
 pub mod page;
+pub mod db_parser;
 
 pub use map::Map;
+pub use db_parser::tileset_parser;
+pub use db_parser::data_parser;
+pub use db_parser::project_parser;

@@ -76,6 +76,18 @@ pub fn parse_string_vec(bytes: &[u8], count: usize) -> (usize, Vec<String>) {
     (offset, strings)
 }
 
+pub fn as_blob(bytes: &[u8], element_size: usize) -> (usize, Vec<u8>) {
+    let mut offset: usize = 0;
+
+    let count: usize = as_u32_le(&bytes[offset..offset+4]) as usize * element_size;
+    offset += 4;
+
+    let blob: Vec<u8> = bytes[offset..offset + count].to_vec();
+    offset += count;
+
+    (offset, blob)
+}
+
 macro_rules! parse_optional_string {
     ( $bytes:expr, $offset:expr, $is_string:expr ) => {
         if $is_string {
