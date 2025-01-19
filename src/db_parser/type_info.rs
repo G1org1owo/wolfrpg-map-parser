@@ -2,6 +2,9 @@ use crate::byte_utils::{as_blob, as_u32_le, as_u32_vec, parse_string, parse_stri
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+/// Information on a database type.
+/// 
+/// By database type, we mean a table, containing several fields and entries.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq)]
 pub struct TypeInfo {
@@ -87,7 +90,7 @@ impl TypeInfo {
         let fields: Vec<TypeField> = fields.iter().enumerate().map(|(i, str)| {
             TypeField {
                 name: str.clone(),
-                special: field_data_types[i],
+                category: field_data_types[i],
                 strings: field_strings[i].clone(),
                 meta: field_metas[i].clone(),
                 default: default_values[i]
@@ -103,90 +106,110 @@ impl TypeInfo {
         })
     }
 
+    /// The index of this type in the database schema.
     pub fn index(&self) -> usize {
         self.index
     }
 
+    /// The name given to this database type.
     pub fn name(&self) -> &str {
         &self.name
     }
-    
+
+    /// Mutable reference accessor for [`TypeInfo::name`].
     pub fn name_mut(&mut self) -> &mut String {
         &mut self.name
     }
 
+    /// A list of fields for this database type.
     pub fn fields(&self) -> &Vec<TypeField> {
         &self.fields
     }
-    
+
+    /// Mutable reference accessor for [`TypeInfo::fields`].
     pub fn fields_mut(&mut self) -> &mut Vec<TypeField> {
         &mut self.fields
     }
 
+    /// A list of names associated with each entry.
     pub fn data_names(&self) -> &Vec<String> {
         &self.data_names
     }
-    
+
+    /// Mutable reference accessor for [`TypeInfo::data_names`].
     pub fn data_names_mut(&mut self) -> &mut Vec<String> {
         &mut self.data_names
     }
 
+    /// A brief description of this database type.
     pub fn note(&self) -> &str {
         &self.note
     }
-    
+
+    /// Mutable reference accessor for [`TypeInfo::note`].
     pub fn note_mut(&mut self) -> &mut String {
         &mut self.note
     }
 }
 
+/// Detailed information regarding a field of the table.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq)]
 pub struct TypeField {
     name: String,
-    special: u8,
+    category: u8,
     strings: Vec<String>,
     meta: Vec<i32>,
     default: i32
 }
 
 impl TypeField {
+    /// The name of the field.
     pub fn name(&self) -> &str {
         &self.name
     }
-    
+
+    /// Mutable reference accessor for [`TypeField::name`].
     pub fn name_mut(&mut self) -> &mut String {
         &mut self.name
     }
 
-    pub fn special(&self) -> u8 {
-        self.special
-    }
-    
-    pub fn special_mut(&mut self) -> &mut u8 {
-        &mut self.special
+    /// The field type/category.
+    pub fn category(&self) -> u8 {
+        self.category
     }
 
+    /// Mutable reference accessor for [`TypeField::category`].
+    pub fn special_mut(&mut self) -> &mut u8 {
+        &mut self.category
+    }
+
+    /// A list of possible string values for this field.
     pub fn strings(&self) -> &Vec<String> {
         &self.strings
     }
-    
+
+    /// Mutable reference accessor for [`TypeField::strings`].
     pub fn strings_mut(&mut self) -> &mut Vec<String> {
         &mut self.strings
     }
 
+    /// Metadata for this field.
     pub fn meta(&self) -> &Vec<i32> {
         &self.meta
     }
-    
+
+    /// Mutable reference accessor for [`TypeField::meta`].
     pub fn meta_mut(&mut self) -> &mut Vec<i32> {
         &mut self.meta
     }
 
+    /// Default value for this field.
     pub fn default(&self) -> i32 {
         self.default
     }
-    
+
+    /// Mutable reference accessor for [`TypeField::default`].
     pub fn default_mut(&mut self) -> &mut i32 {
         &mut self.default
     }

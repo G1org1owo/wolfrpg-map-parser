@@ -3,6 +3,7 @@ use crate::common::u32_or_string::U32OrString;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+/// A database table for storing related data.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq)]
 pub struct Table {
@@ -75,14 +76,17 @@ impl Table {
         })
     }
 
+    /// The index of this table in the database.
     pub fn index(&self) -> usize {
         self.index
     }
 
+    /// A list of tuples representing the database entries. 
     pub fn rows(&self) -> &Vec<Vec<U32OrString>> {
         &self.rows
     }
     
+    /// Mutable reference accessor for [`Table::rows`].
     pub fn rows_mut(&mut self) -> &mut Vec<Vec<U32OrString>> {
         &mut self.rows
     }

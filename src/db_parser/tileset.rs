@@ -3,6 +3,7 @@ use crate::db_parser::tile::Tile;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+/// Detailed information on a tileset.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq)]
 pub struct Tileset {
@@ -64,38 +65,50 @@ impl Tileset {
         })
     }
 
+    /// The index of this tileset in the list.
     pub fn index(&self) -> usize {
         self.index
     }
 
+    /// The name given to this tileset.
     pub fn name(&self) -> &str {
         &self.name
     }
-    
+
+    /// Mutable reference accessor for [`Tileset::name`].
     pub fn name_mut(&mut self) -> &mut String {
         &mut self.name
     }
 
+    /// The file from which most of the tiles are taken.
     pub fn base_tileset(&self) -> &str {
         &self.base_tileset
     }
-    
+
+    /// Mutable reference accessor for [`Tileset::base_tileset`].
     pub fn base_tileset_mut(&mut self) -> &mut String {
         &mut self.base_tileset
     }
 
+    /// A list of files from which the automatic tiles are taken.
+    /// 
+    /// Automatic tiles display differently based on the tiles they are next to, such as
+    /// water rendering the edge of a pond if it's close to grass.
     pub fn auto_tiles(&self) -> &[String; 15] {
         &self.auto_tiles
     }
-    
+
+    /// Mutable reference accessor for [`Tileset::auto_tiles`].
     pub fn auto_tiles_mut(&mut self) -> &mut [String; 15] {
         &mut self.auto_tiles
     }
 
+    /// Specific settings for each tile of the tileset.
     pub fn tiles(&self) -> &Vec<Tile> {
         &self.tiles
     }
-    
+
+    /// Mutable reference accessor for [`Tileset::tiles`].
     pub fn tiles_mut(&mut self) -> &mut Vec<Tile> {
         &mut self.tiles
     }
