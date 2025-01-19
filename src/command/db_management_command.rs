@@ -1,5 +1,5 @@
 use crate::byte_utils::{as_u32_le, parse_string};
-use crate::command::common::u32_or_string::U32OrString;
+use crate::common::u32_or_string::U32OrString;
 use crate::command::db_management_command::assignment::Assignment;
 use crate::command::db_management_command::options::Options;
 use crate::command::db_management_command::state::State;

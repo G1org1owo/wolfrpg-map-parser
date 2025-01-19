@@ -1,6 +1,6 @@
 #[cfg(feature = "serde")]
 use serde::{Serialize, Deserialize};
-use crate::command::common::u32_or_string::U32OrString;
+use crate::common::u32_or_string::U32OrString;
 use crate::command::string_condition_command::operator::Operator;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

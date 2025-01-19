@@ -4,7 +4,7 @@ pub mod condition;
 
 use crate::byte_utils::{as_u32_vec, parse_string_vec};
 use crate::command::common::case::Case;
-use crate::command::common::u32_or_string::U32OrString;
+use crate::common::u32_or_string::U32OrString;
 use crate::command::common::CASES_END_SIGNATURE;
 use crate::command::string_condition_command::condition::Condition;
 use crate::command::string_condition_command::operator::Operator;

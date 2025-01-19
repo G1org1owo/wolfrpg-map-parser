@@ -1,5 +1,5 @@
 use crate::byte_utils::{as_u32_le, as_u32_vec, parse_string_vec};
-use crate::command::common::u32_or_string::U32OrString;
+use crate::common::u32_or_string::U32OrString;
 use crate::command::common_event_command::argument_count::ArgumentCount;
 use crate::command::common_event_command::options::Options;
 #[cfg(feature = "serde")]

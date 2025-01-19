@@ -3,7 +3,7 @@ pub mod operation;
 pub mod special_operation;
 
 use crate::byte_utils::{as_u32_le, parse_string};
-use crate::command::common::u32_or_string::U32OrString;
+use crate::common::u32_or_string::U32OrString;
 use crate::command::party_graphics_command::operation::Operation;
 use crate::command::party_graphics_command::options::Options;
 use crate::byte_utils::parse_optional_string;
