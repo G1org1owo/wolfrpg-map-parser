@@ -2,7 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct ExtraCases {
     left_key: bool,
     right_key: bool,

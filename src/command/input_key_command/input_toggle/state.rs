@@ -5,7 +5,7 @@ use crate::command::input_key_command::input_toggle::device::Device;
 use crate::command::input_key_command::input_toggle::input_type::InputType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum State {
     Basic(Basic),
     Device(Device),

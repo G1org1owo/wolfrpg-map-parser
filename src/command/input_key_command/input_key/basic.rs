@@ -3,7 +3,7 @@ use crate::command::input_key_command::input_key::basic_options::BasicOptions;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Basic {
     options: BasicOptions
 }

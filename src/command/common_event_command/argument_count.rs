@@ -2,7 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct ArgumentCount {
     number_arguments: u8,
     string_arguments: u8

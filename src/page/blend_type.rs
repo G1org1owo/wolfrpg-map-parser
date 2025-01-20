@@ -2,7 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum BlendType {
     Normal      = 0x00,
     Add         = 0x01,

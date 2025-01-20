@@ -6,7 +6,7 @@ use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::zoom::Zoom;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Options {
     display_type: DisplayType,
     blending_method: BlendingMethod,

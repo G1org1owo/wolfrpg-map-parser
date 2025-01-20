@@ -6,7 +6,7 @@ use crate::command::set_variable_plus_command::picture::Picture;
 use crate::command::set_variable_plus_command::position::Position;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum State {
     Character(Character),
     Position(Position),

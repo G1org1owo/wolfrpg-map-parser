@@ -5,7 +5,7 @@ use crate::command::picture_command::show::range_fields::RangeFields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Range {
     position_x: u32,
     position_y: u32,

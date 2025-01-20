@@ -2,7 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Options {
     bind_result: bool,
     use_variable_as_reference: bool,

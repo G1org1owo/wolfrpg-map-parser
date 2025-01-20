@@ -4,7 +4,7 @@ use crate::command::set_variable_plus_command::target::Target;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Other {
     target: Target
 }

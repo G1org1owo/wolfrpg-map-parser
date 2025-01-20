@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::set_string_command::string_operation::StringOperation;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Operation {
     operation: StringOperation,
     input_cancel: bool,

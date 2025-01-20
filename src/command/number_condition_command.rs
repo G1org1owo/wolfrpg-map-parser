@@ -8,7 +8,7 @@ pub mod condition;
 pub mod operator;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct NumberConditionCommand {
     else_case: bool,
     conditions: Vec<Condition>,

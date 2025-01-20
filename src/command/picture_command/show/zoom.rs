@@ -5,7 +5,7 @@ use crate::command::picture_command::show::zoom_fields::ZoomFields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Zoom {
     position_x: u32,
     position_y: u32,

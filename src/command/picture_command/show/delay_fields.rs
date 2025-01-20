@@ -6,7 +6,7 @@ use crate::command::picture_command::show::parsable_fields::ParsableFields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct DelayFields {
     colors_state: ColorsFields,
     delay: u32

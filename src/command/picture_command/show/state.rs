@@ -10,7 +10,7 @@ use crate::command::picture_command::show::range::Range;
 use crate::command::picture_command::show::zoom::Zoom;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum State {
     Base(Base),
     Colors(Colors),

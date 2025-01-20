@@ -3,7 +3,7 @@ use crate::byte_utils::{as_u16_le, as_u32_le};
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 #[allow(unused)]
 pub struct Range {
     range_start: u16,

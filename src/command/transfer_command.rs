@@ -9,7 +9,7 @@ pub mod options;
 pub mod transition;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct TransferCommand {
     target: Target,
     db_variable: Option<u32>,

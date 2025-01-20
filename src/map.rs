@@ -27,7 +27,7 @@ const MAP_SIGNATURE: &[u8]
 /// }
 /// ```
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Map {
     tileset: u32,
     width: u32,

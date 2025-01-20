@@ -2,7 +2,7 @@
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum CompareOperator {
     GreaterThan     = 0x00,
     GreaterOrEquals = 0x01,

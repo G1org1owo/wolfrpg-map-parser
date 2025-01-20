@@ -4,7 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::chip_management_command::options::Options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct MapChipSettings {
     chip: u32,
     options: Options

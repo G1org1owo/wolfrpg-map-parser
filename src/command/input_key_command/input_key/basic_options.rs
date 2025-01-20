@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::input_key_command::input_key::direction_keys::DirectionKeys;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct BasicOptions {
     direction_keys: DirectionKeys,
     input_ok: bool,

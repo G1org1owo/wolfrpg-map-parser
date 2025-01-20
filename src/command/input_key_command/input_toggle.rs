@@ -12,7 +12,7 @@ pub mod device;
 pub mod device_inputs;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct InputToggle {
     input_type: InputType,
     state: State

@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// A database table for storing related data.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Table {
     index: usize,
     rows: Vec<Vec<U32OrString>>,
@@ -14,7 +14,7 @@ pub struct Table {
 impl Table {
     pub(crate) fn parse(bytes: &[u8], index: usize) -> (usize, Self) {
         let mut offset: usize = 0;
-        
+
         let _ = as_u32_le(&bytes[offset..]);
         offset += 4;
 
@@ -81,11 +81,11 @@ impl Table {
         self.index
     }
 
-    /// A list of tuples representing the database entries. 
+    /// A list of tuples representing the database entries.
     pub fn rows(&self) -> &Vec<Vec<U32OrString>> {
         &self.rows
     }
-    
+
     /// Mutable reference accessor for [`Table::rows`].
     pub fn rows_mut(&mut self) -> &mut Vec<Vec<U32OrString>> {
         &mut self.rows

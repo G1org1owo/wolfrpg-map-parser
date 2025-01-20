@@ -8,7 +8,7 @@ use std::cmp::max;
 use std::collections::VecDeque;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Event {
     target: u32,
     argument_count: ArgumentCount,

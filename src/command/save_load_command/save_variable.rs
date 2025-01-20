@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::save_load_command::parser::parse_variable_fields;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct SaveVariable {
     source_variable: u32,
     save_number: u32,

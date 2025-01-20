@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::string_condition_command::compare_operator::CompareOperator;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Operator {
     value_is_variable: bool,
     operator: CompareOperator

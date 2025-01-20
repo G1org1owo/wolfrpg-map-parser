@@ -17,7 +17,7 @@ pub mod csv;
 pub mod state;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct DBManagementCommand {
     db_type: U32OrString, // name for table?
     data: U32OrString,    // name for tuple?

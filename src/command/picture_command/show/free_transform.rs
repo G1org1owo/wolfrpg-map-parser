@@ -5,7 +5,7 @@ use crate::command::picture_command::show::parser::parse_fields;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct FreeTransform {
     top_left_x: u32,
     top_left_y: u32,

@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::db_management_command::assignment_operator::AssignmentOperator;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Assignment {
     use_variable_as_reference: bool,
     operator: AssignmentOperator

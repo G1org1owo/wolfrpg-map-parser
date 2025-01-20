@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::transfer_command::transition::Transition;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Options {
     precise_coordinates: bool,
     transition: Transition,

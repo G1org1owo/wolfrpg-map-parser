@@ -4,7 +4,7 @@ use crate::command::db_management_command::db_type::DBType;
 use crate::command::db_management_command::db_operation_type::DBOperationType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Options {
     db_type: DBType,
     db_operation_type: DBOperationType

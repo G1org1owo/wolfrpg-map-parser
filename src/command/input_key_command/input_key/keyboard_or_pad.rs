@@ -4,7 +4,7 @@ use crate::command::input_key_command::input_key::key_options::KeyOptions;
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct KeyboardOrPad {
     options: KeyOptions,
     key_code: u32

@@ -8,7 +8,7 @@ pub mod move_type;
 pub mod state;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Move {
     move_type: MoveType,
     state: State

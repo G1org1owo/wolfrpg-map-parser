@@ -9,7 +9,7 @@ pub mod automatic_input;
 pub mod input_toggle;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum InputKeyCommand {
     InputKey(InputKey),
     AutomaticInput(AutomaticInput),

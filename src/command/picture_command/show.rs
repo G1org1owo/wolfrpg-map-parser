@@ -25,7 +25,7 @@ pub mod colors;
 mod parsable_fields;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Show {
     options: Options,
     picture: u32,

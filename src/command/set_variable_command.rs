@@ -13,7 +13,7 @@ pub mod range;
 pub mod state;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct SetVariableCommand {
     variable: u32,
     left_side: u32,

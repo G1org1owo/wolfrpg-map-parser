@@ -10,7 +10,7 @@ pub mod extra_cases;
 pub mod options;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct ShowChoiceCommand {
     options: Options,
     choices: Vec<String>,

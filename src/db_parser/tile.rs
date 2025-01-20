@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 /// Settings for a specific tile in a given tileset.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Tile {
     tag_number: u8,
     down_not_passable: bool,
@@ -25,21 +25,21 @@ impl Tile {
             right_not_passable: options & 0b00000100 != 0,
             up_not_passable: options & 0b00001000 != 0,
             always_above_character: options & 0b00010000 != 0,
-            
+
             bottom_half_translucent: options & 0b01000000 != 0,
-            
+
             conceal_character_behind: (options >> 8) & 0b00000001 != 0,
             match_passable_under: (options >> 8) & 0b00000010 != 0
         }
     }
 
     /// A value that can be assigned to tiles and retrieved via the [`SetVariablePlus`] command.
-    /// 
+    ///
     /// [`SetVariablePlus`]: crate::command::set_variable_plus_command::SetVariablePlusCommand
     pub fn tag_number(&self) -> u8 {
         self.tag_number
     }
-    
+
     /// Mutable reference accessor for [`Tile::tag_number`].
     pub fn tag_number_mut(&mut self) -> &mut u8 {
         &mut self.tag_number

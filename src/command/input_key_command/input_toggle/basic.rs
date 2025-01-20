@@ -4,7 +4,7 @@ use crate::command::input_key_command::input_toggle::enabled_inputs::EnabledInpu
 use serde::{Serialize, Deserialize};
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Basic {
     inputs: BasicInputs,
     enabled_inputs: EnabledInputs

@@ -4,7 +4,7 @@ use crate::byte_utils::as_u32_le;
 use crate::command::input_key_command::input_toggle::device_inputs::DeviceInputs;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Device {
     inputs: DeviceInputs,
     enable: bool,

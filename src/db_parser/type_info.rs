@@ -3,10 +3,10 @@ use crate::byte_utils::{as_blob, as_u32_le, as_u32_vec, parse_string, parse_stri
 use serde::{Deserialize, Serialize};
 
 /// Information on a database type.
-/// 
+///
 /// By database type, we mean a table, containing several fields and entries.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct TypeInfo {
     index: usize,
     name: String,
@@ -18,7 +18,7 @@ pub struct TypeInfo {
 impl TypeInfo {
     pub(crate) fn parse(bytes: &[u8], index: usize) -> (usize, Self) {
         let mut offset: usize = 0;
-        
+
         let (bytes_read, name): (usize, String) = parse_string(&bytes[offset..]);
         offset += bytes_read;
 
@@ -154,7 +154,7 @@ impl TypeInfo {
 
 /// Detailed information regarding a field of the table.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct TypeField {
     name: String,
     category: u8,

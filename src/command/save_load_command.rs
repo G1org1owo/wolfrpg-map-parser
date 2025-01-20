@@ -11,7 +11,7 @@ mod parser;
 pub mod load_variable;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum SaveLoadCommand {
     Base(Base),
     LoadVariable(LoadVariable),

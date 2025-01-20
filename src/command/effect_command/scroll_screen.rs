@@ -8,7 +8,7 @@ pub mod scroll_operation;
 pub mod scroll_speed;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct ScrollScreen {
     options: Options,
     x: u32,

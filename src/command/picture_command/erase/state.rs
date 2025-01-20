@@ -6,7 +6,7 @@ use crate::command::picture_command::erase::delay_reset::DelayReset;
 use crate::command::picture_command::erase::range::Range;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum State {
     DelayReset(DelayReset),
     Base(Base),

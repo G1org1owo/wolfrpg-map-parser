@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 
 /// Detailed information on a tileset.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct Tileset {
     index: usize,
     name: String,

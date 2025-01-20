@@ -14,7 +14,7 @@ pub mod filename;
 pub mod variable;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct SoundCommand {
     options: Options,
     systemdb_entry: u16,

@@ -16,7 +16,7 @@ pub mod mouse_options;
 pub mod mouse;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct InputKey {
     variable: u32,
     input_type: InputType,

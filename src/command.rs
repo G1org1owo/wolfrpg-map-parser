@@ -48,7 +48,7 @@ mod signature;
 /// Because of the inherently-recursive nature of this enum, it is probably best to create new
 /// traits and implement them for each variant.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum Command {
     ShowMessage(ShowTextCommand),
     Comment(ShowTextCommand),

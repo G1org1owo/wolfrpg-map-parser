@@ -5,7 +5,7 @@ use crate::command::set_string_command::dynamic::Dynamic;
 use crate::command::set_string_command::input::Input;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum State {
     Base(Base),
     Dynamic(Dynamic),

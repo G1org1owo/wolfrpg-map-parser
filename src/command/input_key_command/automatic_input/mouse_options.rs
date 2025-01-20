@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use crate::command::input_key_command::automatic_input::mouse_type::MouseType;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub struct MouseOptions {
     left_click: bool,
     right_click: bool,

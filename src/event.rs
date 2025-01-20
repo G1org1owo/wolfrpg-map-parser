@@ -11,7 +11,7 @@ const EVENT_SIGNATURE: u32 = 0x6f393000;
 /// This struct contains detailed information about the position of the event and one or more pages
 /// containing extra details on how to render the event, plus the scripts related to this event.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 #[allow(unused)]
 pub struct Event {
     id: u32,

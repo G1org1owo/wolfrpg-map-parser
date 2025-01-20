@@ -11,7 +11,7 @@ pub mod scroll_screen;
 pub mod change_color;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum EffectCommand {
     Base(Base),
     MapShake(MapShake),
