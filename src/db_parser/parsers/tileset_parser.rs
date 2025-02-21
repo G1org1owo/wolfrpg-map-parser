@@ -3,7 +3,7 @@ use std::io::Result;
 use std::path::Path;
 use crate::byte_utils::as_u32_le;
 use crate::db_parser::DATA_MAGIC;
-use crate::db_parser::tileset::Tileset;
+use crate::db_parser::models::tileset::Tileset;
 
 /// Parse a .dat file containing information on the available tilesets.
 /// 

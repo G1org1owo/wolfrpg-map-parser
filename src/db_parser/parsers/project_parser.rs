@@ -1,5 +1,5 @@
 use crate::byte_utils::as_u32_le;
-use crate::db_parser::type_info::TypeInfo;
+use crate::db_parser::models::type_info::TypeInfo;
 use std::fs;
 use std::io::Result;
 use std::path::Path;

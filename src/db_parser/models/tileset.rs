@@ -1,5 +1,5 @@
 use crate::byte_utils::{as_u32_le, as_u32_vec, parse_string};
-use crate::db_parser::tile::Tile;
+use crate::db_parser::models::tile::Tile;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
