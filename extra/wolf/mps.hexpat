@@ -50,7 +50,7 @@ enum CommandSignature: u32 {
     ConditionString6            = 0x08700000,
     ConditionString7            = 0x09700000,
     ConditionString8            = 0x0a700000,
-    
+
     InputKey1                   = 0x037B0000,
     InputKey2                   = 0x047B0000,
     AutomaticInput1             = 0x027D0000,
@@ -58,7 +58,7 @@ enum CommandSignature: u32 {
     AutomaticInput3             = 0x047D0000,
     InputToggle1                = 0x027E0000,
     InputToggle2                = 0x037E0000,
-    
+
     PictureShow1                = 0x0C960000,
     PictureShow2                = 0x0D960000,
     PictureShow3                = 0x1A960000,
@@ -71,22 +71,22 @@ enum CommandSignature: u32 {
     PictureErase2               = 0x07960000,
     PictureErase3               = 0x05960000,
     PictureErase4               = 0x03960000,
-    
+
     EffectBase                  = 0x08220100,
     EffectMapShake              = 0x03180100,
     EffectScrollScreen          = 0x04190100,
     EffectChangeColor           = 0x03970000,
-    
+
     SoundFilename1              = 0x088C0000,
     SoundFilename2              = 0x078C0000,
     SoundVariable               = 0x058C0000,
     SoundVariableMin1           = 0x028C0000,
     SoundVariableMin2           = 0x048C0000,
-    
+
     SaveLoad                    = 0x03DC0000,
     LoadVariable                = 0x05DD0000,
     SaveVariable                = 0x05DE0000,
-    
+
     PartyGraphics1              = 0x030E0100,
     PartyGraphics2              = 0x040E0100,
     PartyGraphics3              = 0x020E0100,
@@ -125,7 +125,7 @@ enum CommandSignature: u32 {
 
     LabelPoint                  = 0x01D40000,
     LabelJump                   = 0x01D50000,
-    
+
     CallEvent1                  = 0x06D20000,
     CallEvent2                  = 0x05D20000,
     CallEvent3                  = 0x07D20000,
@@ -143,7 +143,7 @@ enum CommandSignature: u32 {
 
 struct Command {
     be CommandSignature signature;
-    
+
     match (signature) {
         (CommandSignature::ShowMessage): ShowMessage::Command;
         (CommandSignature::Comment): ShowMessage::CommentCommand;
@@ -152,10 +152,10 @@ struct Command {
         (CommandSignature::ClearDebugText): ShowMessage::ClearDebugTextCommand;
 
         (CommandSignature::ShowChoice): ShowChoice::Command;
-        
+
         (CommandSignature::SetVariable): SetVariable::Command;
         (CommandSignature::SetVariableRange): SetVariable::RangeCommand;
-        
+
         (CommandSignature::DBManagement): DBManagement::Command;
         (CommandSignature::DBManagementString): DBManagement::StringCommand;
         (CommandSignature::DBManagementCSV): DBManagement::CSVCommand;
@@ -169,7 +169,7 @@ struct Command {
         (CommandSignature::ConditionNumber): ConditionNumber::Command;
         (CommandSignature::DoubleConditionNumber): ConditionNumber::DoubleCommand;
         (CommandSignature::TripleConditionNumber): ConditionNumber::TripleCommand;
-        
+
         (CommandSignature::ConditionString1 | CommandSignature::ConditionString2 |
          CommandSignature::ConditionString3 | CommandSignature::ConditionString4 |
          CommandSignature::ConditionString5 | CommandSignature::ConditionString6 |
@@ -177,20 +177,20 @@ struct Command {
             u32 total_count = signature;
             ConditionString::Command<total_count>;
         }
-        
+
         (CommandSignature::InputKey1 | CommandSignature::InputKey2): InputKey::Command;
-        
+
         (CommandSignature::AutomaticInput1 | CommandSignature::AutomaticInput2 |
          CommandSignature::AutomaticInput3): AutomaticInput::Command;
-         
+
         (CommandSignature::InputToggle1 | CommandSignature::InputToggle2): InputToggle::Command;
-        
+
         (CommandSignature::PictureShow1 | CommandSignature::PictureShow2): Picture::ShowCommand;
         (CommandSignature::PictureShow7): Picture::ShowColorsCommand;
         (CommandSignature::PictureShow3 | CommandSignature::PictureShow4 |
          CommandSignature::PictureShow5 | CommandSignature::PictureShow6 |
          CommandSignature::PictureShow8): Picture::ShowCompleteCommand;
-         
+
         (CommandSignature::PictureErase1 | CommandSignature::PictureErase4): Picture::EraseCommand command;
         (CommandSignature::PictureErase2 | CommandSignature::PictureErase3): Picture::EraseCompleteCommand;
 

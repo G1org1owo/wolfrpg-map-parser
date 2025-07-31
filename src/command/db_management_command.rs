@@ -1,10 +1,10 @@
-use crate::byte_utils::{as_u32_le, parse_string};
-use crate::common::u32_or_string::U32OrString;
+use crate::byte_utils::as_u32_le;
 use crate::command::db_management_command::assignment::Assignment;
 use crate::command::db_management_command::options::Options;
 use crate::command::db_management_command::state::State;
+use crate::common::u32_or_string::U32OrString;
 #[cfg(feature = "serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 pub mod base;
 pub mod options;
@@ -15,6 +15,8 @@ pub mod assignment_operator;
 pub mod string;
 pub mod csv;
 pub mod state;
+
+type DBStrings = (Option<String>, Option<String>, Option<String>);
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Clone)]
@@ -28,7 +30,7 @@ pub struct DBManagementCommand {
 }
 
 impl DBManagementCommand {
-    fn parse(bytes: &[u8], parse_state: fn(&[u8]) -> (usize, State)) -> (usize, Self) {
+    fn parse(bytes: &[u8], parse_state: fn(&[u8]) -> (usize, State, DBStrings)) -> (usize, Self) {
         let mut offset: usize = 0;
 
         let db_type: u32 = as_u32_le(&bytes[offset..offset + 4]);
@@ -50,20 +52,12 @@ impl DBManagementCommand {
 
         offset += 2; // padding
 
-        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..]);
+        let (bytes_read, state, db_strings) = parse_state(&bytes[offset..]);
         offset += bytes_read;
 
-        let (bytes_read, db_type_string): (usize, String) = parse_string(&bytes[offset..]);
-        let db_type: U32OrString = Self::get_u32_or_string(db_type, db_type_string);
-        offset += bytes_read;
-
-        let (bytes_read, data_string): (usize, String) = parse_string(&bytes[offset..]);
-        let data: U32OrString = Self::get_u32_or_string(data, data_string);
-        offset += bytes_read;
-
-        let (bytes_read, field_string): (usize, String) = parse_string(&bytes[offset..]);
-        let field: U32OrString = Self::get_u32_or_string(field, field_string);
-        offset += bytes_read;
+        let db_type: U32OrString = Self::get_u32_or_string(db_type, db_strings.0);
+        let data: U32OrString = Self::get_u32_or_string(data, db_strings.1);
+        let field: U32OrString = Self::get_u32_or_string(field, db_strings.2);
 
         offset += 1; // Command end signature
 
@@ -89,11 +83,10 @@ impl DBManagementCommand {
         Self::parse(bytes, State::parse_csv)
     }
 
-    fn get_u32_or_string(value: u32, string: String) -> U32OrString {
-        if !string.is_empty() {
-            U32OrString::String(string)
-        } else {
-            U32OrString::U32(value)
+    fn get_u32_or_string(value: u32, string: Option<String>) -> U32OrString {
+        match string {
+            Some(s) if !s.is_empty() => U32OrString::String(s),
+            _ => U32OrString::U32(value),
         }
     }
 
