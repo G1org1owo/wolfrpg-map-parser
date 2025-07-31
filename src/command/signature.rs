@@ -92,7 +92,9 @@ pub enum Signature {
     CallEventByName4                = 0x032c0100,
     CallEventByName5                = 0x082c0100,
     CallEventByName6                = 0x042c0100,
-    CallEventByVariable             = 0x03D20000,
+    CallEventByName7                = 0x072C0100,
+    CallEventByVariable1            = 0x03D20000,
+    CallEventByVariable2            = 0x0BD20000,
     ReserveEvent                    = 0x03D30000,
     Exit                            = 0x01000000,
     Unknown
@@ -194,7 +196,9 @@ impl Signature {
             0x032c0100 => Self::CallEventByName4,
             0x082c0100 => Self::CallEventByName5,
             0x042c0100 => Self::CallEventByName6,
-            0x03D20000 => Self::CallEventByVariable,
+            0x072C0100 => Self::CallEventByName7,
+            0x03D20000 => Self::CallEventByVariable1,
+            0x0BD20000 => Self::CallEventByVariable2,
             0x03D30000 => Self::ReserveEvent,
             0x01000000 => Self::Exit,
             _ => Self::Unknown

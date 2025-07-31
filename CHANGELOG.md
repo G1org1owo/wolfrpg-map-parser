@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
  - DBManagement parsing failing for rare 0-string command variant
+ - Command parsing failing due to certain missing signatures
 
 ## [0.4.2] - 2025-02-21
 
