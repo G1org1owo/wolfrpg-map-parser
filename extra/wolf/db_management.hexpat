@@ -47,17 +47,25 @@ namespace DBManagement {
         u8 unknown3;
         u8 string_count;
 
-        u32 value_length;
-        char value_string[value_length];
+        if(string_count > 0) {
+            u32 value_length;
+            char value_string[value_length];
+        }
 
-        u32 db_type_length;
-        char db_type_name[db_type_length];
+        if(string_count > 1) {
+            u32 db_type_length;
+            char db_type_name[db_type_length];
+        }
 
-        u32 data_length;
-        char data_name[data_length];
+        if (string_count > 2) {
+            u32 data_length;
+            char data_name[data_length];
+        }
 
-        u32 field_length;
-        char field_name[field_length];
+        if (string_count > 3) {
+            u32 field_length;
+            char field_name[field_length];
+        }
 
         u8 end_command;
     };

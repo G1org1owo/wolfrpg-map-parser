@@ -207,6 +207,10 @@ very in-depth. I advise the ImHex pattern files located in `extra/wolf` be used 
 | `field_length` bytes   | field_name     | NUL-terminated string |
 | 1 byte                 | Command end    | `00`                  |
 
+Each of the `value_string`, `db_type_name`, `data_name`, and `field_name` fields is only
+present if the `string_count` field is greater or equal to its index.
+
+
 ### String Variant
 | Length                 | Content        | Value                 |
 |------------------------|----------------|-----------------------|
