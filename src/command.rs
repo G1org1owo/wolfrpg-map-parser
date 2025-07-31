@@ -196,7 +196,8 @@ impl Command {
             Signature::CallEvent3 | Signature::CallEventByName1 |
             Signature::CallEventByName2 | Signature::CallEventByName3 |
             Signature::CallEventByName4 | Signature::CallEventByName5 |
-            Signature::CallEventByName6 | Signature::CallEventByVariable
+            Signature::CallEventByName6 | Signature::CallEventByName7 |
+            Signature::CallEventByVariable1 | Signature::CallEventByVariable2
                 => Self::parse_call_common_event,
 
             Signature::ReserveEvent => Self::parse_reserve_common_event,
