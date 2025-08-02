@@ -39,7 +39,7 @@ impl Base {
     fn parse_filename_variable(bytes: &[u8], options: &Options) -> (usize, Option<u32>) {
         let mut offset: usize = 0;
         let filename_variable: Option<u32> = match *options.display_type() {
-            DisplayType::LoadFileByStringVar | DisplayType::WindowByStringVar => {
+            DisplayType::StringVar | DisplayType::WindowByStringVar => {
                 let filename_variable: u32 = as_u32_le(&bytes[offset..offset+4]);
                 offset += 4;
 

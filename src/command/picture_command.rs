@@ -11,6 +11,7 @@ pub mod anchor;
 pub mod zoom;
 pub mod colors;
 pub mod erase;
+pub mod display_operation;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Clone)]

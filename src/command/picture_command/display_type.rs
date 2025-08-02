@@ -4,26 +4,20 @@ use serde::{Serialize, Deserialize};
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Clone)]
 pub enum DisplayType {
-    LoadFile            = 0x00,
-    Move                = 0x01,
-    Erase               = 0x02,
-    DelayReset          = 0x03,
-    LoadFileByStringVar = 0x10,
-    ShowStringAsPicture = 0x20,
-    Window              = 0x30,
-    WindowByStringVar   = 0x40,
+    Base              = 0x00,
+    StringVar         = 0x10,
+    StringAsPicture   = 0x20,
+    Window            = 0x30,
+    WindowByStringVar = 0x40,
     Unknown
 }
 
 impl DisplayType {
     pub const fn new(display_type: u8) -> Self {
-        match display_type {
-            0x00 => DisplayType::LoadFile,
-            0x01 => DisplayType::Move,
-            0x02 => DisplayType::Erase,
-            0x03 => DisplayType::DelayReset,
-            0x10 => DisplayType::LoadFileByStringVar,
-            0x20 => DisplayType::ShowStringAsPicture,
+        match display_type & 0xf0 {
+            0x00 => DisplayType::Base,
+            0x10 => DisplayType::StringVar,
+            0x20 => DisplayType::StringAsPicture,
             0x30 => DisplayType::Window,
             0x40 => DisplayType::WindowByStringVar,
             _ => DisplayType::Unknown

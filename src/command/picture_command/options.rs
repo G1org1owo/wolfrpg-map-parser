@@ -2,12 +2,14 @@
 use serde::{Serialize, Deserialize};
 use crate::command::picture_command::anchor::Anchor;
 use crate::command::picture_command::blending_method::BlendingMethod;
+use crate::command::picture_command::display_operation::DisplayOperation;
 use crate::command::picture_command::display_type::DisplayType;
 use crate::command::picture_command::zoom::Zoom;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Clone)]
 pub struct Options {
+    display_operation: DisplayOperation,
     display_type: DisplayType,
     blending_method: BlendingMethod,
     anchor: Anchor,
@@ -21,6 +23,7 @@ pub struct Options {
 impl Options {
     pub fn new(options: u32) -> Self {
         Self {
+            display_operation: DisplayOperation::new((options & 0xff) as u8),
             display_type: DisplayType::new((options & 0xff) as u8),
             blending_method: BlendingMethod::new(((options >> 8) & 0x0f) as u8),
             anchor: Anchor::new((((options >> 8) & 0xf0) >> 4) as u8),
@@ -30,6 +33,10 @@ impl Options {
             link_to_scroll: (options >> 24) & 0b00000010 != 0,
             free_transform: (options >> 24) & 0b00000100 != 0
         }
+    }
+
+    pub fn display_operation(&self) -> &DisplayOperation {
+        &self.display_operation
     }
 
     pub fn display_type(&self) -> &DisplayType {

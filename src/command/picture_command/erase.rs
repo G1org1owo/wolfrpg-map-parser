@@ -7,7 +7,7 @@ pub mod range;
 #[cfg(feature = "serde")]
 use serde::{Serialize, Deserialize};
 use crate::byte_utils::as_u32_le;
-use crate::command::picture_command::display_type::DisplayType;
+use crate::command::picture_command::display_operation::DisplayOperation;
 use crate::command::picture_command::erase::state::State;
 use crate::command::picture_command::options::Options;
 
@@ -52,9 +52,9 @@ impl Erase {
 
     pub(crate) fn parse_base(bytes: &[u8]) -> (usize, Self) {
         let parse_state = |bytes: &[u8], options: &Options| -> (usize, State) {
-            match *options.display_type() {
-                DisplayType::DelayReset => State::parse_delay_reset(bytes, true),
-                DisplayType::Erase => State::parse_base(bytes),
+            match *options.display_operation() {
+                DisplayOperation::DelayReset => State::parse_delay_reset(bytes, true),
+                DisplayOperation::Erase => State::parse_base(bytes),
                 _ => unreachable!()
             }
         };

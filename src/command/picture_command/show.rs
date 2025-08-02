@@ -115,7 +115,7 @@ impl Show {
     fn make_filename_and_string(string_value: Option<String>, filename_variable: Option<u32>,
                                     options: &Options) -> (Option<U32OrString>, Option<String>) {
         let (filename, string): (Option<String>, Option<String>) = match *options.display_type() {
-            DisplayType::ShowStringAsPicture => (None, string_value),
+            DisplayType::StringAsPicture => (None, string_value),
             _ => (string_value, None)
         };
 

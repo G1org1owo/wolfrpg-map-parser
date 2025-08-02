@@ -3,14 +3,15 @@
 
 namespace Picture {
     enum DisplayType: u8 {
-        LoadFile            = 0x00,
-        Move                = 0x01,
-        Erase               = 0x02,
-        DelayReset          = 0x03,
-        LoadFileByStringVar = 0x10,
-        ShowStringAsPicture = 0x20,
-        Window              = 0x30,
-        WindowByStringVar   = 0x40,
+        LoadFile             = 0x00,
+        Move                 = 0x01,
+        Erase                = 0x02,
+        DelayReset           = 0x03,
+        LoadFileByStringVar  = 0x10,
+        ShowStringAsPicture  = 0x20,
+        EraseStringAsPicture = 0x22,
+        Window               = 0x30,
+        WindowByStringVar    = 0x40,
     };
 
     enum Anchor: u8 {
@@ -189,7 +190,7 @@ namespace Picture {
         u32 picture;
 
         match(options.display_type) {
-            (DisplayType::Erase): u32 process_time;
+            (DisplayType::Erase | DisplayType::EraseStringAsPicture): u32 process_time;
             (DisplayType::DelayReset): {
                 if(options.range) {
                     u32 range_count;
