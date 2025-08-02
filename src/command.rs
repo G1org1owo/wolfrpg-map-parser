@@ -72,6 +72,7 @@ pub enum Command {
     Transfer(TransferCommand),
     EventControl(EventControlCommand),
     CommonEvent(CommonEventCommand),
+    Checkpoint(),
     Exit(),
 }
 
@@ -201,6 +202,8 @@ impl Command {
                 => Self::parse_call_common_event,
 
             Signature::ReserveEvent => Self::parse_reserve_common_event,
+
+            Signature::Checkpoint => Self::parse_checkpoint,
             Signature::Exit => Self::parse_exit,
             _ => |_: &[u8], signature: u32| {
                 panic!("Unknown command code {:08x}", signature)
@@ -726,6 +729,10 @@ impl Command {
             = CommonEventCommand::parse_reserve_event(bytes);
 
         (bytes_read, 0, Command::CommonEvent(command))
+    }
+
+    fn parse_checkpoint(_: &[u8], _: u32) -> (usize, u32, Self) {
+        (7, 0, Self::Checkpoint())
     }
 
     fn parse_exit(_: &[u8], _: u32) -> (usize, u32, Self) {

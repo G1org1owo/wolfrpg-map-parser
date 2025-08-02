@@ -21,13 +21,18 @@ struct ExitCommand {
     u32 unknown1;
 };
 
+struct CheckpointCommand {
+    u32 unknown1;
+    u32 unknown2;
+};
+
 enum CommandSignature: u32 {
     ShowMessage                 = 0x01650000,
     Comment                     = 0x01670000,
     ForceCloseMessage           = 0x01690000,
     DebugText                   = 0x016A0000,
     ClearDebugText              = 0x016B0000,
-    
+
     ShowChoice                  = 0x02660000,
     SetVariable                 = 0x05790000,
     SetVariableRange            = 0x06790000,
@@ -41,7 +46,7 @@ enum CommandSignature: u32 {
     ConditionNumber             = 0x056f0000,
     DoubleConditionNumber       = 0x086f0000,
     TripleConditionNumber       = 0x0b6f0000,
-    
+
     ConditionString1            = 0x03700000,
     ConditionString2            = 0x04700000,
     ConditionString3            = 0x05700000,
@@ -140,6 +145,7 @@ enum CommandSignature: u32 {
     CallEventByName7            = 0x072C0100,
     ReserveEvent                = 0x03D30000,
 
+    Checkpoint                  = 0x02630000,
     Exit                        = 0x01000000,
 };
 
@@ -254,6 +260,7 @@ struct Command {
          CommandSignature::CallEventByVariable1 | CommandSignature::CallEventByVariable2 |
          CommandSignature::ReserveEvent): CommonEvent::Command;
 
+        (CommandSignature::Checkpoint): CheckpointCommand;
         (CommandSignature::Exit): {
             ExitCommand;
             break;

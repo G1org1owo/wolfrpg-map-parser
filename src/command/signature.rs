@@ -96,6 +96,7 @@ pub enum Signature {
     CallEventByVariable1            = 0x03D20000,
     CallEventByVariable2            = 0x0BD20000,
     ReserveEvent                    = 0x03D30000,
+    Checkpoint                      = 0x02630000,
     Exit                            = 0x01000000,
     Unknown
 }
@@ -200,6 +201,7 @@ impl Signature {
             0x03D20000 => Self::CallEventByVariable1,
             0x0BD20000 => Self::CallEventByVariable2,
             0x03D30000 => Self::ReserveEvent,
+            0x02630000 => Self::Checkpoint,
             0x01000000 => Self::Exit,
             _ => Self::Unknown
         }
