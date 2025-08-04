@@ -23,7 +23,7 @@ impl Loop {
         offset += 8;
         commands_read += 1;
 
-        if loop_end_signature != LOOP_END_SIGNATURE {
+        if loop_end_signature[..4] != LOOP_END_SIGNATURE[..4] {
             panic!("Invalid loop end.");
         }
 
