@@ -5,10 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.5.0] - 2025-08-05
+### Added
+- Common events database parser via `db_parser::common_events_parser`
+
+### Changed
+- Separated `picture_command::display_type` in `picture_command::display_type` and `picture_command::display_operation`
+
 ### Fixed
  - DBManagement parsing failing for rare 0-string command variant
  - Command parsing failing due to certain missing signatures
+ - Certain kinds of erase commands not being parsed due to picture display type not being granular enough
+ - Nested loops not being parsed due to loop end signature not being checked correctly
 
 ## [0.4.2] - 2025-02-21
 
