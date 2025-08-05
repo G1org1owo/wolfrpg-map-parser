@@ -66,6 +66,21 @@ namespace SetVariable {
         u32 unknown2;
         u8 end_command;
     };
+
+    struct DBCommand {
+        u8 unknown1;
+        u32 variable;
+        u32 left_side;
+        u32 right_side;
+        Options options;
+        Operators operators;
+        u16 unknown2;
+        u32 db_type;
+        u32 db_data;
+        u32 db_field;
+        u16 unknown3;
+        u8 end_command;
+    };
 }
 
 #endif

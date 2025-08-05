@@ -11,6 +11,7 @@ pub mod options;
 pub mod operators;
 pub mod range;
 pub mod state;
+pub mod db;
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Clone)]
@@ -44,7 +45,7 @@ impl SetVariableCommand {
         let operators: Operators = Operators::new(operators);
         offset += 1;
 
-        let (bytes_read, state): (usize, State) = parse_state(bytes);
+        let (bytes_read, state): (usize, State) = parse_state(&bytes[offset..]);
 
         offset += bytes_read;
 
@@ -64,6 +65,10 @@ impl SetVariableCommand {
 
     pub(crate) fn parse_range(bytes: &[u8]) -> (usize, Self) {
         Self::parse(bytes, State::parse_range)
+    }
+
+    pub(crate) fn parse_db(bytes: &[u8]) -> (usize, Self) {
+        Self::parse(bytes, State::parse_db)
     }
 
     pub fn variable(&self) -> u32 {

@@ -35,6 +35,7 @@ enum CommandSignature: u32 {
 
     ShowChoice                  = 0x02660000,
     SetVariable                 = 0x05790000,
+    SetVariableDB               = 0x08790000,
     SetVariableRange            = 0x06790000,
     DBManagement                = 0x06fa0000,
     DBManagementString          = 0x05fa0000,
@@ -162,6 +163,7 @@ struct Command {
         (CommandSignature::ShowChoice): ShowChoice::Command;
 
         (CommandSignature::SetVariable): SetVariable::Command;
+        (CommandSignature::SetVariableDB): SetVariable::DBCommand;
         (CommandSignature::SetVariableRange): SetVariable::RangeCommand;
 
         (CommandSignature::DBManagement): DBManagement::Command;

@@ -108,6 +108,7 @@ impl Command {
             Signature::ShowChoice => Self::parse_show_choice,
             Signature::SetVariableBase => Self::parse_set_variable_base,
             Signature::SetVariableRange => Self::parse_set_variable_range,
+            Signature::SetVariableDB => Self::parse_set_variable_db,
             Signature::DBManagementBase => Self::parse_db_management_base,
             Signature::DBManagementString => Self::parse_db_management_string,
             Signature::DBManagementCsv => Self::parse_db_management_csv,
@@ -294,6 +295,13 @@ impl Command {
     fn parse_set_variable_range(bytes: &[u8], _: u32) -> (usize, u32, Self) {
         let (bytes_read, command): (usize, SetVariableCommand)
             = SetVariableCommand::parse_range(bytes);
+
+        (bytes_read, 0, Command::SetVariable(command))
+    }
+
+    fn parse_set_variable_db(bytes: &[u8], _: u32) -> (usize, u32, Self) {
+        let (bytes_read, command): (usize, SetVariableCommand) 
+            = SetVariableCommand::parse_db(bytes);
 
         (bytes_read, 0, Command::SetVariable(command))
     }
