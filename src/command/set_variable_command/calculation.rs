@@ -11,6 +11,9 @@ pub enum Calculation {
     Remainder   = 0x04,
     BitwiseAnd  = 0x05,
     Random      = 0x06,
+    /// Used only for angle calculations, means the left and right side of the calculation
+    /// should not be used to calculate the complexive right side before assignment
+    Nothing     = 0x0F,
     Unknown
 }
 
@@ -24,6 +27,7 @@ impl Calculation {
             0x04 => Calculation::Remainder,
             0x05 => Calculation::BitwiseAnd,
             0x06 => Calculation::Random,
+            0x0F => Calculation::Nothing,
             _ => Calculation::Unknown
         }
     }

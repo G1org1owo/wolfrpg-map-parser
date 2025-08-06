@@ -35,7 +35,8 @@ namespace SetVariable {
         Divides     = 0x03,
         Remainder   = 0x04,
         BitwiseAnd  = 0x05,
-        BitwiseNot  = 0x06,
+        Random      = 0x06,
+        Nothing     = 0x0f,
     };
 
     bitfield Operators {
