@@ -10,7 +10,7 @@ pub enum Calculation {
     Divides     = 0x03,
     Remainder   = 0x04,
     BitwiseAnd  = 0x05,
-    BitwiseNot  = 0x06,
+    Random      = 0x06,
     Unknown
 }
 
@@ -23,7 +23,7 @@ impl Calculation {
             0x03 => Calculation::Divides,
             0x04 => Calculation::Remainder,
             0x05 => Calculation::BitwiseAnd,
-            0x06 => Calculation::BitwiseNot,
+            0x06 => Calculation::Random,
             _ => Calculation::Unknown
         }
     }
