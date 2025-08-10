@@ -42,9 +42,9 @@ pub fn as_u32_vec(bytes: &[u8]) -> Vec<u32> {
 pub fn as_string(bytes: &[u8], offset: usize, string_length: usize) -> String {
     let string_bytes: &[u8] = &bytes[offset..offset + string_length - 1];
 
-    let (cow, encoding, had_errors): (Cow<str>, &Encoding, bool) = SHIFT_JIS.decode(string_bytes);
+    let (cow, encoding, _): (Cow<str>, &Encoding, bool) = SHIFT_JIS.decode(string_bytes);
 
-    if encoding != SHIFT_JIS || had_errors {
+    if encoding != SHIFT_JIS {
         panic!("String is not SHIFT-JIS");
     }
 
