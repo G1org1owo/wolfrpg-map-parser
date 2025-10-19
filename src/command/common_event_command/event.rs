@@ -94,7 +94,7 @@ impl Event {
             None
         };
 
-        for i in 0..count {
+        for i in 0..count.max(variables.len()) {
             let arg: U32OrString = if options.is_arg_string((i+1) as u8) {
                 U32OrString::String(strings[i].clone())
             } else {

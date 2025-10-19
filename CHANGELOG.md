@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.5] - 2025-10-19
+### Fixed
+- parsing of string arguments failing for certain common events
+
 ## [0.5.4] - 2025-08-11
 ### Changed
 - Allow invalid characters in shift-jis strings
