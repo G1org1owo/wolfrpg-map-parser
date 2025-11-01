@@ -1,10 +1,13 @@
 pub mod argument;
 pub mod argument_type;
+pub mod run_condition;
+pub mod condition_type;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use crate::byte_utils::{as_u32_le, as_u32_vec, parse_string, parse_string_vec};
 use crate::command::Command;
+use crate::db_parser::common_event::run_condition::RunCondition;
 use crate::db_parser::models::common_event::argument::Argument;
 
 const EVENT_SIGNATURE: u8 = 0x8e;
@@ -15,7 +18,7 @@ const END_SIGNATURE: u8 = 0x92;
 #[derive(PartialEq, Clone)]
 pub struct CommonEvent {
     id: u32,
-    event_type: u32,
+    run_condition: RunCondition,
     event_name: String,
     commands: Vec<Command>,
     note: String,
@@ -40,10 +43,20 @@ impl CommonEvent {
         let id: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
-        let event_type: u32 = as_u32_le(&bytes[offset..offset+4]);
+        let condition_settings: u8 = bytes[offset];
+        offset += 1;
+        
+        let condition_variable: u32 = as_u32_le(&bytes[offset..offset+4]);
         offset += 4;
 
-        offset += 5; // Padding
+        let condition_value: u32 = as_u32_le(&bytes[offset..offset+4]);
+        offset += 4;
+        
+        let run_condition: RunCondition = RunCondition::new(
+            condition_settings,
+            condition_variable,
+            condition_value
+        );
 
         let number_arguments_count: u8 = bytes[offset];
         offset += 1;
@@ -141,7 +154,7 @@ impl CommonEvent {
 
         (offset, Self {
             id,
-            event_type,
+            run_condition,
             event_name,
             commands,
             note,
@@ -247,9 +260,9 @@ impl CommonEvent {
         self.id
     }
 
-    /// The type of event
-    pub fn event_type(&self) -> u32 {
-        self.event_type
+    /// The condition under which this event will run
+    pub fn run_condition(&self) -> &RunCondition {
+        &self.run_condition
     }
 
     /// The name of this event, which can be used for invoking it
